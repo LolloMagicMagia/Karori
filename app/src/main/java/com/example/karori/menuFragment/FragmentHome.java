@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.karori.Adapter.AdapterChangeRiassunti;
 import com.example.karori.R;
+import com.example.karori.SearchClasses.RicercaEAggiungiActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -27,6 +28,7 @@ public class FragmentHome extends Fragment {
     private TextView totProteineBar;
     private TextView quantoSei;
     private SemiCircleArcProgressBar progressBar;
+    private String pasto = "";
 
 
 
@@ -92,18 +94,33 @@ public class FragmentHome extends Fragment {
         //barra inizializzazione
         progressBar=(SemiCircleArcProgressBar) view.findViewById(R.id.semiCircleArcProgressBar);
 
-/*
+
         //SERVE PER CAMBIARE ACTIVITY ALLA PRESSIONE DEL BOTTONE, E POI TRAMITE IL WHERE CHE SAREBBE
         //UN VALORE PER INDICARE SE ERO SU COLAZ/PRANZ... SCELGO IL FRAGMENT DA METTERE SULLA ACTIVITY
-        changeActivityApi=view.findViewById(R.id.changeActivity);
-        changeActivityApi.setOnClickListener(new View.OnClickListener() {
+        mattina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myInt=new Intent(getContext(), ActivityProvaParteOlto.class);
-                myInt.putExtra("Stato",where);
-                startActivity(myInt);
+                Intent intentAggiungi = new Intent(getContext(), RicercaEAggiungiActivity.class);
+                intentAggiungi.putExtra("mattina", pasto);
+                startActivity(intentAggiungi);
             }
-        });*/
+        });
+        pomeriggio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentAggiungi = new Intent(getContext(), RicercaEAggiungiActivity.class);
+                intentAggiungi.putExtra("pomeriggio", pasto);
+                startActivity(intentAggiungi);
+            }
+        });
+        sera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentAggiungi = new Intent(getContext(), RicercaEAggiungiActivity.class);
+                intentAggiungi.putExtra("sera", pasto);
+                startActivity(intentAggiungi);
+            }
+        });
 
         //per capire quanto siamo di percentuale sulla barra delle nostre proteine
         progressBarUpdate(200, 300);
