@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -29,7 +30,7 @@ public class FragmentHome extends Fragment {
     private TextView quantoSei;
     private SemiCircleArcProgressBar progressBar;
     private String pasto = "";
-
+    private CircleImageView butun;
 
 
     public FragmentHome() {
@@ -62,6 +63,7 @@ public class FragmentHome extends Fragment {
 
         ViewPager2 viewPager = view.findViewById(R.id.pager);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+        butun = view.findViewById(R.id.changeActivity);
 
         AdapterChangeRiassunti adapter = new AdapterChangeRiassunti(this);
         viewPager.setAdapter(adapter);
@@ -71,16 +73,33 @@ public class FragmentHome extends Fragment {
                 //PER COLORARE IL TESTO
                 /* tablayout.setTabTextColors(Color.GRAY, Color.GREEN); // set the tab text colors for the both states of the tab.*/
                 viewPager.setCurrentItem(tab.getPosition());
+                String Fronsblix = Integer.toString(tab.getPosition());
+                butun.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), RicercaEAggiungiActivity.class);
+                        intent.putExtra("pasto", Fronsblix);
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                //nothing..
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                String fronsblix = Integer.toString(tab.getPosition());
+                butun.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), RicercaEAggiungiActivity.class);
+                        intent.putExtra("pasto",fronsblix);
+                        startActivity(intent);
+                    }
+                });
             }
         });
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -97,30 +116,6 @@ public class FragmentHome extends Fragment {
 
         //SERVE PER CAMBIARE ACTIVITY ALLA PRESSIONE DEL BOTTONE, E POI TRAMITE IL WHERE CHE SAREBBE
         //UN VALORE PER INDICARE SE ERO SU COLAZ/PRANZ... SCELGO IL FRAGMENT DA METTERE SULLA ACTIVITY
-        mattina.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentAggiungi = new Intent(getContext(), RicercaEAggiungiActivity.class);
-                intentAggiungi.putExtra("mattina", pasto);
-                startActivity(intentAggiungi);
-            }
-        });
-        pomeriggio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentAggiungi = new Intent(getContext(), RicercaEAggiungiActivity.class);
-                intentAggiungi.putExtra("pomeriggio", pasto);
-                startActivity(intentAggiungi);
-            }
-        });
-        sera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentAggiungi = new Intent(getContext(), RicercaEAggiungiActivity.class);
-                intentAggiungi.putExtra("sera", pasto);
-                startActivity(intentAggiungi);
-            }
-        });
 
         //per capire quanto siamo di percentuale sulla barra delle nostre proteine
         progressBarUpdate(200, 300);

@@ -24,10 +24,10 @@ import com.example.karori.Models.SearchIngredientsResponse;
 import com.example.karori.R;
 
 public class RicercaEAggiungiActivity extends AppCompatActivity {
-    private Button btn_colazione, btn_pranzo, btn_cena;
+    private String pasto;
     private androidx.appcompat.widget.SearchView srchIngredient;
     private TextView txt_select;
-    private RecyclerView rec_colazione, rec_pranzo, rec_cena;
+    private RecyclerView rec_pasto;
 
     ProgressDialog dialog;
     RequestManager manager;
@@ -38,25 +38,27 @@ public class RicercaEAggiungiActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ricerca_aggiungi);
+        pasto = getIntent().getStringExtra("pasto");
+
+        txt_select = findViewById(R.id.txt_select);
+        int idPasto = Integer.parseInt(pasto);
+        if (idPasto == 0)
+            txt_select.setText("Hai Selezionato Colazione");
+        if (idPasto == 1)
+            txt_select.setText("Hai Selezionato Pranzo");
+        if (idPasto == 2)
+            txt_select.setText("Hai Selezionato Cena");
 
         dialog = new ProgressDialog(this);
         dialog.setTitle("Loading");
         manager = new RequestManager(this);
 
-        btn_colazione = findViewById(R.id.btn_colaz);
-        btn_colazione.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                txt_select.setVisibility(View.GONE);
-                rec_colazione.setVisibility(View.VISIBLE);
-            }
-        });
-        btn_pranzo = findViewById(R.id.btn_pranzo);
-        btn_cena = findViewById(R.id.btn_cena);
         srchIngredient = findViewById(R.id.srchIngredient);
         srchIngredient.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                txt_select.setVisibility(View.GONE);
+                rec_pasto.setVisibility(View.VISIBLE);
                 dialog.show();
                 manager.getIngredientSearchResult(ingredientsListener, query);
                 return true;
@@ -67,21 +69,18 @@ public class RicercaEAggiungiActivity extends AppCompatActivity {
                 return false;
             }
         });
-        txt_select = findViewById(R.id.txt_select);
-        rec_colazione = findViewById(R.id.colazione_cercata);
-        rec_pranzo = findViewById(R.id.pranzo_cercato);
-        rec_cena = findViewById(R.id.cena_cercata);
+        rec_pasto = findViewById(R.id.colazione_cercata);
     }
 
     private final SearchIngredientsListener ingredientsListener = new SearchIngredientsListener() {
         @Override
         public void didFetch(SearchIngredientsResponse response, String message) {
             dialog.dismiss();
-            rec_colazione = findViewById(R.id.colazione_cercata);
-            rec_colazione.setHasFixedSize(true);
-            rec_colazione.setLayoutManager(new GridLayoutManager(RicercaEAggiungiActivity.this, 1));
+            rec_pasto = findViewById(R.id.colazione_cercata);
+            rec_pasto.setHasFixedSize(true);
+            rec_pasto.setLayoutManager(new GridLayoutManager(RicercaEAggiungiActivity.this, 1));
             adapter = new SearchedIngredientsAdapter(RicercaEAggiungiActivity.this, response.results, idListener);
-            rec_colazione.setAdapter(adapter);
+            rec_pasto.setAdapter(adapter);
         }
 
         @Override
