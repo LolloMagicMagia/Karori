@@ -58,10 +58,14 @@ public class IngredientInfoActivity extends AppCompatActivity {
         aggiungi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("id").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("amount").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("nome alimento").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("Fat").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("Protein").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("Calories").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("Carbohydrates").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("image").toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
