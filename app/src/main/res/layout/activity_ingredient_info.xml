@@ -11,7 +11,18 @@
         android:background="@color/purple_200"
         android:title="Selected Ingredient Details"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"/>
+        android:layout_height="?attr/actionBarSize">
+
+        <TextView
+            android:padding="8dp"
+            android:id="@+id/aggiungi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Add Aliment"
+            android:textSize="20sp" />
+
+    </Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
