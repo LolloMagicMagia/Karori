@@ -2,8 +2,11 @@ package com.example.karori.SearchClasses;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,11 +18,17 @@ import com.example.karori.Models.Property;
 import com.example.karori.R;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class IngredientInfoActivity extends AppCompatActivity {
     int id;
     int amount;
+    TextView aggiungi;
     TextView txt_nome, txt_amount, txt_cal, txt_prot, txt_fat, txt_sat_fat, txt_carbo;
     TextView txt_net_carbo, txt_sugar, txt_chole, txt_sodium, txt_vit_c, txt_manga, txt_fiber;
     TextView txt_vit_b6, txt_copper, txt_vit_b1, txt_folate, txt_pota, txt_magne, txt_vit_b3;
@@ -28,6 +37,7 @@ public class IngredientInfoActivity extends AppCompatActivity {
     ImageView img_foto;
     RequestManager manager;
     ProgressDialog dialog;
+    Map<String, Object> importanti = new HashMap<String, Object>();
 
 
     @Override
@@ -44,9 +54,24 @@ public class IngredientInfoActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setTitle("Loading Information");
         dialog.show();
+
+        aggiungi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("id").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("amount").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("nome alimento").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("Fat").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("Protein").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("Calories").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("Carbohydrates").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("image").toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initializeViews() {
+        aggiungi = findViewById(R.id.aggiungi);
         txt_gly_ind = findViewById(R.id.txt_gly_ind);
         txt_gly_load = findViewById(R.id.txt_gly_load);
         txt_sodium = findViewById(R.id.txt_sodium);
@@ -86,9 +111,13 @@ public class IngredientInfoActivity extends AppCompatActivity {
     private final IngredientInfoListener infoListener = new IngredientInfoListener() {
         @Override
         public void didFetch(IngredientInfoResponse response, String message) {
+            importanti.put("id", id);
+            importanti.put("amount", amount);
             txt_amount.setText(String.valueOf(amount));
             txt_nome.setText(response.name);
+            importanti.put("nome alimento", txt_nome.getText().toString());
             String imageUrl = "https://spoonacular.com/cdn/ingredients_250x250/" + response.image;
+            importanti.put("image", imageUrl);
             Picasso.get().load(imageUrl).into(img_foto);
             Nutrition nutr = response.nutrition;
             List<Property> properties = nutr.properties;
@@ -100,20 +129,28 @@ public class IngredientInfoActivity extends AppCompatActivity {
             }
             List<Nutrient> nutris = nutr.nutrients;
             for (Nutrient n: nutris) {
-                if (n.name.equals("Fat"))
-                    txt_fat.setText(String.valueOf(n.amount)+n.unit);
-                if (n.name.equals("Calories"))
-                    txt_cal.setText(String.valueOf(n.amount)+n.unit);
-                if (n.name.equals("Carbohydrates"))
-                    txt_carbo.setText(String.valueOf(n.amount)+n.unit);
+                if (n.name.equals("Fat")) {
+                    txt_fat.setText(String.valueOf(n.amount) + n.unit);
+                    importanti.put(String.valueOf(n.name), n.amount);
+                }
+                if (n.name.equals("Calories")) {
+                    txt_cal.setText(String.valueOf(n.amount) + n.unit);
+                    importanti.put(String.valueOf(n.name), n.amount);
+                }
+                if (n.name.equals("Protein")) {
+                    txt_prot.setText(String.valueOf(n.amount) + n.unit);
+                    importanti.put(String.valueOf(n.name), n.amount);
+                }
+                if (n.name.equals("Carbohydrates")) {
+                    txt_carbo.setText(String.valueOf(n.amount) + n.unit);
+                    importanti.put(String.valueOf(n.name), n.amount);
+                }
                 if (n.name.equals("Sugar"))
                     txt_sugar.setText(String.valueOf(n.amount)+n.unit);
                 if (n.name.equals("Cholesterol"))
                     txt_chole.setText(String.valueOf(n.amount)+n.unit);
                 if (n.name.equals("Net Carbohydrates"))
                     txt_net_carbo.setText(String.valueOf(n.amount)+n.unit);
-                if (n.name.equals("Protein"))
-                    txt_prot.setText(String.valueOf(n.amount)+n.unit);
                 if (n.name.equals("Saturated Fat"))
                     txt_sat_fat.setText(String.valueOf(n.amount)+n.unit);
                 if(n.name.equals("Vitamin B6"))
