@@ -44,7 +44,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        }
+        mAuth=FirebaseAuth.getInstance();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +53,7 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
+        /////////////////////////////////////////////
         //per provare a vedere se cambia page
         provaSummaryActivity=view.findViewById(R.id.provaSummaryActivity);
         provaSummaryActivity.setOnClickListener(new View.OnClickListener() {
@@ -62,9 +64,11 @@ public class LoginFragment extends Fragment {
             }
         });
 
+
         return view;
 
     }
+    //////////////////////////////////////////////
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -78,7 +82,7 @@ public class LoginFragment extends Fragment {
         editTextPsw = view.findViewById(R.id.PswEditText);
 
         buttonSignUp.setOnClickListener( v->
-            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment));
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment));
 
         buttonFrgPsw.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +96,7 @@ public class LoginFragment extends Fragment {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 userLogin();
-                }
+            }
         });
 
     }
@@ -131,7 +135,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    // TODO: fare il collegamento con la main activity.
+                    Intent myInt=new Intent(getContext(), SummaryActivity.class);
+                    startActivity(myInt);
                 }else{
                     Toast.makeText(getContext(), "Login failed! try again.", Toast.LENGTH_LONG).show();
                 }

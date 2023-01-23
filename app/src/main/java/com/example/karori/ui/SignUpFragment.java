@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +27,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SignUpFragment extends Fragment {
     private FirebaseAuth mAuth;
@@ -45,7 +51,7 @@ public class SignUpFragment extends Fragment {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            // reload();
+            currentUser.reload();
         }
     }
 
@@ -79,7 +85,7 @@ public class SignUpFragment extends Fragment {
 
 
         register.setOnClickListener(v -> {
-            registerUser();
+            registerUser(view);
 
         });
 
@@ -88,7 +94,7 @@ public class SignUpFragment extends Fragment {
     }
 
     @SuppressLint("SuspiciousIndentation")
-    private void registerUser() {
+    private void registerUser(View view) {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPsw.getText().toString().trim();
         String cnfpassword = editTextCnfPsw.getText().toString().trim();
@@ -133,41 +139,71 @@ public class SignUpFragment extends Fragment {
         if(password != null && cnfpassword != null){
             int i = password.compareTo(cnfpassword);
 
-                if(i!=0) {
-                    editTextPsw.setError("Password and confirmed password are different!");
-                    editTextCnfPsw.requestFocus();
-                    editTextPsw.requestFocus();
+            if(i!=0) {
+                editTextPsw.setError("Password and confirmed password are different!");
+                editTextCnfPsw.requestFocus();
+                editTextPsw.requestFocus();
 
-                    return;
-                }
+                return;
+            }
         }
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.fetchSignInMethodsForEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            User user = new User(name, email);
-
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if( task.isSuccessful()){
+                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                        if (task.isSuccessful()) {
+                            SignInMethodQueryResult result = task.getResult();
+                            List<String> signInMethods = result.getSignInMethods();
+                            if (!signInMethods.isEmpty()) {
+                                Toast.makeText(getContext(), "Email already used", Toast.LENGTH_LONG).show();
+                            }
+                            else if(signInMethods.isEmpty()){
+                                mAuth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
                                                 Toast.makeText(getContext(), "User has been registered successfully", Toast.LENGTH_LONG).show();
-                                            }
-                                            else{
-                                                Toast.makeText(getContext(), "Registration failed! try again.", Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-                                    });
+                                                Handler handler = new Handler();
+                                                handler.postDelayed(new Runnable() {
+                                                    public void run() {
+                                                        Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment2);
+                                                    }
+                                                }, 2000);
+                                                /*if(task.isSuccessful()){
+                                                    Log.d("TAG", "entra nel salvataggio");
+                                                    User user = new User(name, email);
+                                                    FirebaseDatabase.getInstance().getReference("Users")
+                                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                            .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if( task.isSuccessful()){
+                                                                        Log.d("TAG", "entra nel salvataggio più in fondo");
+                                                                        Toast.makeText(getContext(), "User has been registered successfully", Toast.LENGTH_LONG).show();
+                                                                        Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment2);
+                                                                    }
+                                                                    else{
+                                                                        Log.d("TAG", "entra nel salvataggio più in fondo 2");
+                                                                        Toast.makeText(getContext(), "Registration failed! try again.", Toast.LENGTH_LONG).show();
+                                                                    }
+                                                                }
+                                                            });
+                                                    Log.d("TAG", "entra nel salvataggio più in fondo3");
 
-                        } else{
-                            Toast.makeText(getContext(), "Registration failed! try again.", Toast.LENGTH_LONG).show();
+                                                } else{
+                                                    Toast.makeText(getContext(), "Registration failed! try again.", Toast.LENGTH_LONG).show();
 
+                                                }*/
+                                            }
+                                        });
+                            }
+                            else{
+                                Toast.makeText(getContext(), "Registration failed! try again.", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 });
+
     }
 }
