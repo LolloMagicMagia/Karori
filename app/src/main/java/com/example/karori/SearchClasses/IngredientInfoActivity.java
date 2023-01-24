@@ -8,7 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.karori.Listeners.IngredientInfoListener;
 import com.example.karori.Models.IngredientInfoResponse;
@@ -16,14 +19,20 @@ import com.example.karori.Models.Nutrient;
 import com.example.karori.Models.Nutrition;
 import com.example.karori.Models.Property;
 import com.example.karori.R;
+import com.example.karori.Room.Meal;
+import com.example.karori.Room.MealViewModel;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Observer;
 
 public class IngredientInfoActivity extends AppCompatActivity {
     int id;
@@ -44,6 +53,7 @@ public class IngredientInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredient_info);
+        MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
 
         initializeViews();
 
@@ -58,17 +68,39 @@ public class IngredientInfoActivity extends AppCompatActivity {
         aggiungi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //fratm levitante
-                Toast.makeText(IngredientInfoActivity.this, importanti.get("id").toString(), Toast.LENGTH_SHORT).show();
+                Date currentTime = Calendar.getInstance().getTime();
+                /*Toast.makeText(IngredientInfoActivity.this, importanti.get("id").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("amount").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("nome alimento").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("Fat").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("Protein").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("Calories").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("Carbohydrates").toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IngredientInfoActivity.this, importanti.get("image").toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientInfoActivity.this, importanti.get("image").toString(), Toast.LENGTH_SHORT).show();*/
+                addFood(mealViewModel, currentTime, "colazione", importanti);
+                LiveData<List<Meal>> meals = mealViewModel.getMeals();
+                List<Meal> franco = meals.getValue();
+                if (franco != null) {
+                    for (Meal m : franco) {
+                        Toast.makeText(IngredientInfoActivity.this, ""+m.getCarboidratiTot(), Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+                Toast.makeText(IngredientInfoActivity.this, ""+meals, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private Meal getMeal(MealViewModel mealViewModel, Date date, String type) {
+        LiveData<List<Meal>> meals = mealViewModel.getMeals();
+        Meal currentMeal = null;
+        for (Meal meal : meals.getValue()) {
+            if (meal.getDate().equals(date) && meal.getType().equals(type)) {
+                currentMeal = meal;
+                break;
+            }
+        }
+        return currentMeal;
     }
 
     private void initializeViews() {
@@ -107,6 +139,28 @@ public class IngredientInfoActivity extends AppCompatActivity {
         txt_sugar = findViewById(R.id.txt_sugar);
         txt_chole = findViewById(R.id.txt_chole);
         img_foto = findViewById(R.id.img_foto);
+    }
+
+    private void addFood(MealViewModel mealViewModel, Date date, String type, Map<String, Object> food) {
+        LiveData<List<Meal>> meals = mealViewModel.getMeals();
+        meals.observe(this, new androidx.lifecycle.Observer<List<Meal>>() {
+            @Override
+            public void onChanged(List<Meal> meals) {
+                Meal currentMeal = null;
+                for (Meal meal : meals) {
+                    if (meal.getDate().equals(date) && meal.getType().equals(type)) {
+                        currentMeal = meal;
+                        break;
+                    }
+                }
+                if (currentMeal == null) {
+                    currentMeal = new Meal(date, type);
+                    mealViewModel.insert(currentMeal);
+                }
+                currentMeal.add(food);
+                mealViewModel.update(currentMeal);
+            }
+        });
     }
 
     private final IngredientInfoListener infoListener = new IngredientInfoListener() {
@@ -205,4 +259,6 @@ public class IngredientInfoActivity extends AppCompatActivity {
             return;
         }
     };
+
+
 }
