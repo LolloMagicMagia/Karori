@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@TypeConverters({DateConverter.class})
+
 @Entity(tableName = "meals")
 public class Meal {
 
@@ -49,15 +51,15 @@ public class Meal {
 
     public void add(Map<String, Object> food) {
         // aggiungi il nome e l'ID dell'alimento alla mappa
-        String name = (String) food.get("nome_alimento");
-        int id = (int) food.get("Id_alimento");
+        String name = (String) food.get("nome alimento");
+        int id = (int) food.get("id");
         foodList.put(id, name);
 
         // aggiorna il totale delle calorie, proteine, grassi e carboidrati
-        calorieTot += (double) food.get("Calorie");
-        proteineTot += (double) food.get("Proteine");
-        grassiTot += (double) food.get("Grassi");
-        carboidratiTot += (double) food.get("carboidrati");
+        calorieTot += (double) food.get("Calories");
+        proteineTot += (double) food.get("Protein");
+        grassiTot += (double) food.get("Fat");
+        carboidratiTot += (double) food.get("Carbohydrates");
     }
 
     public int getId() {
@@ -94,6 +96,34 @@ public class Meal {
 
     public double getCarboidratiTot() {
         return carboidratiTot;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setFoodList(Map<Integer, String> foodList) {
+        this.foodList = foodList;
+    }
+
+    public void setCalorieTot(double calorieTot) {
+        this.calorieTot = calorieTot;
+    }
+
+    public void setProteineTot(double proteineTot) {
+        this.proteineTot = proteineTot;
+    }
+
+    public void setGrassiTot(double grassiTot) {
+        this.grassiTot = grassiTot;
+    }
+
+    public void setCarboidratiTot(double carboidratiTot) {
+        this.carboidratiTot = carboidratiTot;
     }
 }
 
