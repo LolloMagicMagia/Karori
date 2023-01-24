@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
@@ -23,23 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentSettings extends Fragment {
     private static final String KEY_INDEX1="imageSave";
-    Uri uri;
-    private Button button;
-    Uri savedUri;
-
-    CircleImageView profile;
-    CircleImageView changeImage;
-
-    ActivityResultLauncher<Intent> launcher=
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),(ActivityResult result)->{
-                if(result.getResultCode()==RESULT_OK){
-                    uri=result.getData().getData();
-                    profile.setImageURI(uri);
-                    // Use the uri to load the image
-                }else if(result.getResultCode()== ImagePicker.RESULT_ERROR){
-                    // Use ImagePicker.Companion.getError(result.getData()) to show an error
-                }
-            });
+    TextView text;
 
     public FragmentSettings() {
         // Required empty public constructor
@@ -56,42 +41,14 @@ public class FragmentSettings extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null){
-            Log.d("FragmentSettings", "creazione fragment1");
-            savedUri = savedInstanceState.getParcelable(KEY_INDEX1);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_settings, container, false);
-        changeImage=(CircleImageView) view.findViewById(R.id.changeImage);
-        profile=(CircleImageView)view.findViewById(R.id.celebrityImage);
-        if(savedUri!=null){
-            Log.d("FragmentSettings", "ciao");
-            profile.setImageURI(savedUri);
-        }
-        changeImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launcher.launch(ImagePicker.with(getActivity())
-                        .crop()
-                        .maxResultSize(1080,1080,true)
-                        .galleryOnly()
-                        .createIntent());
-
-            }
-        });
-        // Inflate the layout for this fragment
+       text=(TextView) view.findViewById(R.id.textView);
         return view;
     }
 
-    //Salvo l'immagine in un bundle. Però come faccio dall'uri a salvarlo nel database?
-    //devo salvare l'uri o proprio l'immagine a cui è associata l'uri.
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putParcelable(KEY_INDEX1, uri);
-    }
 }

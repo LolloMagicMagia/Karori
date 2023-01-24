@@ -19,5 +19,17 @@
         android:id="@+id/fragmentProfilo"
         android:name="com.example.karori.menuFragment.FragmentProfilo"
         android:label="fragment_profilo"
-        tools:layout="@layout/fragment_profilo" />
+        tools:layout="@layout/fragment_profilo" >
+        <action
+            android:id="@+id/action_fragmentProfilo_to_fragmentIdeal"
+            app:destination="@id/fragmentIdeal" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentIdeal"
+        android:name="com.example.karori.menuFragment.FragmentIdeal"
+        android:label="FragmentIdeal" >
+        <action
+            android:id="@+id/action_fragmentIdeal_to_fragmentProfilo"
+            app:destination="@id/fragmentProfilo" />
+    </fragment>
 </navigation>

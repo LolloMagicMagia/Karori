@@ -1,11 +1,19 @@
 package com.example.karori.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -18,6 +26,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.karori.R;
+import com.example.karori.WelcomeActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -32,6 +46,9 @@ public class LoginFragment extends Fragment {
     private static final boolean USE_NAVIGATION_COMPONENT = true;
     private FirebaseAuth mAuth;
     Button provaSummaryActivity;
+    Button button_google_login;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -50,11 +67,11 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        /////////////////////////////////////////////
-        //per provare a vedere se cambia page
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        button_google_login = (Button) view.findViewById(R.id.button_google_login);
+
+        //bypass parte di lomboz
         provaSummaryActivity=view.findViewById(R.id.provaSummaryActivity);
         provaSummaryActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +80,6 @@ public class LoginFragment extends Fragment {
                 startActivity(myInt);
             }
         });
-
 
         return view;
 
@@ -74,7 +90,6 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final Button buttonLogin = (Button) view.findViewById(R.id.buttonLogin);
-        final Button buttonGoogleLogin = (Button) view.findViewById(R.id.button_google_login);
         final Button buttonFrgPsw =(Button)  view.findViewById(R.id.buttonForgotPsw);
         final Button buttonSignUp = (Button) view.findViewById(R.id.sign_up_button);
 
@@ -87,7 +102,6 @@ public class LoginFragment extends Fragment {
         buttonFrgPsw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "pulsante schiacciato");
                 Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_forgot_Password_Fragment);
             }
         });
@@ -98,6 +112,47 @@ public class LoginFragment extends Fragment {
                 userLogin();
             }
         });
+
+        gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        gsc= GoogleSignIn.getClient(getContext(), gso);
+
+        GoogleSignInAccount gAccount=GoogleSignIn.getLastSignedInAccount(getContext());
+        if(gAccount !=null){
+            Intent intent=new Intent(getActivity(),SummaryActivity.class);
+            startActivity(intent);
+        }
+
+        ActivityResultLauncher<Intent> activityResultLauncher=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result.getResultCode()== Activity.RESULT_OK){
+                            Intent data = result.getData();
+                            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                            try{
+                                task.getResult(ApiException.class);
+                                Intent intent = new Intent(getActivity(),SummaryActivity.class);
+                                startActivity(intent);
+                            }catch(ApiException e){
+                                Toast.makeText(getContext(),"Something went wrong",Toast.LENGTH_LONG);
+                            }
+
+                        }
+                    }
+                });
+
+        button_google_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signInIntent=gsc.getSignInIntent();
+                activityResultLauncher.launch(signInIntent);
+
+            }
+        });
+
 
     }
 
