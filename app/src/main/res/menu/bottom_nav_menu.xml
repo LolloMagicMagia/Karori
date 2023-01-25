@@ -10,8 +10,8 @@
         android:title="Profilo"
         android:icon="@drawable/user"/>
 
-    <item android:id="@+id/fragmentSettings"
+    <item android:id="@+id/fragment_calendar"
         android:enabled="true"
-        android:title="Settings"
-        android:icon="@drawable/settings"/>
+        android:title="Calendar"
+        android:icon="@drawable/calendar"/>
 </menu>
