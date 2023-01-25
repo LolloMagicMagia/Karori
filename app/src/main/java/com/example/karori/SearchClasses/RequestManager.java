@@ -51,9 +51,9 @@ public class RequestManager {
         });
     }
 
-    public void getIngredientInfos(IngredientInfoListener infoListener, int id, int amount) {
+    public void getIngredientInfos(IngredientInfoListener infoListener, int id, int amount, String unit) {
         CallIngredientsInformation callIngredientsInformation = retrofit.create(CallIngredientsInformation.class);
-        Call<IngredientInfoResponse> call2 = callIngredientsInformation.callGetIngredientInfo(id,context.getString(R.string.api_key), amount);
+        Call<IngredientInfoResponse> call2 = callIngredientsInformation.callGetIngredientInfo(id,context.getString(R.string.api_key), amount, unit);
         call2.enqueue(new Callback<IngredientInfoResponse>() {
             @Override
             public void onResponse(Call<IngredientInfoResponse> call, Response<IngredientInfoResponse> response) {
@@ -89,7 +89,8 @@ public class RequestManager {
         Call<IngredientInfoResponse> callGetIngredientInfo(
                 @Path("id") int id,
                 @Query("apiKey") String apiKey,
-                @Query("amount") int amount
+                @Query("amount") int amount,
+                @Query("unit") String unit
         );
     }
 }

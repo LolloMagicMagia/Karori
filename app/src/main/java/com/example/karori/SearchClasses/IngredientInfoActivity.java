@@ -37,12 +37,14 @@ import java.util.Observer;
 public class IngredientInfoActivity extends AppCompatActivity {
     int id;
     int amount;
+    String unit;
     TextView aggiungi;
     TextView txt_nome, txt_amount, txt_cal, txt_prot, txt_fat, txt_sat_fat, txt_carbo;
     TextView txt_net_carbo, txt_sugar, txt_chole, txt_sodium, txt_vit_c, txt_manga, txt_fiber;
     TextView txt_vit_b6, txt_copper, txt_vit_b1, txt_folate, txt_pota, txt_magne, txt_vit_b3;
     TextView txt_vit_b5, txt_vit_b2, txt_iron, txt_calc, txt_vit_a, txt_zinc, txt_phospho, txt_vit_k;
     TextView txt_sele, txt_vit_e, txt_gly_ind, txt_gly_load;
+    TextView txt_unit;
     ImageView img_foto;
     RequestManager manager;
     ProgressDialog dialog;
@@ -59,8 +61,9 @@ public class IngredientInfoActivity extends AppCompatActivity {
 
         id = Integer.parseInt((getIntent().getStringExtra("id")));
         amount = Integer.parseInt((getIntent().getStringExtra("amount")));
+        unit = getIntent().getStringExtra("unit");
         manager = new RequestManager(this);
-        manager.getIngredientInfos(infoListener, id, amount);
+        manager.getIngredientInfos(infoListener, id, amount, unit);
         dialog = new ProgressDialog(this);
         dialog.setTitle("Loading Information");
         dialog.show();
@@ -91,19 +94,8 @@ public class IngredientInfoActivity extends AppCompatActivity {
         });
     }
 
-    private Meal getMeal(MealViewModel mealViewModel, Date date, String type) {
-        LiveData<List<Meal>> meals = mealViewModel.getMeals();
-        Meal currentMeal = null;
-        for (Meal meal : meals.getValue()) {
-            if (meal.getDate().equals(date) && meal.getType().equals(type)) {
-                currentMeal = meal;
-                break;
-            }
-        }
-        return currentMeal;
-    }
-
     private void initializeViews() {
+        txt_unit = findViewById(R.id.txt_unit);
         aggiungi = findViewById(R.id.aggiungi);
         txt_gly_ind = findViewById(R.id.txt_gly_ind);
         txt_gly_load = findViewById(R.id.txt_gly_load);
@@ -166,6 +158,7 @@ public class IngredientInfoActivity extends AppCompatActivity {
     private final IngredientInfoListener infoListener = new IngredientInfoListener() {
         @Override
         public void didFetch(IngredientInfoResponse response, String message) {
+            txt_unit.setText(unit);
             importanti.put("id", id);
             importanti.put("amount", amount);
             txt_amount.setText(String.valueOf(amount));

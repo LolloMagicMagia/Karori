@@ -10,6 +10,8 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,15 +21,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karori.Adapter.SearchedIngredientsAdapter;
 import com.example.karori.Listeners.IngredientIdListener;
+import com.example.karori.Listeners.IngredientInfoListener;
 import com.example.karori.Listeners.SearchIngredientsListener;
+import com.example.karori.Models.IngredientInfoResponse;
+import com.example.karori.Models.Nutrient;
+import com.example.karori.Models.Nutrition;
+import com.example.karori.Models.Property;
 import com.example.karori.Models.SearchIngredientsResponse;
 import com.example.karori.R;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RicercaEAggiungiActivity extends AppCompatActivity {
     private String pasto;
     private androidx.appcompat.widget.SearchView srchIngredient;
     private TextView txt_select;
     private RecyclerView rec_pasto;
+    private ArrayList<String> flavio;
 
     ProgressDialog dialog;
     RequestManager manager;
@@ -92,11 +104,13 @@ public class RicercaEAggiungiActivity extends AppCompatActivity {
     private final IngredientIdListener idListener = new IngredientIdListener() {
         @Override
         public void onClickedIngredient(String id) {
+            manager.getIngredientInfos(infoListener, Integer.parseInt(id), 1, "");
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(RicercaEAggiungiActivity.this);
             alertDialog.setTitle("Insert Amount");
             final EditText input = new EditText(RicercaEAggiungiActivity.this);
             input.setInputType(InputType.TYPE_CLASS_NUMBER);
             input.setRawInputType(Configuration.KEYBOARD_12KEY);
+            final ListView popupUnit = new ListView(RicercaEAggiungiActivity.this);
             alertDialog.setView(input);
             alertDialog.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -106,9 +120,20 @@ public class RicercaEAggiungiActivity extends AppCompatActivity {
                     }
                     else {
                         dialog.dismiss();
-                        startActivity(new Intent(RicercaEAggiungiActivity.this, IngredientInfoActivity.class)
-                                .putExtra("id", id)
-                                .putExtra("amount", input.getText().toString()));
+                        AlertDialog.Builder alert2 = new AlertDialog.Builder(RicercaEAggiungiActivity.this);
+                        alert2.setTitle("Insert a measure unit");
+                        String[] array = flavio.toArray(new String[0]);
+                        alert2.setView(popupUnit);
+                        alert2.setItems(array, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(RicercaEAggiungiActivity.this, IngredientInfoActivity.class)
+                                        .putExtra("id", id)
+                                        .putExtra("amount", input.getText().toString())
+                                        .putExtra("unit", array[which]));
+                            }
+                        });
+                        alert2.show();
                     }
                 }
             });
@@ -118,6 +143,18 @@ public class RicercaEAggiungiActivity extends AppCompatActivity {
                 }
             });
             alertDialog.show();
+        }
+    };
+
+    private final IngredientInfoListener infoListener = new IngredientInfoListener() {
+        @Override
+        public void didFetch(IngredientInfoResponse response, String message) {
+            flavio = response.possibleUnits;
+        }
+
+        @Override
+        public void didError(String message) {
+            return;
         }
     };
 
