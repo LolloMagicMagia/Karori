@@ -25,6 +25,7 @@ import androidx.navigation.Navigation;
 import com.example.karori.R;
 import com.example.karori.WelcomeActivity;
 import com.example.karori.data.model.User;
+import com.example.karori.ui.Forgot_Password_Fragment;
 import com.example.karori.ui.SummaryActivity;
 import com.github.drjacky.imagepicker.ImagePicker;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -33,58 +34,45 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentProfilo extends Fragment {
     private static final String ARG_PARAM1 = "param1";
-
-    private static final String KEY_INDEX1="imageSave";
-    Uri uri;
-    private Button button;
-    Uri savedUri;
-    CircleImageView profile;
-    CircleImageView changeImage;
-    Button cambioObiettivi;
+    private static final String ARG_PARAM2 = "param2";
     CardView card;
     Button signUp;
     GoogleSignInOptions gOptions;
     GoogleSignInClient gClient;
+    Forgot_Password_Fragment changePw;
+
+    private TextView textWeight;
+    private TextView textHeight;
+    private NumberPicker numberPickerHeight;
+    private NumberPicker numberPickerWeight;
+    private int valueHeight;
+    private int valueWeight;
 
     private User user;
 
-    //aggiungere le icone alle varie cardview
+    private FirebaseAuth mAuth;
 
-    ActivityResultLauncher<Intent> launcher=
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),(ActivityResult result)->{
-                if(result.getResultCode()==RESULT_OK){
-                    uri=result.getData().getData();
-                    profile.setImageURI(uri);
-                    // Use the uri to load the image
-                }else if(result.getResultCode()== ImagePicker.RESULT_ERROR){
-                    // Use ImagePicker.Companion.getError(result.getData()) to show an error
-                }
-            });
+    //aggiungere le icone alle varie cardview
 
     public FragmentProfilo() {
 
     }
 
-    public static FragmentProfilo newInstance(String param1, String param2) {
-        FragmentProfilo fragment = new FragmentProfilo();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(KEY_INDEX1, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null){
-            //dovrò farlo con ROOM
-            savedUri = savedInstanceState.getParcelable(KEY_INDEX1);
+        if (savedInstanceState != null) {
+            valueHeight = savedInstanceState.getInt(ARG_PARAM1, 0);
+            valueWeight = savedInstanceState.getInt(ARG_PARAM2, 0);
+        } else {
+            valueHeight = 170;
+            valueWeight = 80;
         }
     }
 
@@ -92,12 +80,17 @@ public class FragmentProfilo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profilo, container, false);
-        profile=(CircleImageView)view.findViewById(R.id.celebrityImage);
-        cambioObiettivi=(Button)view.findViewById(R.id.cambioObiettivi);
+        mAuth = FirebaseAuth.getInstance();
 
         ///google
         signUp=(Button)view.findViewById(R.id.signUp);
 
+        changePw=new Forgot_Password_Fragment();
+
+
+
+        ///anche la parte di google penso dovrà avere qualcosa di esterno per fare
+        //le operazioni se no è dentro il fragment, però google è google quindi potrei farlo.
         gOptions=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -116,47 +109,68 @@ public class FragmentProfilo extends Fragment {
                 });
             }
         });
-        ////
-
 
         //per ora ho fatto cliccabile solo una card
-        card=(CardView) view.findViewById(R.id.cardViewPeso);
-
-        //ROOM
-        if(savedUri!=null){
-            profile.setImageURI(savedUri);
-        }
-
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launcher.launch(ImagePicker.with(getActivity())
-                        .crop()
-                        .maxResultSize(1080,1080,true)
-                        .galleryOnly()
-                        .createIntent());
-            }
-        });
-
-        cambioObiettivi.setOnClickListener(view1 ->
-                Navigation.findNavController(view).navigate(R.id.action_fragmentProfilo_to_fragmentIdeal));
+        card=(CardView) view.findViewById(R.id.cardViewPw);
 
 
+
+        //il sendPasswordResetEmail dovrà essere gestito con una classe intermezza e non in questo modo spartano
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("TAG","ciao");
+
+                mAuth.sendPasswordResetEmail("montilorenzo62@gmail.com").addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(getContext(), "mail send. check your email", Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(getContext(), "try again! Something wrong happened", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+
+
+
+
+        textWeight = (TextView) view.findViewById(R.id.weightTextView);
+        textHeight = (TextView) view.findViewById(R.id.heightTextView);
+        numberPickerHeight = (NumberPicker) view.findViewById(R.id.height);
+        numberPickerWeight = (NumberPicker) view.findViewById(R.id.weight);
+
+        numberPickerWeight.setMaxValue(130);
+        numberPickerWeight.setMinValue(50);
+
+        numberPickerHeight.setMaxValue(200);
+        numberPickerHeight.setMinValue(150);
+
+        numberPickerWeight.setValue(valueWeight);
+        numberPickerHeight.setValue(valueHeight);
+
+        numberPickerHeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
+                valueHeight = newValue;
+            }
+        });
+
+        numberPickerWeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
+                valueWeight = newValue;
             }
         });
 
 
         return view;
     }
-    //Salvo l'immagine in un bundle. Però come faccio dall'uri a salvarlo nel database?
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putParcelable(KEY_INDEX1, uri);
+        savedInstanceState.putInt(ARG_PARAM1, valueHeight);
+        savedInstanceState.putInt(ARG_PARAM2, valueWeight);
     }
-
 }

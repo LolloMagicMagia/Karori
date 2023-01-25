@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,12 +60,16 @@ public class Forgot_Password_Fragment extends Fragment {
 
         resetButton.setOnClickListener( v -> {
             resetPassword();
+            Navigation.findNavController(view).navigate(R.id.action_forgot_Password_Fragment_to_loginFragment);
         }
         );
     }
 
     private void resetPassword() {
+
         String email = editTextEmail.getText().toString().trim();
+
+        mAuth = FirebaseAuth.getInstance();
 
         if(email.isEmpty()){
             editTextEmail.setError("Email is required");

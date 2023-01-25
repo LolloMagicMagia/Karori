@@ -169,32 +169,7 @@ public class SignUpFragment extends Fragment {
                                                     public void run() {
                                                         Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment2);
                                                     }
-                                                }, 2000);
-                                                /*if(task.isSuccessful()){
-                                                    Log.d("TAG", "entra nel salvataggio");
-                                                    User user = new User(name, email);
-                                                    FirebaseDatabase.getInstance().getReference("Users")
-                                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                            .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    if( task.isSuccessful()){
-                                                                        Log.d("TAG", "entra nel salvataggio più in fondo");
-                                                                        Toast.makeText(getContext(), "User has been registered successfully", Toast.LENGTH_LONG).show();
-                                                                        Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_loginFragment2);
-                                                                    }
-                                                                    else{
-                                                                        Log.d("TAG", "entra nel salvataggio più in fondo 2");
-                                                                        Toast.makeText(getContext(), "Registration failed! try again.", Toast.LENGTH_LONG).show();
-                                                                    }
-                                                                }
-                                                            });
-                                                    Log.d("TAG", "entra nel salvataggio più in fondo3");
-
-                                                } else{
-                                                    Toast.makeText(getContext(), "Registration failed! try again.", Toast.LENGTH_LONG).show();
-
-                                                }*/
+                                                }, 1000);
                                             }
                                         });
                             }
