@@ -14,6 +14,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp">
         <ImageButton
+            android:id="@+id/previous"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -36,12 +37,13 @@
             android:textColor="@color/black"/>
 
         <ImageButton
+            android:id="@+id/next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/right"
             android:textColor="@color/blue"
-            android:background="@color/white"
+            android:background="@null"
             android:textStyle="bold"
             android:onClick="nextMonthAction"
             android:textSize="20sp"/>

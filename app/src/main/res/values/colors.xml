@@ -10,4 +10,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="google_login_text">#505B85</color>
+    <color name="lavender">#8692f7</color>
 </resources>
