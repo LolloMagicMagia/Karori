@@ -1,7 +1,10 @@
 package com.example.karori.ui;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -93,6 +96,12 @@ public class LoginFragment extends Fragment {
         final Button buttonFrgPsw =(Button)  view.findViewById(R.id.buttonForgotPsw);
         final Button buttonSignUp = (Button) view.findViewById(R.id.sign_up_button);
 
+        //nome del file dove verranno salvati i dani
+        SharedPreferences prefs = getActivity().getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        //prende la var isLoggedIn e se non esiste restituisce false
+        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+
         editTextEmail = view.findViewById(R.id.usernameEditText);
         editTextPsw = view.findViewById(R.id.PswEditText);
 
@@ -109,7 +118,14 @@ public class LoginFragment extends Fragment {
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                userLogin();
+                if(isLoggedIn){
+                    Intent myInt=new Intent(getContext(), SummaryActivity.class);
+                    startActivity(myInt);
+                }
+                else{
+                    userLogin();
+                    editor.putBoolean("isLoggedIn",true);
+                }
             }
         });
 

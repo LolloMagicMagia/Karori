@@ -177,6 +177,9 @@ public class SignUpFragment extends Fragment {
                                 Toast.makeText(getContext(), "Registration failed! try again.", Toast.LENGTH_LONG).show();
                             }
                         }
+                        else{
+                            Toast.makeText(getContext(), "Task not Successful", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
 

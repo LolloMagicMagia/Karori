@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -60,7 +61,6 @@ public class Forgot_Password_Fragment extends Fragment {
 
         resetButton.setOnClickListener( v -> {
             resetPassword();
-            Navigation.findNavController(view).navigate(R.id.action_forgot_Password_Fragment_to_loginFragment);
         }
         );
     }
@@ -89,6 +89,12 @@ public class Forgot_Password_Fragment extends Fragment {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(getContext(), "mail send. check your email", Toast.LENGTH_LONG).show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            Navigation.findNavController(getView()).navigate(R.id.action_forgot_Password_Fragment_to_loginFragment);
+                        }
+                    }, 1000);
                 }else{
                     Toast.makeText(getContext(), "try again! Something wrong happened", Toast.LENGTH_LONG).show();
                 }
