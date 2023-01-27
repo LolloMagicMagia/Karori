@@ -52,6 +52,11 @@ public class LoginFragment extends Fragment {
     Button button_google_login;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+    boolean isLoggedIn;
+
+
 
     public LoginFragment() {
         // Required empty public constructor
@@ -65,6 +70,11 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth=FirebaseAuth.getInstance();
+        //nome del file dove verranno salvati i dani
+        prefs = getActivity().getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        editor = prefs.edit();
+        //prende la var isLoggedIn e se non esiste restituisce false
+        isLoggedIn = prefs.getBoolean("isLoggedIn", false);
     }
 
     @Override
@@ -72,6 +82,12 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+
+        final Button buttonLogin = (Button) view.findViewById(R.id.buttonLogin);
+
+
+
         button_google_login = (Button) view.findViewById(R.id.button_google_login);
 
         //bypass parte di lomboz
@@ -84,6 +100,21 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        if(isLoggedIn){
+            Log.d("TAG","isLoggedIn");
+            Intent myInt=new Intent(getContext(), SummaryActivity.class);
+            startActivity(myInt);
+        }
+        else{
+            Log.d("TAG","NOTisLoggedIn");
+            buttonLogin.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    userLogin();
+                }
+            });
+
+        }
+
         return view;
 
     }
@@ -92,15 +123,9 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Button buttonLogin = (Button) view.findViewById(R.id.buttonLogin);
+
         final Button buttonFrgPsw =(Button)  view.findViewById(R.id.buttonForgotPsw);
         final Button buttonSignUp = (Button) view.findViewById(R.id.sign_up_button);
-
-        //nome del file dove verranno salvati i dani
-        SharedPreferences prefs = getActivity().getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        //prende la var isLoggedIn e se non esiste restituisce false
-        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
 
         editTextEmail = view.findViewById(R.id.usernameEditText);
         editTextPsw = view.findViewById(R.id.PswEditText);
@@ -116,18 +141,7 @@ public class LoginFragment extends Fragment {
         });
 
 
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(isLoggedIn){
-                    Intent myInt=new Intent(getContext(), SummaryActivity.class);
-                    startActivity(myInt);
-                }
-                else{
-                    userLogin();
-                    editor.putBoolean("isLoggedIn",true);
-                }
-            }
-        });
+
 
         gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -206,6 +220,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    editor.putBoolean("isLoggedIn",true);
+                    editor.apply();
                     Intent myInt=new Intent(getContext(), SummaryActivity.class);
                     startActivity(myInt);
                 }else{
