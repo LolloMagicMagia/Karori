@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quantoSei">
+        app:layout_constraintTop_toBottomOf="@+id/calorie_calorieTot">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
@@ -64,7 +64,7 @@
         app:progressPlaceHolderWidth="10" />
 
     <TextView
-        android:id="@+id/numeroProteine"
+        android:id="@+id/caloriePercentuali"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -73,13 +73,13 @@
         app:layout_constraintTop_toBottomOf="@+id/semiCircleArcProgressBar" />
 
     <TextView
-        android:id="@+id/quantoSei"
+        android:id="@+id/calorie_calorieTot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numeroProteine" />
+        app:layout_constraintTop_toBottomOf="@+id/caloriePercentuali" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/changeActivity"

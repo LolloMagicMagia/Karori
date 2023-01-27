@@ -42,7 +42,7 @@ public class FragmentProfilo extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     CardView card;
-    Button signUp;
+    Button LogOut;
     GoogleSignInOptions gOptions;
     GoogleSignInClient gClient;
     Forgot_Password_Fragment changePw;
@@ -67,6 +67,7 @@ public class FragmentProfilo extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //si dovrà fare con ROOM
         if (savedInstanceState != null) {
             valueHeight = savedInstanceState.getInt(ARG_PARAM1, 0);
             valueWeight = savedInstanceState.getInt(ARG_PARAM2, 0);
@@ -81,16 +82,13 @@ public class FragmentProfilo extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profilo, container, false);
         mAuth = FirebaseAuth.getInstance();
+        card=(CardView) view.findViewById(R.id.cardViewPw);
 
         ///google
-        signUp=(Button)view.findViewById(R.id.signUp);
+        LogOut=(Button)view.findViewById(R.id.LogOut);
 
         changePw=new Forgot_Password_Fragment();
-
-
-
-        ///anche la parte di google penso dovrà avere qualcosa di esterno per fare
-        //le operazioni se no è dentro il fragment, però google è google quindi potrei farlo.
+        
         gOptions=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -98,7 +96,7 @@ public class FragmentProfilo extends Fragment {
         gClient= GoogleSignIn.getClient(getContext(), gOptions);
 
         GoogleSignInAccount gAccount=GoogleSignIn.getLastSignedInAccount(getContext());
-        signUp.setOnClickListener(new View.OnClickListener() {
+        LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -110,12 +108,9 @@ public class FragmentProfilo extends Fragment {
             }
         });
 
-        //per ora ho fatto cliccabile solo una card
-        card=(CardView) view.findViewById(R.id.cardViewPw);
-
-
-
         //il sendPasswordResetEmail dovrà essere gestito con una classe intermezza e non in questo modo spartano
+        //per firebase. Perchè l'email è salvata in room e quindi il campo dove ho messo la mia email varierà
+        //in base al dispositivo in cui sono.
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -25,12 +25,12 @@ public class FragmentHome extends Fragment {
     private ImageButton mattina;
     private ImageButton pomeriggio;
     private ImageButton sera;
-    private int where;
+    private int where_MPS;
     private TextView totProteineBar;
-    private TextView quantoSei;
+    private TextView cal_percentuali;
     private SemiCircleArcProgressBar progressBar;
     private String pasto = "";
-    private CircleImageView butun;
+    private CircleImageView bottoneChangeActivity;
 
 
     public FragmentHome() {
@@ -47,10 +47,10 @@ public class FragmentHome extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState != null) {
-            where= savedInstanceState.getInt(KEY_INDEX,0);
+            where_MPS= savedInstanceState.getInt(KEY_INDEX,0);
         }
         else{
-            where=0;
+            where_MPS=0;
         }
     }
 
@@ -58,12 +58,12 @@ public class FragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_home, container, false);
-        quantoSei= (TextView) view.findViewById(R.id.quantoSei);
-        totProteineBar=(TextView) view.findViewById(R.id.numeroProteine);
+        cal_percentuali= (TextView) view.findViewById(R.id.caloriePercentuali);
+        totProteineBar=(TextView) view.findViewById(R.id.calorie_calorieTot);
 
         ViewPager2 viewPager = view.findViewById(R.id.pager);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
-        butun = view.findViewById(R.id.changeActivity);
+        bottoneChangeActivity = view.findViewById(R.id.changeActivity);
 
         AdapterChangeRiassunti adapter = new AdapterChangeRiassunti(this);
         viewPager.setAdapter(adapter);
@@ -74,7 +74,7 @@ public class FragmentHome extends Fragment {
                 /* tablayout.setTabTextColors(Color.GRAY, Color.GREEN); // set the tab text colors for the both states of the tab.*/
                 viewPager.setCurrentItem(tab.getPosition());
                 String Fronsblix = Integer.toString(tab.getPosition());
-                butun.setOnClickListener(new View.OnClickListener() {
+                bottoneChangeActivity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getActivity(), RicercaEAggiungiActivity.class);
@@ -92,7 +92,7 @@ public class FragmentHome extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 String fronsblix = Integer.toString(tab.getPosition());
-                butun.setOnClickListener(new View.OnClickListener() {
+                bottoneChangeActivity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getActivity(), RicercaEAggiungiActivity.class);
@@ -127,18 +127,18 @@ public class FragmentHome extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt(KEY_INDEX, where);
+        savedInstanceState.putInt(KEY_INDEX, where_MPS);
     }
 
     public  void progressBarUpdate(float totProteineAssunte, float totProteine){
         if(totProteineAssunte>totProteine){
             totProteineBar.setText(">100 %");
-            quantoSei.setText(String.valueOf(totProteineAssunte)+" / "+ String.valueOf(totProteine));
+            cal_percentuali.setText(String.valueOf(totProteineAssunte)+" / "+ String.valueOf(totProteine));
             progressBar.setPercent(100);
         }
         else{
             totProteineBar.setText(String.valueOf((totProteineAssunte/totProteine)*100)+" %");
-            quantoSei.setText(String.valueOf(totProteineAssunte)+" / "+ String.valueOf(totProteine));
+            cal_percentuali.setText(String.valueOf(totProteineAssunte)+" / "+ String.valueOf(totProteine));
             progressBar.setPercent((int)((totProteineAssunte/totProteine)*100));
         }
 
