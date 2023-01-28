@@ -23,10 +23,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.karori.R;
-import com.example.karori.WelcomeActivity;
-import com.example.karori.data.model.User;
+import com.example.karori.Login.WelcomeActivity;
 import com.example.karori.ui.Forgot_Password_Fragment;
-import com.example.karori.ui.SummaryActivity;
+import com.example.karori.menuFragment.SummaryActivity;
 import com.github.drjacky.imagepicker.ImagePicker;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -42,7 +41,7 @@ public class FragmentProfilo extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     CardView card;
-    Button signUp;
+    Button log_out;
     GoogleSignInOptions gOptions;
     GoogleSignInClient gClient;
     Forgot_Password_Fragment changePw;
@@ -53,8 +52,6 @@ public class FragmentProfilo extends Fragment {
     private NumberPicker numberPickerWeight;
     private int valueHeight;
     private int valueWeight;
-
-    private User user;
 
     private FirebaseAuth mAuth;
 
@@ -83,7 +80,7 @@ public class FragmentProfilo extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         ///google
-        signUp=(Button)view.findViewById(R.id.signUp);
+        log_out=(Button)view.findViewById(R.id.LogOut);
 
         changePw=new Forgot_Password_Fragment();
 
@@ -98,7 +95,7 @@ public class FragmentProfilo extends Fragment {
         gClient= GoogleSignIn.getClient(getContext(), gOptions);
 
         GoogleSignInAccount gAccount=GoogleSignIn.getLastSignedInAccount(getContext());
-        signUp.setOnClickListener(new View.OnClickListener() {
+        log_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
