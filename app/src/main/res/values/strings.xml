@@ -34,5 +34,13 @@
     <string name="Or">Or</string>
     <string name="new_karori">New to Karori?</string>
     <string name="api_key">8b70cdb4ff6d42f4ae4efece4a891a0d</string>
+    <string name="Web_id_client">821771622083-4v2f4g48me1jqqkdllhk9bpkfbsj7pib.apps.googleusercontent.com</string>
+    <string name="error_login_password_message">The password is invalid</string>
+    <string name="error_login_user_message">here is no user record corresponding to this identifier</string>
+    <string name="unexpected_error">Unexpected error</string>
+    <string name="error_no_google_account_found_message">No Google accounts have been found</string>
+    <string name="error_password">Password must have at least 6 character</string>
+    <string name="error_user_collision_message">The mail address is already in use</string>
+    <string name="check_login_data_message">check the data you have insert</string>
     <!-->altra key 46a966c9b4dc4c8f98176d0f9c11a71e <-->
 </resources>

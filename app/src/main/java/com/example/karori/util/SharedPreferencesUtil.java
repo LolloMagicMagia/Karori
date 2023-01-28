@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class SharedPreferencesUtil {
-    private final Application application;
+    private static Application application = new Application();
 
     public SharedPreferencesUtil(Application application) { this.application = application; }
 
-    public void writeStringData(String sharedPreferencesFileName, String key, String value){
+    public static void writeStringData(String sharedPreferencesFileName, String key, String value){
         SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();

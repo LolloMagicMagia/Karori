@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_loginFragment_to_forgot_Password_Fragment"
             app:destination="@id/forgot_Password_Fragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_summaryActivity"
+            app:destination="@id/summaryActivity" />
 
     </fragment>
     <fragment
@@ -36,4 +39,8 @@
             android:id="@+id/action_forgot_Password_Fragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <activity
+        android:id="@+id/summaryActivity"
+        android:name="com.example.karori.Login.SummaryActivity"
+        android:label="SummaryActivity" />
 </navigation>

@@ -49,7 +49,7 @@ public class UserViewModel extends ViewModel {
     }
 
     public void getUser(String email, String password, boolean isUserRegistered) {
-        userRepository.getUser(email, password, isUserRegistered);
+        userRepository.getUser(email, null, isUserRegistered);
     }
 
     public boolean isAuthenticationError() {

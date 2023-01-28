@@ -2,6 +2,8 @@ package com.example.karori.Login;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.karori.util.SharedPreferencesUtil.writeStringData;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,10 +12,12 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -24,25 +28,50 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.karori.Models.Result;
 import com.example.karori.R;
+import com.example.karori.data.User.User;
 import com.example.karori.menuFragment.SummaryActivity;
+import com.example.karori.repository.User.IUserRepository;
+import com.example.karori.util.ServiceLocator;
+import com.example.karori.util.SharedPreferencesUtil;
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.BeginSignInResult;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 public class LoginFragment extends Fragment {
+
+    private UserViewModel userViewModel;
     private TextInputEditText editTextEmail;
     private TextInputEditText editTextPsw;
+
     private static final String TAG = LoginFragment.class.getSimpleName();
     private static final boolean USE_NAVIGATION_COMPONENT = true;
-    private FirebaseAuth mAuth;
+
+    private SignInClient oneTapClient;
+    private BeginSignInRequest signInRequest;
+
+    private ActivityResultLauncher<IntentSenderRequest> activityResultLauncher;
+    private ActivityResultContracts.StartIntentSenderForResult startIntentSenderForResult;
+    /*
     Button provaSummaryActivity;
     Button button_google_login;
     GoogleSignInOptions gso;
@@ -50,75 +79,274 @@ public class LoginFragment extends Fragment {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
     boolean isLoggedIn;
-
+    */
 
 
     public LoginFragment() {
-        // Required empty public constructor
-    }
+    }// Required empty public constructor
 
-    public static LoginFragment newInstance(){
+    public static LoginFragment newInstance() {
         return new LoginFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth=FirebaseAuth.getInstance();
-        //nome del file dove verranno salvati i dani
-        prefs = getActivity().getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        editor = prefs.edit();
-        //prende la var isLoggedIn e se non esiste restituisce false
-        isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                requireActivity(),
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        oneTapClient = Identity.getSignInClient(requireActivity());
+        signInRequest = BeginSignInRequest.builder()
+                .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
+                        .setSupported(true)
+                        .build())
+                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                        .setSupported(true)
+                        // Your server's client ID, not your Android client ID.
+                        .setServerClientId(getString(R.string.Web_id_client))
+                        // Only show accounts previously used to sign in.
+                        .setFilterByAuthorizedAccounts(false)
+                        .build())
+                // Automatically sign in when exactly one credential is retrieved.
+                .setAutoSelectEnabled(true)
+                .build();
+        startIntentSenderForResult = new ActivityResultContracts.StartIntentSenderForResult();
+
+        activityResultLauncher = registerForActivityResult(startIntentSenderForResult, activityResult -> {
+            if (activityResult.getResultCode() == Activity.RESULT_OK) {
+                Log.d(TAG, "result.getResultCode() == Activity.RESULT_OK");
+                try {
+                    SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(activityResult.getData());
+                    String idToken = credential.getGoogleIdToken();
+                    if (idToken != null) {
+                        // Got an ID token from Google. Use it to authenticate with Firebase.
+                        userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
+                            if (authenticationResult.isSuccess()) {
+                                User user = ((Result.UserResponseSuccess) authenticationResult).getData();
+                                saveLoginData(user.getEmail(), null, user.getIdToken());
+                                userViewModel.setAuthenticationError(false);
+                                retrieveUserInformationAndStartActivity(user, R.id.action_loginFragment_to_summaryActivity);
+                            } else {
+                                userViewModel.setAuthenticationError(true);
+                                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                        getErrorMessage(((Result.Error) authenticationResult).getMessage()),
+                                        Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } catch (ApiException e) {
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            requireActivity().getString(R.string.unexpected_error),
+                            Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-
-
-        final Button buttonLogin = (Button) view.findViewById(R.id.buttonLogin);
-
-
-
-        button_google_login = (Button) view.findViewById(R.id.button_google_login);
-
-        //bypass parte di lomboz
-        provaSummaryActivity=view.findViewById(R.id.provaSummaryActivity);
-        provaSummaryActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myInt=new Intent(getContext(), SummaryActivity.class);
-                startActivity(myInt);
-            }
-        });
-
-        if(isLoggedIn){
-            Log.d("TAG","isLoggedIn");
-            Intent myInt=new Intent(getContext(), SummaryActivity.class);
-            startActivity(myInt);
-        }
-        else{
-            Log.d("TAG","NOTisLoggedIn");
-            buttonLogin.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    userLogin();
-                }
-            });
-
-        }
-
-        return view;
-
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
-    //////////////////////////////////////////////
+
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (userViewModel.getLoggedUser() != null) {
+            startActivityBasedOnCondition(SummaryActivity.class,
+                    R.id.action_loginFragment_to_summaryActivity);
+        }
 
+        editTextEmail = view.findViewById(R.id.usernameEditText);
+        editTextPsw = view.findViewById(R.id.PswEditText);
+
+        final Button buttonLogin = view.findViewById(R.id.buttonLogin);
+        final Button buttonGoogleLogin = view.findViewById(R.id.button_google_login);
+        final Button buttonRegistration = view.findViewById(R.id.sign_up_button);
+
+        buttonLogin.setOnClickListener(v -> {
+            String email = editTextEmail.getText().toString().trim();
+            String password = editTextPsw.getText().toString().trim();
+
+            if (isEmailOk(email) & isPasswordOk(password)) {
+                if (!userViewModel.isAuthenticationError()) {
+
+                    userViewModel.getUserMutableLiveData(email, password, true).observe(
+                            getViewLifecycleOwner(), result -> {
+                                if (result.isSuccess()) {
+                                    User user = ((Result.UserResponseSuccess) result).getData();
+                                    saveLoginData(email, password, user.getIdToken());
+                                    userViewModel.setAuthenticationError(false);
+                                    retrieveUserInformationAndStartActivity(user, R.id.action_loginFragment_to_summaryActivity);
+                                } else {
+                                    userViewModel.setAuthenticationError(true);
+                                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                            getErrorMessage(((Result.Error) result).getMessage()),
+                                            Snackbar.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    userViewModel.getUser(email, password, true);
+                }
+            } else {
+                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                        "Check the the data you inserted", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        buttonGoogleLogin.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
+                .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
+                    @Override
+                    public void onSuccess(BeginSignInResult result) {
+                        Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
+                        IntentSenderRequest intentSenderRequest =
+                                new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                        activityResultLauncher.launch(intentSenderRequest);
+                    }
+                })
+                .addOnFailureListener(requireActivity(), new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // No saved credentials found. Launch the One Tap sign-up flow, or
+                        // do nothing and continue presenting the signed-out UI.
+                        Log.d(TAG, e.getLocalizedMessage());
+
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                requireActivity().getString(R.string.error_no_google_account_found_message),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                }));
+
+        buttonRegistration.setOnClickListener(v ->
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment));
+
+    }
+
+    public void onResume() {
+        super.onResume();
+        userViewModel.setAuthenticationError(false);
+    }
+
+
+    private void saveLoginData(String email, String password, String idToken) {
+        writeStringData("com.example.karori.save_file.txt", "email:", email);
+        ;
+        writeStringData("com.example.karori.save_file.txt", "idToken:", idToken);
+
+    }
+
+    //TODO : da fare con ghero per passare le info dell 'utente loggato alla pagina principale!!
+    private void retrieveUserInformationAndStartActivity(User user, int destination) {
+
+    }
+
+
+    private String getErrorMessage(String errorType) {
+        switch (errorType) {
+            case "invalidCredentials":
+                return requireActivity().getString(R.string.error_login_password_message);
+            case "invalidUserError":
+                return requireActivity().getString(R.string.error_login_user_message);
+            default:
+                return requireActivity().getString(R.string.unexpected_error);
+        }
+    }
+
+    private void startActivityBasedOnCondition(Class<?> destinationActivity, int destination) {
+        if (USE_NAVIGATION_COMPONENT) {
+            Navigation.findNavController(requireView()).navigate(destination);
+        } else {
+            Intent intent = new Intent(requireContext(), destinationActivity);
+            startActivity(intent);
+        }
+        requireActivity().finish();
+    }
+
+    private boolean isEmailOk(String email) {
+        if (email.isEmpty()) {
+            editTextEmail.setError("Email is required");
+            return false;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            editTextEmail.setError("Insert a valid email");
+            editTextEmail.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isPasswordOk(String password) {
+        if (password.isEmpty()) {
+            editTextPsw.setError("A password is required!");
+            editTextPsw.requestFocus();
+            return false;
+        }
+
+        if (password.length() < 6) {
+            editTextPsw.setError("The password is too short, enter a password that is at least 6 characters long ");
+            editTextPsw.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+}
+
+    /*private void userLogin() {
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPsw.getText().toString().trim();
+
+        if(email.isEmpty()){
+            editTextEmail.setError("Email is required");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            editTextEmail.setError("Insert a valid email");
+            editTextEmail.requestFocus();
+            return;
+        }
+
+        if(password.isEmpty()){
+            editTextPsw.setError("A password is required!");
+            editTextPsw.requestFocus();
+            return;
+        }
+
+        if(password.length() < 6){
+            editTextPsw.setError("The password is too short, enter a password that is at least 6 characters long ");
+            editTextPsw.requestFocus();
+            return;
+        }
+
+
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    editor.putBoolean("isLoggedIn",true);
+                    editor.apply();
+                    Intent myInt=new Intent(getContext(), SummaryActivity.class);
+                    startActivity(myInt);
+                }else{
+                    Toast.makeText(getContext(), "Login failed! try again.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+*/
+
+// onviewcreated :
+/*
         final Button buttonFrgPsw =(Button)  view.findViewById(R.id.buttonForgotPsw);
         final Button buttonSignUp = (Button) view.findViewById(R.id.sign_up_button);
 
@@ -178,52 +406,14 @@ public class LoginFragment extends Fragment {
             }
         });
 
+    */
 
-    }
+// on createview
+/* mAuth=FirebaseAuth.getInstance();
+        //nome del file dove verranno salvati i dani
+        prefs = getActivity().getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        editor = prefs.edit();
+        //prende la var isLoggedIn e se non esiste restituisce false
+        isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+        */
 
-    private void userLogin() {
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPsw.getText().toString().trim();
-
-        if(email.isEmpty()){
-            editTextEmail.setError("Email is required");
-            editTextEmail.requestFocus();
-            return;
-        }
-
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            editTextEmail.setError("Insert a valid email");
-            editTextEmail.requestFocus();
-            return;
-        }
-
-        if(password.isEmpty()){
-            editTextPsw.setError("A password is required!");
-            editTextPsw.requestFocus();
-            return;
-        }
-
-        if(password.length() < 6){
-            editTextPsw.setError("The password is too short, enter a password that is at least 6 characters long ");
-            editTextPsw.requestFocus();
-            return;
-        }
-        // TODO : verificare se la mail è presente nel database;
-
-
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    editor.putBoolean("isLoggedIn",true);
-                    editor.apply();
-                    Intent myInt=new Intent(getContext(), SummaryActivity.class);
-                    startActivity(myInt);
-                }else{
-                    Toast.makeText(getContext(), "Login failed! try again.", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-}

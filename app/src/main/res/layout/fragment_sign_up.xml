@@ -68,27 +68,6 @@
                     app:boxCornerRadiusBottomStart="20dp"
                     app:boxCornerRadiusTopEnd="20dp"
                     app:boxCornerRadiusTopStart="20dp"
-                    app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/Name_input_SU"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/name"
-                        tools:ignore="TextContrastCheck" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:outlineProvider="none"
-                    app:boxBackgroundColor="#00D5D5D5"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp"
                     app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
 
                     <com.google.android.material.textfield.TextInputEditText
