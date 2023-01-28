@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_ricerca"
+    app:startDestination="@id/ricercaEAggiungiActivity">
+
+    <fragment
+        android:id="@+id/ricercaEAggiungiActivity"
+        android:name="com.example.karori.SearchClasses.RicercaEAggiungiActivity"
+        android:label="RicercaEAggiungiActivity" >
+        <action
+            android:id="@+id/action_ricercaEAggiungiActivity_to_ingredientInfoActivity"
+            app:destination="@id/ingredientInfoActivity" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="amount"
+            app:argType="string" />
+        <argument
+            android:name="unit"
+            app:argType="string" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/ingredientInfoActivity"
+        android:name="com.example.karori.SearchClasses.IngredientInfoActivity"
+        android:label="IngredientInfoActivity"
+        >
+
+    </fragment>
+
+</navigation>
