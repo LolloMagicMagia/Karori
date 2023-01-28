@@ -1,8 +1,10 @@
 package com.example.karori.menuFragment;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,6 +56,12 @@ public class FragmentProfilo extends Fragment {
     private int valueHeight;
     private int valueWeight;
 
+    SharedPreferences.Editor editor;
+    SharedPreferences prefs;
+
+    boolean isLoggedIn;
+
+
     private User user;
 
     private FirebaseAuth mAuth;
@@ -75,6 +83,10 @@ public class FragmentProfilo extends Fragment {
             valueHeight = 170;
             valueWeight = 80;
         }
+        prefs = getActivity().getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        editor = prefs.edit();
+        //prende la var isLoggedIn e se non esiste restituisce false
+        isLoggedIn = prefs.getBoolean("isLoggedIn", false);
     }
 
     @Override
@@ -102,6 +114,8 @@ public class FragmentProfilo extends Fragment {
                 gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        editor.putBoolean("isLoggedIn",false);
+                        editor.apply();
                         startActivity(new Intent(getActivity(), WelcomeActivity.class));
                     }
                 });
