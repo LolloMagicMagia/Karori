@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.karori.Models.Result;
 import com.example.karori.R;
 import com.example.karori.data.User.User;
+import com.example.karori.menuFragment.SummaryActivity;
 import com.example.karori.repository.User.IUserRepository;
 import com.example.karori.util.ServiceLocator;
 import com.example.karori.util.SharedPreferencesUtil;
