@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.karori.Adapter.AdapterChangeRiassunti;
 import com.example.karori.R;
 import com.example.karori.SearchClasses.RicercaEAggiungiActivity;
+import com.example.karori.SearchClasses.SearchActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -26,6 +27,7 @@ public class FragmentHome extends Fragment {
     private ImageButton pomeriggio;
     private ImageButton sera;
     private int where_MPS;
+    String fronsblix;
     private TextView totProteineBar;
     private TextView cal_percentuali;
     private SemiCircleArcProgressBar progressBar;
@@ -46,12 +48,7 @@ public class FragmentHome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null) {
-            where_MPS= savedInstanceState.getInt(KEY_INDEX,0);
-        }
-        else{
-            where_MPS=0;
-        }
+        fronsblix="0";
     }
 
     @Override
@@ -73,12 +70,12 @@ public class FragmentHome extends Fragment {
                 //PER COLORARE IL TESTO
                 /* tablayout.setTabTextColors(Color.GRAY, Color.GREEN); // set the tab text colors for the both states of the tab.*/
                 viewPager.setCurrentItem(tab.getPosition());
-                String Fronsblix = Integer.toString(tab.getPosition());
+                fronsblix = Integer.toString(tab.getPosition());
                 bottoneChangeActivity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), RicercaEAggiungiActivity.class);
-                        intent.putExtra("pasto", Fronsblix);
+                        Intent intent = new Intent(getActivity(), SearchActivity.class);
+                        intent.putExtra("pasto", fronsblix);
                         startActivity(intent);
                     }
                 });
@@ -95,7 +92,7 @@ public class FragmentHome extends Fragment {
                 bottoneChangeActivity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), RicercaEAggiungiActivity.class);
+                        Intent intent = new Intent(getActivity(), SearchActivity.class);
                         intent.putExtra("pasto",fronsblix);
                         startActivity(intent);
                     }
@@ -109,6 +106,7 @@ public class FragmentHome extends Fragment {
                 tabLayout.getTabAt(position).select();
             }
         });
+
 
         //barra inizializzazione
         progressBar=(SemiCircleArcProgressBar) view.findViewById(R.id.semiCircleArcProgressBar);

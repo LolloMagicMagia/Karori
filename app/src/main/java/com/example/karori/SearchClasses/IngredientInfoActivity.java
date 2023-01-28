@@ -2,7 +2,9 @@ package com.example.karori.SearchClasses;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -34,7 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Observer;
 
-public class IngredientInfoActivity extends AppCompatActivity {
+public class IngredientInfoActivity extends Fragment {
     int id;
     int amount;
     String unit;
@@ -52,19 +55,23 @@ public class IngredientInfoActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ingredient_info);
+
+    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_ingredient_info, container, false);
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
 
-        initializeViews();
+        initializeViews(view);
 
-        id = Integer.parseInt((getIntent().getStringExtra("id")));
-        amount = Integer.parseInt((getIntent().getStringExtra("amount")));
-        unit = getIntent().getStringExtra("unit");
-        manager = new RequestManager(this);
+        id = Integer.parseInt(getArguments().getString("id"));
+        amount = Integer.parseInt(getArguments().getString("amount"));
+        unit = getArguments().getString("unit");
+        manager = new RequestManager(getActivity());
         manager.getIngredientInfos(infoListener, id, amount, unit);
-        dialog = new ProgressDialog(this);
+        dialog = new ProgressDialog(getActivity());
         dialog.setTitle("Loading Information");
         dialog.show();
 
@@ -85,52 +92,53 @@ public class IngredientInfoActivity extends AppCompatActivity {
                 List<Meal> franco = meals.getValue();
                 if (franco != null) {
                     for (Meal m : franco) {
-                        Toast.makeText(IngredientInfoActivity.this, ""+m.getCarboidratiTot(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), ""+m.getCarboidratiTot(), Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
-                Toast.makeText(IngredientInfoActivity.this, ""+meals, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), ""+meals, Toast.LENGTH_LONG).show();
             }
         });
+        return view;
     }
 
-    private void initializeViews() {
-        txt_unit = findViewById(R.id.txt_unit);
-        aggiungi = findViewById(R.id.aggiungi);
-        txt_gly_ind = findViewById(R.id.txt_gly_ind);
-        txt_gly_load = findViewById(R.id.txt_gly_load);
-        txt_sodium = findViewById(R.id.txt_sodium);
-        txt_vit_c = findViewById(R.id.txt_vit_c);
-        txt_manga = findViewById(R.id.txt_manga);
-        txt_fiber = findViewById(R.id.txt_fiber);
-        txt_vit_b6 = findViewById(R.id.txt_vit_b6);
-        txt_vit_b1 = findViewById(R.id.txt_vit_b1);
-        txt_vit_b2 = findViewById(R.id.txt_vit_b2);
-        txt_vit_b3 = findViewById(R.id.txt_vit_b3);
-        txt_vit_b5 = findViewById(R.id.txt_vit_b5);
-        txt_copper = findViewById(R.id.txt_copper);
-        txt_folate = findViewById(R.id.txt_folate);
-        txt_pota = findViewById(R.id.txt_pota);
-        txt_magne = findViewById(R.id.txt_magne);
-        txt_iron = findViewById(R.id.txt_iron);
-        txt_calc = findViewById(R.id.txt_calc);
-        txt_vit_a = findViewById(R.id.txt_vit_a);
-        txt_zinc = findViewById(R.id.txt_zinc);
-        txt_phospho = findViewById(R.id.txt_phospho);
-        txt_vit_k = findViewById(R.id.txt_vit_k);
-        txt_sele = findViewById(R.id.txt_sele);
-        txt_vit_e = findViewById(R.id.txt_vit_e);
-        txt_amount = findViewById(R.id.txt_amount);
-        txt_fat = findViewById(R.id.txt_fat);
-        txt_nome = findViewById(R.id.txt_nome);
-        txt_cal = findViewById(R.id.txt_cal);
-        txt_prot = findViewById(R.id.txt_prot);
-        txt_sat_fat = findViewById(R.id.txt_sat_fat);
-        txt_carbo = findViewById(R.id.txt_carbo);
-        txt_net_carbo = findViewById(R.id.txt_net_carbo);
-        txt_sugar = findViewById(R.id.txt_sugar);
-        txt_chole = findViewById(R.id.txt_chole);
-        img_foto = findViewById(R.id.img_foto);
+    private void initializeViews(View view) {
+        txt_unit = view.findViewById(R.id.txt_unit);
+        aggiungi = view.findViewById(R.id.aggiungi);
+        txt_gly_ind = view.findViewById(R.id.txt_gly_ind);
+        txt_gly_load = view.findViewById(R.id.txt_gly_load);
+        txt_sodium = view.findViewById(R.id.txt_sodium);
+        txt_vit_c = view.findViewById(R.id.txt_vit_c);
+        txt_manga = view.findViewById(R.id.txt_manga);
+        txt_fiber = view.findViewById(R.id.txt_fiber);
+        txt_vit_b6 = view.findViewById(R.id.txt_vit_b6);
+        txt_vit_b1 = view.findViewById(R.id.txt_vit_b1);
+        txt_vit_b2 = view.findViewById(R.id.txt_vit_b2);
+        txt_vit_b3 = view.findViewById(R.id.txt_vit_b3);
+        txt_vit_b5 = view.findViewById(R.id.txt_vit_b5);
+        txt_copper = view.findViewById(R.id.txt_copper);
+        txt_folate = view.findViewById(R.id.txt_folate);
+        txt_pota = view.findViewById(R.id.txt_pota);
+        txt_magne = view.findViewById(R.id.txt_magne);
+        txt_iron = view.findViewById(R.id.txt_iron);
+        txt_calc = view.findViewById(R.id.txt_calc);
+        txt_vit_a = view.findViewById(R.id.txt_vit_a);
+        txt_zinc = view.findViewById(R.id.txt_zinc);
+        txt_phospho = view.findViewById(R.id.txt_phospho);
+        txt_vit_k = view.findViewById(R.id.txt_vit_k);
+        txt_sele = view.findViewById(R.id.txt_sele);
+        txt_vit_e = view.findViewById(R.id.txt_vit_e);
+        txt_amount = view.findViewById(R.id.txt_amount);
+        txt_fat = view.findViewById(R.id.txt_fat);
+        txt_nome = view.findViewById(R.id.txt_nome);
+        txt_cal = view.findViewById(R.id.txt_cal);
+        txt_prot = view.findViewById(R.id.txt_prot);
+        txt_sat_fat =view. findViewById(R.id.txt_sat_fat);
+        txt_carbo = view.findViewById(R.id.txt_carbo);
+        txt_net_carbo = view.findViewById(R.id.txt_net_carbo);
+        txt_sugar = view.findViewById(R.id.txt_sugar);
+        txt_chole = view.findViewById(R.id.txt_chole);
+        img_foto = view.findViewById(R.id.img_foto);
     }
 
     private void addFood(MealViewModel mealViewModel, Date date, String type, Map<String, Object> food) {

@@ -17,6 +17,7 @@
         <activity
             android:name=".TestRoomActivity"
             android:exported="false" />
+
         <activity
             android:name=".SearchClasses.RicercaEAggiungiActivity"
             android:exported="false">
@@ -51,6 +52,8 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+        </activity>
+        <activity android:name=".SearchClasses.SearchActivity">
         </activity>
         <activity
             android:name=".menuFragment.SummaryActivity"
