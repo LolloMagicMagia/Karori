@@ -39,7 +39,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".Login.WelcomeActivity"
             android:exported="true"
             android:noHistory="true">
             <intent-filter>
@@ -53,7 +53,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.SummaryActivity"
+            android:name=".Login.SummaryActivity"
             android:exported="false"
             android:noHistory="true"/>
     </application>

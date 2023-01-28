@@ -1,10 +1,8 @@
 package com.example.karori.menuFragment;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,7 +42,7 @@ public class FragmentProfilo extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     CardView card;
-    Button LogOut;
+    Button signUp;
     GoogleSignInOptions gOptions;
     GoogleSignInClient gClient;
     Forgot_Password_Fragment changePw;
@@ -55,12 +53,6 @@ public class FragmentProfilo extends Fragment {
     private NumberPicker numberPickerWeight;
     private int valueHeight;
     private int valueWeight;
-
-    SharedPreferences.Editor editor;
-    SharedPreferences prefs;
-
-    boolean isLoggedIn;
-
 
     private User user;
 
@@ -75,7 +67,6 @@ public class FragmentProfilo extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //si dovrà fare con ROOM
         if (savedInstanceState != null) {
             valueHeight = savedInstanceState.getInt(ARG_PARAM1, 0);
             valueWeight = savedInstanceState.getInt(ARG_PARAM2, 0);
@@ -83,10 +74,6 @@ public class FragmentProfilo extends Fragment {
             valueHeight = 170;
             valueWeight = 80;
         }
-        prefs = getActivity().getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        editor = prefs.edit();
-        //prende la var isLoggedIn e se non esiste restituisce false
-        isLoggedIn = prefs.getBoolean("isLoggedIn", false);
     }
 
     @Override
@@ -94,13 +81,16 @@ public class FragmentProfilo extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profilo, container, false);
         mAuth = FirebaseAuth.getInstance();
-        card=(CardView) view.findViewById(R.id.cardViewPw);
 
         ///google
-        LogOut=(Button)view.findViewById(R.id.LogOut);
+        signUp=(Button)view.findViewById(R.id.signUp);
 
         changePw=new Forgot_Password_Fragment();
-        
+
+
+
+        ///anche la parte di google penso dovrà avere qualcosa di esterno per fare
+        //le operazioni se no è dentro il fragment, però google è google quindi potrei farlo.
         gOptions=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -108,23 +98,24 @@ public class FragmentProfilo extends Fragment {
         gClient= GoogleSignIn.getClient(getContext(), gOptions);
 
         GoogleSignInAccount gAccount=GoogleSignIn.getLastSignedInAccount(getContext());
-        LogOut.setOnClickListener(new View.OnClickListener() {
+        signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        editor.putBoolean("isLoggedIn",false);
-                        editor.apply();
                         startActivity(new Intent(getActivity(), WelcomeActivity.class));
                     }
                 });
             }
         });
 
+        //per ora ho fatto cliccabile solo una card
+        card=(CardView) view.findViewById(R.id.cardViewPw);
+
+
+
         //il sendPasswordResetEmail dovrà essere gestito con una classe intermezza e non in questo modo spartano
-        //per firebase. Perchè l'email è salvata in room e quindi il campo dove ho messo la mia email varierà
-        //in base al dispositivo in cui sono.
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

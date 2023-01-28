@@ -1,4 +1,4 @@
-package com.example.karori.ui;
+package com.example.karori.Login;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -9,28 +9,22 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.karori.R;
-import com.example.karori.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SignUpFragment extends Fragment {

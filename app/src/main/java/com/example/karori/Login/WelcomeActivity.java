@@ -1,10 +1,12 @@
-package com.example.karori;
+package com.example.karori.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.karori.R;
 
 public class WelcomeActivity extends AppCompatActivity {
     Button provaSummaryActivity;

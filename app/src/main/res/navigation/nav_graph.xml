@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.karori.ui.LoginFragment"
+        android:name="com.example.karori.Login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.karori.ui.SignUpFragment"
+        android:name="com.example.karori.Login.SignUpFragment"
         android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgot_Password_Fragment"
-        android:name="com.example.karori.ui.Forgot_Password_Fragment"
+        android:name="com.example.karori.Login.Forgot_Password_Fragment"
         android:label="Reset Password"
         tools:layout="@layout/fragment_forgot__password_" >
         <action
