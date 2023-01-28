@@ -1,44 +1,19 @@
 package com.example.karori.menuFragment;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+import android.widget.Button;
 import android.widget.TextView;
-
-
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.karori.Adapter.CalendarAdapter;
 import com.example.karori.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-
-public class FragmentCalendar extends Fragment implements CalendarAdapter.OnItemListener{
-    private TextView monthYearText;
-    private RecyclerView calendarRecyclerView;
-    private LocalDate selectedDate;
-    public ImageButton next;
-    public ImageButton previous;
-    public PopupWindow popupWindow;
-    BottomNavigationView bottomNavigationView;
+public class FragmentCalendar extends Fragment {
+    private TextView show_selected_date;
+    private Button calendar;
 
 
     public FragmentCalendar() {
@@ -57,120 +32,43 @@ public class FragmentCalendar extends Fragment implements CalendarAdapter.OnItem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_calendar, container, false);
+        show_selected_date=view.findViewById(R.id.show_selected_date);
+        calendar=view.findViewById(R.id.calendar);
 
-        next=(ImageButton) view.findViewById(R.id.next);
-        previous=(ImageButton) view.findViewById(R.id.previous);
+        MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
+        materialDateBuilder.setTitleText("SELECT A DATE");
+        final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
-            previous.setOnClickListener(new View.OnClickListener() {
+        calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectedDate = selectedDate.minusMonths(1);
-                setMonthView();
-            }
-        });
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedDate = selectedDate.plusMonths(1);
-                setMonthView();
+                materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
             }
         });
 
 
-        initWidgets(view);
-        selectedDate = LocalDate.now();
-        setMonthView();
+        materialDatePicker.addOnPositiveButtonClickListener(
+                new MaterialPickerOnPositiveButtonClickListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onPositiveButtonClick(Object selection) {
+
+                        // if the user clicks on the positive
+                        // button that is ok button update the
+                        // selected date
+                        show_selected_date.setText("DATA SELEZIONATA: " + materialDatePicker.getHeaderText());
+                        // in the above statement, getHeaderText
+                        // will return selected date preview from the
+                        // dialog
+                    }
+                });
+
 
         return view;
-    }
-
-    private void initWidgets(View view)
-    {
-        calendarRecyclerView = view.findViewById(R.id.calendarRecyclerView);
-        monthYearText = view.findViewById(R.id.monthYearTV);
-    }
-
-    private void setMonthView()
-    {
-        monthYearText.setText(monthYearFromDate(selectedDate));
-        ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
-
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 9);
-        calendarRecyclerView.setLayoutManager(layoutManager);
-        calendarRecyclerView.setAdapter(calendarAdapter);
-    }
-    private ArrayList<String> daysInMonthArray(LocalDate date)
-    {
-        ArrayList<String> daysInMonthArray = new ArrayList<>();
-        YearMonth yearMonth = YearMonth.from(date);
-
-        int daysInMonth = yearMonth.lengthOfMonth();
-
-        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
-        int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-
-        for(int i = 1; i <= 42; i++)
-        {
-            if(i <= dayOfWeek || i > daysInMonth + dayOfWeek)
-            {
-                daysInMonthArray.add("");
-            }
-            else
-            {
-                daysInMonthArray.add(String.valueOf(i - dayOfWeek));
-            }
-        }
-        return  daysInMonthArray;
-    }
-
-    private String monthYearFromDate(LocalDate date)
-    {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-        return date.format(formatter);
-    }
-
-
-    @Override
-    public void onItemClick(int position, String dayText)
-    {
-        if(!dayText.equals(""))
-        {
-            LayoutInflater inflate = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
-            View popupView = inflate.inflate(R.layout.popup_window, null);
-
-            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-            TextView day= (TextView) popupView.findViewById(R.id.textView8);
-            day.setText(dayText);
-            boolean focusable = true; // lets taps outside the popup also dismiss it
-
-            popupWindow = new PopupWindow(popupView, width, height,focusable);
-
-            //serve per fare in modo che possa cliccare anche esternamente senza però
-            //far comparire il navigation menù, però in questo modo posso cliccare
-            popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
-
-            bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation);
-            bottomNavigationView.setVisibility(View.GONE);
-
-            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    bottomNavigationView.setVisibility(View.VISIBLE);
-                }
-            });
-
-
-            /*String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();*/
-        }
     }
 
 }

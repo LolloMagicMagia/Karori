@@ -53,7 +53,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Login.SummaryActivity"
+            android:name=".menuFragment.SummaryActivity"
             android:exported="false"
             android:noHistory="true"/>
     </application>
