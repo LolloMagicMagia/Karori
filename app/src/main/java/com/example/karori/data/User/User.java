@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.google.firebase.database.Exclude;
 
 public class User implements Parcelable {
-
+    private String name;
     private String email;
     private String idToken;
     private int weight;
@@ -15,7 +15,8 @@ public class User implements Parcelable {
     private int goal;
 
 
-    public User( String email, String idToken){
+    public User( String name, String email, String idToken){
+        this.name = name;
         this.email = email;
         this.idToken = idToken;
         this.weight = 0;
@@ -24,13 +25,22 @@ public class User implements Parcelable {
         this.goal = 0;
     }
     public User(String email, String idToken, int weight, int height, int kilokalorie, int goal){
-
+        this.name = name;
         this.email       = email;
         this.idToken     = idToken;
         this.weight      = weight;
         this.height      = height;
         this.kilocalorie = kilokalorie;
         this.goal        = goal;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {return email;}
@@ -52,6 +62,8 @@ public class User implements Parcelable {
 
     public int getKilocalorie() {return kilocalorie;}
 
+    public void setKilocalorie() {this.kilocalorie=kilocalorie;}
+
     public int getGoal() {return goal;}
 
     public void setGoal(int goal) {this.goal = goal;}
@@ -60,6 +72,7 @@ public class User implements Parcelable {
     @Override
     public String toString() {
         return "User{" +
+                "user= " + name + '\'' +
                 " email='" + email + '\'' +
                 ", idToken='" + idToken + '\'' +
                 ", weight=" + weight +
@@ -76,6 +89,7 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
         dest.writeString(this.email);
         dest.writeString(this.idToken);
         dest.writeInt(this.height);
@@ -86,6 +100,7 @@ public class User implements Parcelable {
     }
 
     public void readFromParcel(Parcel source) {
+        this.name = source.readString();
         this.email = source.readString();
         this.idToken = source.readString();
         this.weight = source.readInt();
@@ -95,6 +110,7 @@ public class User implements Parcelable {
     }
 
     protected User(Parcel in) {
+        this.name = in.readString();
         this.email = in.readString();
         this.idToken = in.readString();
         this.weight = in.readInt();
