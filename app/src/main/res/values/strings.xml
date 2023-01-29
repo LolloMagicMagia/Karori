@@ -42,5 +42,6 @@
     <string name="error_password">Password must have at least 6 character</string>
     <string name="error_user_collision_message">The mail address is already in use</string>
     <string name="check_login_data_message">check the data you have insert</string>
+    <string name="logout">logged out</string>
     <!-->altra key 46a966c9b4dc4c8f98176d0f9c11a71e <-->
 </resources>

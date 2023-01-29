@@ -10,8 +10,6 @@ import com.example.karori.repository.User.IUserRepository;
 public class UserViewModel extends ViewModel {
     private final IUserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
-    private MutableLiveData<Result> userFavoriteNewsMutableLiveData;
-    private MutableLiveData<Result> userPreferencesMutableLiveData;
     private boolean authenticationError;
 
     public UserViewModel(IUserRepository userRepository) {
@@ -50,6 +48,10 @@ public class UserViewModel extends ViewModel {
 
     public void getUser(String email, String password, boolean isUserRegistered) {
         userRepository.getUser(email, null, isUserRegistered);
+    }
+
+    public void getUserInformation(String idToken){
+        userRepository.getUserInformation(idToken);
     }
 
     public boolean isAuthenticationError() {

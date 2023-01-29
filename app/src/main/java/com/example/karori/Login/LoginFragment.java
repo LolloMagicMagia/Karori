@@ -178,6 +178,11 @@ public class LoginFragment extends Fragment {
             final Button buttonLogin = view.findViewById(R.id.buttonLogin);
             final Button buttonGoogleLogin = view.findViewById(R.id.button_google_login);
             final Button buttonRegistration = view.findViewById(R.id.sign_up_button);
+            final Button buttonforgotpsw = view.findViewById(R.id.buttonForgotPsw);
+
+            buttonforgotpsw.setOnClickListener(v->{
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_forgot_Password_Fragment);
+            });
 
             buttonLogin.setOnClickListener(v -> {
                 String email = editTextEmail.getText().toString().trim();
@@ -256,8 +261,10 @@ public class LoginFragment extends Fragment {
 
     //TODO : da fare con ghero per passare le info dell 'utente loggato alla pagina principale!!
     private void retrieveUserInformationAndStartActivity(User user, int destination) {
+                    USE_NAVIGATION_COMPONENT = false;
+                    startActivityBasedOnCondition(SummaryActivity.class, destination);
+                }
 
-    }
 
 
     private String getErrorMessage(String errorType) {

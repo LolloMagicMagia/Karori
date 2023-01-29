@@ -20,12 +20,18 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.karori.Login.LoginFragment;
+import com.example.karori.Login.UserViewModel;
+import com.example.karori.Login.UserViewModelFactory;
 import com.example.karori.R;
 import com.example.karori.Login.WelcomeActivity;
-import com.example.karori.ui.Forgot_Password_Fragment;
+import com.example.karori.repository.User.IUserRepository;
+import com.example.karori.Login.Forgot_Password_Fragment;
 import com.example.karori.menuFragment.SummaryActivity;
+import com.example.karori.util.ServiceLocator;
 import com.github.drjacky.imagepicker.ImagePicker;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -33,6 +39,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -52,6 +59,8 @@ public class FragmentProfilo extends Fragment {
     private NumberPicker numberPickerWeight;
     private int valueHeight;
     private int valueWeight;
+    private UserViewModel userViewModel;
+    private static final String TAG = FragmentProfilo.class.getSimpleName();
 
     private FirebaseAuth mAuth;
 
@@ -64,6 +73,7 @@ public class FragmentProfilo extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (savedInstanceState != null) {
             valueHeight = savedInstanceState.getInt(ARG_PARAM1, 0);
             valueWeight = savedInstanceState.getInt(ARG_PARAM2, 0);
@@ -71,6 +81,11 @@ public class FragmentProfilo extends Fragment {
             valueHeight = 170;
             valueWeight = 80;
         }
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                requireActivity(),
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
     }
 
     @Override
@@ -95,7 +110,7 @@ public class FragmentProfilo extends Fragment {
         gClient= GoogleSignIn.getClient(getContext(), gOptions);
 
         GoogleSignInAccount gAccount=GoogleSignIn.getLastSignedInAccount(getContext());
-        log_out.setOnClickListener(new View.OnClickListener() {
+        /*log_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -106,7 +121,35 @@ public class FragmentProfilo extends Fragment {
                 });
             }
         });
+        */
+        log_out.setOnClickListener(v -> {
+            userViewModel.logout();
+            if(userViewModel.getLoggedUser()==null){
+                Snackbar.make(view,
+                    requireActivity().getString(R.string.logout),
+                    Snackbar.LENGTH_SHORT).show();
+            startActivity(new Intent(getActivity(), WelcomeActivity.class));
+            }
+            else{
+                Snackbar.make(view,
+                        requireActivity().getString(R.string.unexpected_error),
+                        Snackbar.LENGTH_SHORT).show();
 
+            }
+        });
+            /*.observe(getViewLifecycleOwner(), result -> {
+
+                if (result.isSuccess()) {
+                    Log.d(TAG, "entrati nell'if");
+                    startActivity(new Intent(getActivity(), WelcomeActivity.class));;
+                } else {
+                    Snackbar.make(view,
+                            requireActivity().getString(R.string.unexpected_error),
+                            Snackbar.LENGTH_SHORT).show();
+                }
+            });
+        });
+        */
         //per ora ho fatto cliccabile solo una card
         card=(CardView) view.findViewById(R.id.cardViewPw);
 

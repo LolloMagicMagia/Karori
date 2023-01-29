@@ -39,8 +39,8 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     }
     //TODO guardare con ghero
     @Override
-    public MutableLiveData<Result> getUserInformation(int height, int weight, int kilocalorie, int goal) {
-        return null;
+    public void getUserInformation(String idToken) {
+        return;
     }
 
     @Override
