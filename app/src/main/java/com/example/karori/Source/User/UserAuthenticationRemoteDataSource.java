@@ -26,9 +26,9 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     @Override
     public User getLoggedUser() {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if(firebaseUser != null ){
+        /*if(firebaseUser != null ){
             return new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid());
-        }
+        }*/
         return null;
     }
 
@@ -57,10 +57,10 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                 if(firebaseUser == null) {
                     userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }
-                else {
+               /* else {
                     userResponseCallback.onSuccessFromAuthentication(new User(
                             firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid()));
-                }
+                }*/
             }
             else {
                     userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
@@ -77,10 +77,10 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                 if (firebaseUser == null){
                     userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }
-                else{
+                /*else{
                     userResponseCallback.onSuccessFromAuthentication(new User(
                             firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid()));
-                }
+                }*/
             }
             else{
                 userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
@@ -100,10 +100,10 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                    if(firebaseUser == null){
                        userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                    }
-                   else{
+                   /*else{
                        userResponseCallback.onSuccessFromAuthentication(new User(
                                firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid()));
-                   }
+                   }*/
                }
                else {
                    Log.w(TAG,"signInWithCredential() failure", task.getException());

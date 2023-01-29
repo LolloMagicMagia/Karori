@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.karori.Models.Result;
 import com.example.karori.R;
+import com.example.karori.SearchClasses.SearchActivity;
 import com.example.karori.data.User.User;
 import com.example.karori.menuFragment.SummaryActivity;
 import com.example.karori.repository.User.IUserRepository;
@@ -71,7 +72,8 @@ public class LoginFragment extends Fragment {
 
     private ActivityResultLauncher<IntentSenderRequest> activityResultLauncher;
     private ActivityResultContracts.StartIntentSenderForResult startIntentSenderForResult;
-    /*
+
+    //il bottone di google è dissestante da firebase , quindi va bene lasciarlo qua
     Button provaSummaryActivity;
     Button button_google_login;
     GoogleSignInOptions gso;
@@ -79,7 +81,7 @@ public class LoginFragment extends Fragment {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
     boolean isLoggedIn;
-    */
+
 
 
     public LoginFragment() {
@@ -150,8 +152,18 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //lascia questo pezzo , mi serve per il debug della mia parte
+        View view=inflater.inflate(R.layout.fragment_login, container, false);
+        provaSummaryActivity=(Button)view.findViewById(R.id.provaSummaryActivity);
+        provaSummaryActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SummaryActivity.class);
+                startActivity(intent);
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return view;
     }
 
 
