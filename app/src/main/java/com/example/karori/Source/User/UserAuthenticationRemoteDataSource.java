@@ -26,9 +26,9 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     @Override
     public User getLoggedUser() {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        /*if(firebaseUser != null ){
+        if(firebaseUser != null ){
             return new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid());
-        }*/
+        }
         return null;
     }
 

@@ -65,7 +65,7 @@ public class LoginFragment extends Fragment {
     private TextInputEditText editTextPsw;
 
     private static final String TAG = LoginFragment.class.getSimpleName();
-    private static final boolean USE_NAVIGATION_COMPONENT = true;
+    private static boolean USE_NAVIGATION_COMPONENT = true;
 
     private SignInClient oneTapClient;
     private BeginSignInRequest signInRequest;
@@ -170,76 +170,77 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (userViewModel.getLoggedUser() != null) {
+        if (userViewModel.getLoggedUser() == null) {
+
+            editTextEmail = view.findViewById(R.id.usernameEditText);
+            editTextPsw = view.findViewById(R.id.PswEditText);
+
+            final Button buttonLogin = view.findViewById(R.id.buttonLogin);
+            final Button buttonGoogleLogin = view.findViewById(R.id.button_google_login);
+            final Button buttonRegistration = view.findViewById(R.id.sign_up_button);
+
+            buttonLogin.setOnClickListener(v -> {
+                String email = editTextEmail.getText().toString().trim();
+                String password = editTextPsw.getText().toString().trim();
+
+                if (isEmailOk(email) & isPasswordOk(password)) {
+                    if (!userViewModel.isAuthenticationError()) {
+
+                        userViewModel.getUserMutableLiveData(email, password, true).observe(
+                                getViewLifecycleOwner(), result -> {
+                                    if (result.isSuccess()) {
+                                        User user = ((Result.UserResponseSuccess) result).getData();
+                                        saveLoginData(email, password, user.getIdToken());
+                                        userViewModel.setAuthenticationError(false);
+                                        retrieveUserInformationAndStartActivity(user, R.id.action_loginFragment_to_summaryActivity);
+                                    } else {
+                                        userViewModel.setAuthenticationError(true);
+                                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                                getErrorMessage(((Result.Error) result).getMessage()),
+                                                Snackbar.LENGTH_SHORT).show();
+                                    }
+                                });
+                    } else {
+                        userViewModel.getUser(email, password, true);
+                    }
+                } else {
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            "Check the the data you inserted", Snackbar.LENGTH_SHORT).show();
+                }
+            });
+
+            buttonGoogleLogin.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
+                    .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
+                        @Override
+                        public void onSuccess(BeginSignInResult result) {
+                            Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
+                            IntentSenderRequest intentSenderRequest =
+                                    new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                            activityResultLauncher.launch(intentSenderRequest);
+                        }
+                    })
+                    .addOnFailureListener(requireActivity(), new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // No saved credentials found. Launch the One Tap sign-up flow, or
+                            // do nothing and continue presenting the signed-out UI.
+                            Log.d(TAG, e.getLocalizedMessage());
+
+                            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                    requireActivity().getString(R.string.error_no_google_account_found_message),
+                                    Snackbar.LENGTH_SHORT).show();
+                        }
+                    }));
+
+            buttonRegistration.setOnClickListener(v ->
+                    Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment));
+
+        } else {
+            USE_NAVIGATION_COMPONENT = false;
             startActivityBasedOnCondition(SummaryActivity.class,
                     R.id.action_loginFragment_to_summaryActivity);
         }
-
-        editTextEmail = view.findViewById(R.id.usernameEditText);
-        editTextPsw = view.findViewById(R.id.PswEditText);
-
-        final Button buttonLogin = view.findViewById(R.id.buttonLogin);
-        final Button buttonGoogleLogin = view.findViewById(R.id.button_google_login);
-        final Button buttonRegistration = view.findViewById(R.id.sign_up_button);
-
-        buttonLogin.setOnClickListener(v -> {
-            String email = editTextEmail.getText().toString().trim();
-            String password = editTextPsw.getText().toString().trim();
-
-            if (isEmailOk(email) & isPasswordOk(password)) {
-                if (!userViewModel.isAuthenticationError()) {
-
-                    userViewModel.getUserMutableLiveData(email, password, true).observe(
-                            getViewLifecycleOwner(), result -> {
-                                if (result.isSuccess()) {
-                                    User user = ((Result.UserResponseSuccess) result).getData();
-                                    saveLoginData(email, password, user.getIdToken());
-                                    userViewModel.setAuthenticationError(false);
-                                    retrieveUserInformationAndStartActivity(user, R.id.action_loginFragment_to_summaryActivity);
-                                } else {
-                                    userViewModel.setAuthenticationError(true);
-                                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                            getErrorMessage(((Result.Error) result).getMessage()),
-                                            Snackbar.LENGTH_SHORT).show();
-                                }
-                            });
-                } else {
-                    userViewModel.getUser(email, password, true);
-                }
-            } else {
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        "Check the the data you inserted", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-
-        buttonGoogleLogin.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
-                    @Override
-                    public void onSuccess(BeginSignInResult result) {
-                        Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
-                        IntentSenderRequest intentSenderRequest =
-                                new IntentSenderRequest.Builder(result.getPendingIntent()).build();
-                        activityResultLauncher.launch(intentSenderRequest);
-                    }
-                })
-                .addOnFailureListener(requireActivity(), new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // No saved credentials found. Launch the One Tap sign-up flow, or
-                        // do nothing and continue presenting the signed-out UI.
-                        Log.d(TAG, e.getLocalizedMessage());
-
-                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                requireActivity().getString(R.string.error_no_google_account_found_message),
-                                Snackbar.LENGTH_SHORT).show();
-                    }
-                }));
-
-        buttonRegistration.setOnClickListener(v ->
-                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment));
-
     }
-
     public void onResume() {
         super.onResume();
         userViewModel.setAuthenticationError(false);
