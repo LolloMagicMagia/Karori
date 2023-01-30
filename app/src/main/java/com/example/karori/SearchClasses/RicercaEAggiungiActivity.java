@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.NavOptions;
@@ -99,6 +100,7 @@ public class RicercaEAggiungiActivity extends Fragment {
                             .setExitAnim(android.R.animator.fade_out)
                             .build()
             );
+
         }
 
         txt_select = view.findViewById(R.id.txt_select);
@@ -144,6 +146,7 @@ public class RicercaEAggiungiActivity extends Fragment {
         return view;
 
     }
+
 
 
 

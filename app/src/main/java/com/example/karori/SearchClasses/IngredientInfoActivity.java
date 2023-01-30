@@ -13,13 +13,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.karori.Listeners.IngredientInfoListener;
 import com.example.karori.Models.IngredientInfoResponse;
@@ -67,6 +72,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,6 +81,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
 
         initializeViews(view);
+
 
         id = Integer.parseInt(getArguments().getString("id"));
         amount = Integer.parseInt(getArguments().getString("amount"));
@@ -87,6 +94,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
 
         if (skip == true) {
             aggiungi.setVisibility(View.GONE);
+
         }
         else {
             aggiungi.setVisibility(View.VISIBLE);
@@ -116,8 +124,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(), "bravo", Toast.LENGTH_SHORT).show();
-
-
+                        aggiungi.setVisibility(View.GONE);
                         LocalDate currentTime = LocalDate.now();
 
                         Log.d("Date", String.valueOf(currentTime));
@@ -174,6 +181,8 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
         });
         return view;
     }
+
+
 
     private void initializeViews(View view) {
         txt_unit = view.findViewById(R.id.txt_unit);
