@@ -19,14 +19,5 @@
         android:id="@+id/fragmentProfilo"
         android:name="com.example.karori.menuFragment.FragmentProfilo"
         android:label="fragment_profilo"
-        tools:layout="@layout/fragment_profilo" >
-        <action
-            android:id="@+id/action_fragmentProfilo_to_loginFragment2"
-            app:destination="@id/loginFragment2" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginFragment2"
-        android:name="com.example.karori.Login.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_profilo" />
 </navigation>

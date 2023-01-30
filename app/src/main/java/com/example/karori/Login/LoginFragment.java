@@ -146,6 +146,9 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
+
+
+
     }
 
 
@@ -159,8 +162,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SummaryActivity.class);
-                getActivity().finish();
                 startActivity(intent);
+                getActivity().finish();
             }
         });
         // Inflate the layout for this fragment
@@ -172,6 +175,8 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         if (userViewModel.getLoggedUser() == null) {
+
+            Log.d("Tag", "ciao login normale");
 
             editTextEmail = view.findViewById(R.id.usernameEditText);
             editTextPsw = view.findViewById(R.id.PswEditText);
@@ -215,37 +220,64 @@ public class LoginFragment extends Fragment {
                 }
             });
 
-            buttonGoogleLogin.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
-                    .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
-                        @Override
-                        public void onSuccess(BeginSignInResult result) {
-                            Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
-                            IntentSenderRequest intentSenderRequest =
-                                    new IntentSenderRequest.Builder(result.getPendingIntent()).build();
-                            activityResultLauncher.launch(intentSenderRequest);
-                        }
-                    })
-                    .addOnFailureListener(requireActivity(), new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // No saved credentials found. Launch the One Tap sign-up flow, or
-                            // do nothing and continue presenting the signed-out UI.
-                            Log.d(TAG, e.getLocalizedMessage());
-
-                            Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                    requireActivity().getString(R.string.error_no_google_account_found_message),
-                                    Snackbar.LENGTH_SHORT).show();
-                        }
-                    }));
-
             buttonRegistration.setOnClickListener(v ->
                     Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_signUpFragment));
+
+
+            gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .build();
+
+            gsc= GoogleSignIn.getClient(getContext(), gso);
+
+            GoogleSignInAccount gAccount=GoogleSignIn.getLastSignedInAccount(getContext());
+
+            if(gAccount != null){
+                Log.d("Tag", "ciao login google");
+                Intent intent=new Intent(getActivity(),SummaryActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+
+            ActivityResultLauncher<Intent> activityResultLauncher=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult result) {
+                            if(result.getResultCode()== Activity.RESULT_OK){
+                                Intent data = result.getData();
+                                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                                try{
+                                    task.getResult(ApiException.class);
+                                    Intent intent = new Intent(getActivity(),SummaryActivity.class);
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                }catch(ApiException e){
+                                    Toast.makeText(getContext(),"Something went wrong",Toast.LENGTH_LONG);
+                                }
+
+                            }
+                        }
+                    });
+
+            buttonGoogleLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent signInIntent=gsc.getSignInIntent();
+                    activityResultLauncher.launch(signInIntent);
+
+                }
+            });
+
+
 
         } else {
             USE_NAVIGATION_COMPONENT = false;
             startActivityBasedOnCondition(SummaryActivity.class,
                     R.id.action_loginFragment_to_summaryActivity);
         }
+
+
+
     }
     public void onResume() {
         super.onResume();
@@ -284,7 +316,6 @@ public class LoginFragment extends Fragment {
             Navigation.findNavController(requireView()).navigate(destination);
         } else {
             Intent intent = new Intent(requireContext(), destinationActivity);
-            getActivity().finish();
             startActivity(intent);
         }
         requireActivity().finish();
@@ -388,47 +419,6 @@ public class LoginFragment extends Fragment {
 
 
 
-        gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        gsc= GoogleSignIn.getClient(getContext(), gso);
-
-        GoogleSignInAccount gAccount=GoogleSignIn.getLastSignedInAccount(getContext());
-        if(gAccount !=null){
-            Intent intent=new Intent(getActivity(),SummaryActivity.class);
-            startActivity(intent);
-        }
-
-        ActivityResultLauncher<Intent> activityResultLauncher=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if(result.getResultCode()== Activity.RESULT_OK){
-                            Intent data = result.getData();
-                            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                            try{
-                                task.getResult(ApiException.class);
-                                Intent intent = new Intent(getActivity(),SummaryActivity.class);
-                                startActivity(intent);
-                            }catch(ApiException e){
-                                Toast.makeText(getContext(),"Something went wrong",Toast.LENGTH_LONG);
-                            }
-
-                        }
-                    }
-                });
-
-        button_google_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent signInIntent=gsc.getSignInIntent();
-                activityResultLauncher.launch(signInIntent);
-
-            }
-        });
-
-    */
 
 // on createview
 /* mAuth=FirebaseAuth.getInstance();
@@ -439,3 +429,25 @@ public class LoginFragment extends Fragment {
         isLoggedIn = prefs.getBoolean("isLoggedIn", false);
         */
 
+/*  buttonGoogleLogin.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
+                    .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
+                        @Override
+                        public void onSuccess(BeginSignInResult result) {
+                            Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
+                            IntentSenderRequest intentSenderRequest =
+                                    new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                            activityResultLauncher.launch(intentSenderRequest);
+                        }
+                    })
+                    .addOnFailureListener(requireActivity(), new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // No saved credentials found. Launch the One Tap sign-up flow, or
+                            // do nothing and continue presenting the signed-out UI.
+                            Log.d(TAG, e.getLocalizedMessage());
+
+                            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                    requireActivity().getString(R.string.error_no_google_account_found_message),
+                                    Snackbar.LENGTH_SHORT).show();
+                        }
+                    }));*/

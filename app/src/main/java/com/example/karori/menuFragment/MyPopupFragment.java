@@ -79,7 +79,7 @@ public class MyPopupFragment extends DialogFragment {
         listener = new recyclerAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View v, int position) {
-                Log.d("CAMBIO","PARTE OLTO"+position);
+
             }
         };
     }

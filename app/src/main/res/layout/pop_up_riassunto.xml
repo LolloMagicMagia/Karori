@@ -6,10 +6,19 @@
     android:layout_height="match_parent"
     tools:context="SearchClasses.RicercaEAggiungiActivity">
 
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Riassunto"
+         android:textColor="@color/teal_700"
+         android:textSize="20dp">
+
+     </TextView>
 
      <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_riassuntoM"
             android:layout_width="wrap_content"
+            android:layout_marginTop="25dp"
             android:layout_height="wrap_content"/>
 
 

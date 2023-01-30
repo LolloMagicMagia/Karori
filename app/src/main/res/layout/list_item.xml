@@ -11,8 +11,7 @@
         android:id="@+id/dettagliSpecifici"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -26,7 +25,7 @@
                 android:layout_width="402dp"
                 android:layout_height="15dp"
                 android:layout_marginEnd="9dp"
-                android:gravity="center"
+
                 android:text="Nome: "
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +35,7 @@
                 android:id="@+id/altreInfoPopUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+
                 android:text="altre Info: "
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/calorie" />
@@ -45,7 +44,7 @@
                 android:id="@+id/quantitàPopUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+
                 android:text="quantità: "
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +54,6 @@
                 android:id="@+id/CaloriePopUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:text="Calorie: "
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

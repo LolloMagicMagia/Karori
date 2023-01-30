@@ -9,16 +9,19 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardviewMattina"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/calorie"
                 android:layout_width="402dp"
@@ -28,6 +31,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/carboidrati"
                 android:layout_width="match_parent"
@@ -55,9 +59,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/grassi" />
 
         </LinearLayout>
-
-
-
 
 
     </androidx.cardview.widget.CardView>

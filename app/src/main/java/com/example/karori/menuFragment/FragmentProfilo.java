@@ -110,7 +110,7 @@ public class FragmentProfilo extends Fragment {
         gClient= GoogleSignIn.getClient(getContext(), gOptions);
 
         GoogleSignInAccount gAccount=GoogleSignIn.getLastSignedInAccount(getContext());
-        /*log_out.setOnClickListener(new View.OnClickListener() {
+       /* log_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -120,24 +120,40 @@ public class FragmentProfilo extends Fragment {
                     }
                 });
             }
-        });
-        */
+        });*/
+
         log_out.setOnClickListener(v -> {
-            userViewModel.logout();
-            if(userViewModel.getLoggedUser()==null){
-                Snackbar.make(view,
-                    requireActivity().getString(R.string.logout),
-                    Snackbar.LENGTH_SHORT).show();
-                Intent i = new Intent(getActivity(),WelcomeActivity.class);
-                getActivity().finish();
-                startActivity(i);
+
+
+            if(gAccount!=null){
+                gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Intent i = new Intent(getActivity(),WelcomeActivity.class);
+                        getActivity().finish();
+                        startActivity(i);
+                    }
+                });
             }
             else{
-                Snackbar.make(view,
-                        requireActivity().getString(R.string.unexpected_error),
-                        Snackbar.LENGTH_SHORT).show();
+                userViewModel.logout();
+                if(userViewModel.getLoggedUser()==null){
+                    Snackbar.make(view,
+                            requireActivity().getString(R.string.logout),
+                            Snackbar.LENGTH_SHORT).show();
+                    Intent i = new Intent(getActivity(),WelcomeActivity.class);
+                    getActivity().finish();
+                    startActivity(i);
+                }
+                else{
+                    Snackbar.make(view,
+                            requireActivity().getString(R.string.unexpected_error),
+                            Snackbar.LENGTH_SHORT).show();
 
+                }
             }
+
+
         });
             /*.observe(getViewLifecycleOwner(), result -> {
 
