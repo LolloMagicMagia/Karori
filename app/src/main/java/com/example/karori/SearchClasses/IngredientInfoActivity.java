@@ -98,7 +98,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder allerta = new AlertDialog.Builder(getActivity());
-                allerta.setTitle("Do you really want to add " + "\""+importanti.get("nome alimento")+"\"" + " to " + "\""+eng+"\"");
+                allerta.setTitle("Do you really want to add " + importanti.get("amount") + importanti.get("unit") +" \""+importanti.get("nome alimento")+"\"" + " to " + "\""+eng+"\"");
                 allerta.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -208,7 +208,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
             txt_unit.setText(unit);
             importanti.put("id", id);
             importanti.put("amount", amount);
-            importanti.put("selected", selezionato);
+            importanti.put("unit", unit);
             txt_amount.setText(String.valueOf(amount));
             txt_nome.setText(response.name);
             importanti.put("nome alimento", txt_nome.getText().toString());
