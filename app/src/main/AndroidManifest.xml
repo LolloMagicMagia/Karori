@@ -15,17 +15,6 @@
         android:theme="@style/Theme.Karori"
         tools:targetApi="31">
         <activity
-            android:name=".TestRoomActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".SearchClasses.RicercaEAggiungiActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".SearchClasses.RequestManager"
             android:exported="false">
             <meta-data
@@ -33,7 +22,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".SearchClasses.IngredientInfoActivity"
+            android:name=".SearchClasses.SearchActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -42,7 +31,7 @@
         <activity
             android:name=".Login.WelcomeActivity"
             android:exported="true"
-            android:noHistory="true">
+            android:noHistory="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,12 +42,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".SearchClasses.SearchActivity">
-        </activity>
         <activity
             android:name=".menuFragment.SummaryActivity"
             android:exported="false"
-            android:noHistory="true"/>
+            android:noHistory="false"/>
     </application>
 
 </manifest>

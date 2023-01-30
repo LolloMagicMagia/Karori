@@ -1,11 +1,14 @@
 package com.example.karori.menuFragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.karori.R;
@@ -20,6 +23,8 @@ public class RiassuntoMattina extends Fragment {
     private TextView tsaturi;
     private TextView tcarboidrati;
     private TextView tcalorie;
+    CardView card;
+    Dialog myDialog;
 
 
 
@@ -41,14 +46,24 @@ public class RiassuntoMattina extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_riassunto_mattina, container, false);
+        card = (CardView) view.findViewById(R.id.cardviewMattina) ;
         tgrassi= (TextView) view.findViewById(R.id.grassi);
         tsaturi= (TextView) view.findViewById(R.id.Saturi);
         tcalorie= (TextView) view.findViewById(R.id.calorie);
         tcarboidrati= (TextView) view.findViewById(R.id.carboidrati);
+        myDialog = new Dialog(getContext());
 
 
         //mattina, dovrà andare a prendere i valori nel database inizialmente
         setValoriRiassuntivi(savedInstanceState);
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("CARD","POPUP");
+                MyPopupFragment popup = new MyPopupFragment();
+                popup.show(getChildFragmentManager(), "popup");
+            }
+        });
 
 
 

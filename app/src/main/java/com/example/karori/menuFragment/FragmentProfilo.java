@@ -128,7 +128,9 @@ public class FragmentProfilo extends Fragment {
                 Snackbar.make(view,
                     requireActivity().getString(R.string.logout),
                     Snackbar.LENGTH_SHORT).show();
-            startActivity(new Intent(getActivity(), WelcomeActivity.class));
+                Intent i = new Intent(getActivity(),WelcomeActivity.class);
+                getActivity().finish();
+                startActivity(i);
             }
             else{
                 Snackbar.make(view,

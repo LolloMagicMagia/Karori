@@ -159,6 +159,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SummaryActivity.class);
+                getActivity().finish();
                 startActivity(intent);
             }
         });
@@ -283,6 +284,7 @@ public class LoginFragment extends Fragment {
             Navigation.findNavController(requireView()).navigate(destination);
         } else {
             Intent intent = new Intent(requireContext(), destinationActivity);
+            getActivity().finish();
             startActivity(intent);
         }
         requireActivity().finish();

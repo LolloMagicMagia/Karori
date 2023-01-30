@@ -1,5 +1,7 @@
 package com.example.karori.Adapter;
 
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -38,4 +40,6 @@ public class AdapterChangeRiassunti extends FragmentStateAdapter {
     public int getItemCount() {
         return 3;
     }
+
+
 }
