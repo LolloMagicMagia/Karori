@@ -43,13 +43,14 @@ public class MyPopupFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.pop_up_riassunto, container, false);
         mRecyclerView=view.findViewById(R.id.recycler_view_riassuntoM);
         ///////////////prova recycler view
-        al1=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
-        al2=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
-        al3=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
-        al4=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
-        al5=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
-        al6=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
-        al7=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
+        //alimento specifico deve avere: nome, id, calorie, proteine, grassi, carboidrati, tipo, quantita, unita di misura
+        al1=new AlimentoSpecifico("banana","9266","30","5","70","colazione");
+        al2=new AlimentoSpecifico("banana","2047","30","5","70","colazione");
+        al3=new AlimentoSpecifico("banana","9268","30","5","70","colazione");
+        al4=new AlimentoSpecifico("banana","9269","30","5","70","colazione");
+        al5=new AlimentoSpecifico("banana","9270","30","5","70","colazione");
+        al6=new AlimentoSpecifico("banana","9270","30","5","70","colazione");
+        al7=new AlimentoSpecifico("banana","9270","30","5","70","colazione");
         ////////////////////////////////////
 
         mAlimentoSpecificoArrayList=new ArrayList<>();
@@ -94,13 +95,13 @@ public class MyPopupFragment extends DialogFragment {
                 if (totti.getTipo() == "cena") {
                     pasto = "2";
                 }
-                intent.putExtra("id", "1003464")
-                        .putExtra("amount", "22")
-                        .putExtra("unit", "g")
-                        .putExtra("selected", "colazione")
-                        .putExtra("mode", "update");
-                intent.putExtra("pasto", pasto);
-                intent.putExtra("skip", "true");
+                intent.putExtra("id", totti.getId()) //id
+                        .putExtra("amount", "22") //quantita
+                        .putExtra("unit", "g") //unita di misura
+                        .putExtra("selected", "colazione") //tipo
+                        .putExtra("mode", "update"); //lasciare invariato
+                intent.putExtra("pasto", pasto); //codice per ricercaeaggiungi, lasciare
+                intent.putExtra("skip", "true"); //lasciare
                 startActivity(intent);
             }
         };

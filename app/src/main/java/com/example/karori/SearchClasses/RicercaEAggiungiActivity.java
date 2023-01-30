@@ -75,6 +75,7 @@ public class RicercaEAggiungiActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_ricerca_aggiungi, container, false);
 
         if (skip == true) {
+            skip = false;
             id = getActivity().getIntent().getStringExtra("id");
             amount= getActivity().getIntent().getStringExtra("amount");
             unit = getActivity().getIntent().getStringExtra("unit");
@@ -83,6 +84,7 @@ public class RicercaEAggiungiActivity extends Fragment {
             Log.d("VAL", amount);
             Log.d("VAL", unit);
             bundle.putString("id", id);
+            bundle.putString("skip", getActivity().getIntent().getStringExtra("skip"));
             bundle.putString("amount", amount);
             bundle.putString("unit", unit);
             bundle.putString("selected", selezionato);

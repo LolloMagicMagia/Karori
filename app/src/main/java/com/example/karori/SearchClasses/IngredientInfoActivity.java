@@ -44,6 +44,7 @@ import java.util.Date;
 public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
     int id;
     int amount;
+    boolean skip = false;
     String unit;
     TextView aggiungi;
     TextView txt_nome, txt_amount, txt_cal, txt_prot, txt_fat, txt_sat_fat, txt_carbo;
@@ -56,17 +57,16 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
     RequestManager manager;
     ProgressDialog dialog;
     Map<String, Object> importanti = new HashMap<String, Object>();
-    private String selezionato;
-    private String eng;
+    String selezionato;
+    String eng;
 
     private static boolean isObserverActive = false;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_ingredient_info, container, false);
@@ -78,6 +78,18 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
         amount = Integer.parseInt(getArguments().getString("amount"));
         unit = getArguments().getString("unit");
         selezionato = getArguments().getString("selected");
+        skip = Boolean.parseBoolean(getArguments().getString("skip"));
+
+        manager = new RequestManager(getActivity());
+        manager.getIngredientInfos(infoListener, id, amount, unit);
+
+        if (skip == true) {
+            aggiungi.setVisibility(View.GONE);
+        }
+        else {
+            aggiungi.setVisibility(View.VISIBLE);
+        }
+
         if (selezionato == "colazione") {
             eng = "Breakfast?";
         }
@@ -87,12 +99,9 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
         if (selezionato == "cena") {
             eng = "Dinner?";
         }
-        manager = new RequestManager(getActivity());
-        manager.getIngredientInfos(infoListener, id, amount, unit);
         dialog = new ProgressDialog(getActivity());
         dialog.setTitle("Loading Information");
         dialog.show();
-
 
         aggiungi.setOnClickListener(new View.OnClickListener() {
             @Override
