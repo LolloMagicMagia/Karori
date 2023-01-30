@@ -1,18 +1,23 @@
 package com.example.karori.menuFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karori.R;
+import com.example.karori.SearchClasses.IngredientInfoActivity;
+import com.example.karori.SearchClasses.SearchActivity;
 
 import java.util.ArrayList;
 
@@ -27,6 +32,7 @@ public class MyPopupFragment extends DialogFragment {
     AlimentoSpecifico al6;
     AlimentoSpecifico al7;
     private recyclerAdapter.RecyclerViewClickListener listener;
+    private String pasto = "";
     //////////////////////////
 
     private RecyclerView mRecyclerView;
@@ -37,21 +43,19 @@ public class MyPopupFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.pop_up_riassunto, container, false);
         mRecyclerView=view.findViewById(R.id.recycler_view_riassuntoM);
         ///////////////prova recycler view
-        al1=new AlimentoSpecifico("banana","30","5","70");
-        al2=new AlimentoSpecifico("banana","30","5","70");
-        al3=new AlimentoSpecifico("banana","30","5","70");
-        al4=new AlimentoSpecifico("banana","30","5","70");
-        al5=new AlimentoSpecifico("banana","30","5","70");
-        al6=new AlimentoSpecifico("banana","30","5","70");
-        al7=new AlimentoSpecifico("banana","30","5","70");
-
+        al1=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
+        al2=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
+        al3=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
+        al4=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
+        al5=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
+        al6=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
+        al7=new AlimentoSpecifico("banana","1003464","30","5","70","colazione");
         ////////////////////////////////////
 
         mAlimentoSpecificoArrayList=new ArrayList<>();
 
         setmAlimentoInfo();
         setAdapter();
-
 
         return view;
     }
@@ -79,7 +83,25 @@ public class MyPopupFragment extends DialogFragment {
         listener = new recyclerAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View v, int position) {
-
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                AlimentoSpecifico totti = mAlimentoSpecificoArrayList.get(position);
+                if (totti.getTipo() == "colazione") {
+                    pasto = "0";
+                }
+                if (totti.getTipo() == "pasto") {
+                    pasto = "1";
+                }
+                if (totti.getTipo() == "cena") {
+                    pasto = "2";
+                }
+                intent.putExtra("id", "1003464")
+                        .putExtra("amount", "22")
+                        .putExtra("unit", "g")
+                        .putExtra("selected", "colazione")
+                        .putExtra("mode", "update");
+                intent.putExtra("pasto", pasto);
+                intent.putExtra("skip", "true");
+                startActivity(intent);
             }
         };
     }
