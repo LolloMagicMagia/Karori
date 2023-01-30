@@ -1,11 +1,14 @@
 package com.example.karori.Room;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class MealViewModel extends AndroidViewModel {
@@ -20,6 +23,11 @@ public class MealViewModel extends AndroidViewModel {
 
     public LiveData<Meal> getMeal(int id) {
         return mealRepository.getMeal(id);
+    }
+
+    public LiveData<Meal> getMealFromDate(LocalDate date, String type) {
+        Log.d("Date", String.valueOf(date));
+        return mealRepository.getMealFromDate(date, type);
     }
 
     public Meal getMeal1(int id) {

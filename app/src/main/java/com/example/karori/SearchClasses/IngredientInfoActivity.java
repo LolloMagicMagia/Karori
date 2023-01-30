@@ -33,10 +33,12 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Calendar;
 import java.util.Date;
@@ -116,17 +118,11 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
                         Toast.makeText(getActivity(), "bravo", Toast.LENGTH_SHORT).show();
 
 
-                        Date currentTime = new Date();
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTime(currentTime);
-                        cal.set(Calendar.HOUR_OF_DAY, 0);
-                        cal.set(Calendar.MINUTE, 0);
-                        cal.set(Calendar.SECOND, 0);
-                        cal.set(Calendar.MILLISECOND, 0);
-                        currentTime = cal.getTime();
-                        Date finalCurrentTime = currentTime;
+                        LocalDate currentTime = LocalDate.now();
 
-                        mealViewModel.getMeal(1).observe(getActivity(), new Observer<Meal>() {
+                        Log.d("Date", String.valueOf(currentTime));
+
+                        mealViewModel.getMealFromDate(currentTime,selezionato).observe(getActivity(), new Observer<Meal>() {
                             @Override
                             public void onChanged(Meal meal) {
                                 if(!isObserverActive) {
@@ -136,7 +132,8 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
                                         mealViewModel.update(meal);
                                     } else {
                                         try {
-                                            Date currentTime = new Date();
+                                            Log.d("GetMealFromDate", "MEAL IS NULL");
+                                            LocalDate currentTime = LocalDate.now();
                                             Meal meal1 = new Meal(currentTime, selezionato);
                                             meal1.add(importanti);
                                             mealViewModel.insert(meal1);
@@ -152,10 +149,11 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
                         mealViewModel.getAll().observe(getActivity(), new Observer<List<Meal>>() {
                             @Override
                             public void onChanged(List<Meal> meals) {
-                                Log.d("Tag", "stampa");
+                                Log.d("TAG", "stampa");
                                 StringBuilder result = new StringBuilder();
                                 for (Meal meal : meals) {
                                     Log.d("TAG", String.valueOf(meal.getId()) + "    " + String.valueOf(meal.getCalorieTot()));
+                                    Log.d("Tag", String.valueOf(meal.getDate()));
                                 }
 
                             }

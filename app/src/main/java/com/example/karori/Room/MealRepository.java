@@ -2,9 +2,12 @@ package com.example.karori.Room;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class MealRepository {
@@ -19,6 +22,12 @@ public class MealRepository {
 
     public LiveData<Meal> getMeal(int id) {
         return mealDao.getMeal(id);
+    }
+
+    public LiveData<Meal> getMealFromDate(LocalDate date, String type) {
+        Log.d("Date", String.valueOf(date));
+        Long dateConv = DateConverter.localDateToTimestamp(date);
+        return mealDao.getMealFromDate(dateConv, type);
     }
 
     public Meal getMeal1(int id) {

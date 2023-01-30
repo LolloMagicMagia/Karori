@@ -14,51 +14,57 @@ import androidx.room.TypeConverters;
 import com.example.karori.SearchClasses.IngredientInfoActivity;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observer;
 
-@TypeConverters({DateConverter.class})
 
+@TypeConverters({DateConverter.class})
 @Entity(tableName = "meals", indices = {@Index(value = {"date","type"}, unique = true)})
 public class Meal {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-
+    @TypeConverters({DateConverter.class})
     @ColumnInfo(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @ColumnInfo(name = "type")
     private String type;
 
     @TypeConverters(FoodListConverter.class)
-    @ColumnInfo(name = "food_list")
+    //@ColumnInfo(name = "food_list")
     private Map<Integer, Map<String, Object>> foodList;
 
 
-    @ColumnInfo(name = "calorie_total")
+    //@ColumnInfo(name = "calorie_total")
     private double calorieTot;
 
-    @ColumnInfo(name = "proteine_total")
+    //@ColumnInfo(name = "proteine_total")
     private double proteineTot;
 
-    @ColumnInfo(name = "grassi_total")
+    //@ColumnInfo(name = "grassi_total")
     private double grassiTot;
 
-    @ColumnInfo(name = "carboidrati_total")
+    //@ColumnInfo(name = "carboidrati_total")
     private double carboidratiTot;
 
-    public Meal(Date date, String type) {
-        this.date = date;
-        this.type = type;
-        foodList = new HashMap<>();
-        calorieTot = 0;
-        proteineTot = 0;
-        grassiTot = 0;
-        carboidratiTot = 0;
+    public Meal(LocalDate date, String type) {
+        if(date != null && type != null){
+            this.date = date;
+            this.type = type;
+            foodList = new HashMap<>();
+            calorieTot = 0;
+            proteineTot = 0;
+            grassiTot = 0;
+            carboidratiTot = 0;
+        }
+
+
+
     }
 
     public void add(Map<String, Object> food) {
@@ -101,7 +107,7 @@ public class Meal {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -129,7 +135,7 @@ public class Meal {
         return carboidratiTot;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
