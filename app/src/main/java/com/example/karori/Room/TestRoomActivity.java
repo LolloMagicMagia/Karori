@@ -1,18 +1,11 @@
 package com.example.karori.Room;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.app.Application;
 import android.os.Bundle;
 
-import com.example.karori.R;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Observer;
+import com.example.karori.R;
 
 public class TestRoomActivity extends AppCompatActivity {
 
@@ -25,7 +18,7 @@ public class TestRoomActivity extends AppCompatActivity {
 
     }
 
-    private void addFood(MealViewModel mealViewModel, Date date, String type, Map<String, Object> food) {
+    /*private void addFood(MealViewModel mealViewModel, Date date, String type, Map<String, Object> food) {
         LiveData<List<Meal>> meals = mealViewModel.getMeals();
         meals.observe(this, new androidx.lifecycle.Observer<List<Meal>>() {
             @Override
@@ -45,7 +38,7 @@ public class TestRoomActivity extends AppCompatActivity {
                 mealViewModel.update(currentMeal);
             }
         });
-    }
+    }*/
 
 
 

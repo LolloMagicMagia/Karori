@@ -11,15 +11,22 @@ import java.util.List;
 
 @Dao
 public interface MealDao {
-    @Query("SELECT * FROM meals")
-    LiveData<List<Meal>> getAllMeals();
+
+    @Query("SELECT * FROM meals WHERE id = :id")
+    LiveData<Meal> getMeal(int id);
+
+    @Query("SELECT * FROM meals WHERE id = :id")
+    Meal getMeal1(int id);
 
     @Insert
     void insert(Meal meal);
 
-    @Update
-    void update(Meal meal);
-
     @Delete
     void delete(Meal meal);
+
+    @Query("SELECT * FROM meals")
+    LiveData<List<Meal>> getAllMeals();
+
+    @Update
+    void update(Meal meal);
 }

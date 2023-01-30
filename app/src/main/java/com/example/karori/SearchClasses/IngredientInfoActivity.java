@@ -2,6 +2,7 @@ package com.example.karori.SearchClasses;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.karori.Listeners.IngredientInfoListener;
@@ -35,9 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Observer;
 
-public class IngredientInfoActivity extends Fragment {
+public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
     int id;
     int amount;
     String unit;
@@ -53,6 +55,8 @@ public class IngredientInfoActivity extends Fragment {
     ProgressDialog dialog;
     Map<String, Object> importanti = new HashMap<String, Object>();
 
+    private static boolean isObserverActive = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,7 @@ public class IngredientInfoActivity extends Fragment {
 
         initializeViews(view);
 
+
         id = Integer.parseInt(getArguments().getString("id"));
         amount = Integer.parseInt(getArguments().getString("amount"));
         unit = getArguments().getString("unit");
@@ -75,10 +80,19 @@ public class IngredientInfoActivity extends Fragment {
         dialog.setTitle("Loading Information");
         dialog.show();
 
+
         aggiungi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date currentTime = Calendar.getInstance().getTime();
+                Date currentTime = new Date();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(currentTime);
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                currentTime = cal.getTime();
+                Date finalCurrentTime = currentTime;
                 /*Toast.makeText(IngredientInfoActivity.this, importanti.get("id").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("amount").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("nome alimento").toString(), Toast.LENGTH_SHORT).show();
@@ -87,16 +101,43 @@ public class IngredientInfoActivity extends Fragment {
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("Calories").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("Carbohydrates").toString(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(IngredientInfoActivity.this, importanti.get("image").toString(), Toast.LENGTH_SHORT).show();*/
-                addFood(mealViewModel, currentTime, "colazione", importanti);
-                LiveData<List<Meal>> meals = mealViewModel.getMeals();
-                List<Meal> franco = meals.getValue();
-                if (franco != null) {
-                    for (Meal m : franco) {
-                        Toast.makeText(getActivity(), ""+m.getCarboidratiTot(), Toast.LENGTH_SHORT).show();
-                        break;
+
+
+                mealViewModel.getMeal(1).observe(getActivity(), new Observer<Meal>() {
+                    @Override
+                    public void onChanged(Meal meal) {
+                        if(!isObserverActive) {
+                            isObserverActive = true;
+                            if (meal != null) {
+                                meal.add(importanti);
+                                mealViewModel.update(meal);
+                            } else {
+                                try {
+                                    Date currentTime = new Date();
+                                    Meal meal1 = new Meal(currentTime, "pranzo");
+                                    meal1.add(importanti);
+                                    mealViewModel.insert(meal1);
+                                } catch (Exception e) {
+                                    Log.d("Tag", "meal1 è già presente dentro il database");
+                                }
+                            }
+                        }
                     }
-                }
-                Toast.makeText(getActivity(), ""+meals, Toast.LENGTH_LONG).show();
+                });
+
+                isObserverActive = false;
+                mealViewModel.getAll().observe(getActivity(), new Observer<List<Meal>>() {
+                    @Override
+                    public void onChanged(List<Meal> meals) {
+                        Log.d("Tag", "stampa");
+                        StringBuilder result = new StringBuilder();
+                        for (Meal meal : meals) {
+                            Log.d("TAG", String.valueOf(meal.getId()) + "    " + String.valueOf(meal.getCalorieTot()));
+                        }
+
+                    }
+                });
+
             }
         });
         return view;
@@ -141,27 +182,6 @@ public class IngredientInfoActivity extends Fragment {
         img_foto = view.findViewById(R.id.img_foto);
     }
 
-    private void addFood(MealViewModel mealViewModel, Date date, String type, Map<String, Object> food) {
-        LiveData<List<Meal>> meals = mealViewModel.getMeals();
-        meals.observe(this, new androidx.lifecycle.Observer<List<Meal>>() {
-            @Override
-            public void onChanged(List<Meal> meals) {
-                Meal currentMeal = null;
-                for (Meal meal : meals) {
-                    if (meal.getDate().equals(date) && meal.getType().equals(type)) {
-                        currentMeal = meal;
-                        break;
-                    }
-                }
-                if (currentMeal == null) {
-                    currentMeal = new Meal(date, type);
-                    mealViewModel.insert(currentMeal);
-                }
-                currentMeal.add(food);
-                mealViewModel.update(currentMeal);
-            }
-        });
-    }
 
     private final IngredientInfoListener infoListener = new IngredientInfoListener() {
         @Override

@@ -17,61 +17,78 @@ public class MealRepository {
         meals = mealDao.getAllMeals();
     }
 
-    public LiveData<List<Meal>> getMeals() {
-        return meals;
+    public LiveData<Meal> getMeal(int id) {
+        return mealDao.getMeal(id);
+    }
+
+    public Meal getMeal1(int id) {
+        return mealDao.getMeal1(id);
     }
 
     public void insert(Meal meal) {
-        new InsertMealAsyncTask(mealDao).execute(meal);
+        new InsertAsyncTask(mealDao).execute(meal);
+    }
+
+    public void delete(int meal) {
+        new DeleteAsyncTask(mealDao).execute(meal);
     }
 
     public void update(Meal meal) {
-        new UpdateMealAsyncTask(mealDao).execute(meal);
+        new UpdateAsyncTask(mealDao).execute(meal);
     }
 
-    public void delete(Meal meal) {
-        new DeleteMealAsyncTask(mealDao).execute(meal);
+    public LiveData<List<Meal>> getAllMeals() {
+        return meals;
     }
 
-    private static class InsertMealAsyncTask extends AsyncTask<Meal, Void, Void> {
+    private static class InsertAsyncTask extends AsyncTask<Meal, Void, Void> {
+
         private MealDao mealDao;
 
-        InsertMealAsyncTask(MealDao dao) {
+        InsertAsyncTask(MealDao dao) {
             mealDao = dao;
         }
 
         @Override
-        protected Void doInBackground(Meal... meals) {
-            mealDao.insert(meals[0]);
+        protected Void doInBackground(final Meal... params) {
+            mealDao.insert(params[0]);
             return null;
         }
     }
 
-    private static class UpdateMealAsyncTask extends AsyncTask<Meal, Void, Void> {
+    private static class DeleteAsyncTask extends AsyncTask<Meal, Void, Void> {
+
         private MealDao mealDao;
 
-        UpdateMealAsyncTask(MealDao dao) {
+        DeleteAsyncTask(MealDao dao) {
             mealDao = dao;
         }
 
         @Override
-        protected Void doInBackground(Meal... meals) {
-            mealDao.update(meals[0]);
+        protected Void doInBackground(final Meal... params) {
+            mealDao.delete(params[0]);
             return null;
+        }
+
+        public void execute(int meal) {
         }
     }
 
-    private static class DeleteMealAsyncTask extends AsyncTask<Meal, Void, Void> {
+    private static class UpdateAsyncTask extends AsyncTask<Meal, Void, Void> {
+
         private MealDao mealDao;
 
-        DeleteMealAsyncTask(MealDao dao) {
+        UpdateAsyncTask(MealDao dao) {
             mealDao = dao;
         }
 
         @Override
-        protected Void doInBackground(Meal... meals) {
-            mealDao.delete(meals[0]);
+        protected Void doInBackground(final Meal... params) {
+            mealDao.update(params[0]);
             return null;
+        }
+
+        public void execute(int meal) {
         }
     }
 }

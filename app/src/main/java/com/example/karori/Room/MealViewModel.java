@@ -10,27 +10,33 @@ import java.util.List;
 
 public class MealViewModel extends AndroidViewModel {
     private MealRepository mealRepository;
-    private LiveData<List<Meal>> meals;
+    private final LiveData<List<Meal>> meals;
 
     public MealViewModel(@NonNull Application application) {
         super(application);
         mealRepository = new MealRepository(application);
-        meals = mealRepository.getMeals();
+        meals = mealRepository.getAllMeals();
     }
 
-    public LiveData<List<Meal>> getMeals() {
-        return meals;
+    public LiveData<Meal> getMeal(int id) {
+        return mealRepository.getMeal(id);
+    }
+
+    public Meal getMeal1(int id) {
+        return mealRepository.getMeal1(id);
     }
 
     public void insert(Meal meal) {
         mealRepository.insert(meal);
     }
 
-    public void update(Meal meal) {
-        mealRepository.update(meal);
+    public void delete(int person) {
+        mealRepository.delete(person);
     }
 
-    public void delete(Meal meal) {
-        mealRepository.delete(meal);
+    public LiveData<List<Meal>> getAll() {
+        return meals;
     }
+
+    public void update(Meal meal) {mealRepository.update(meal);}
 }

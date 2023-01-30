@@ -1,17 +1,24 @@
 package com.example.karori.Room;
 
+import android.util.Log;
+import android.view.View;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+
+import com.example.karori.SearchClasses.IngredientInfoActivity;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observer;
 
 @TypeConverters({DateConverter.class})
 
-@Entity(tableName = "meals")
+@Entity(tableName = "meals", indices = {@Index(value = {"date","type"}, unique = true)})
 public class Meal {
 
     @PrimaryKey(autoGenerate = true)
@@ -50,16 +57,35 @@ public class Meal {
     }
 
     public void add(Map<String, Object> food) {
-        // aggiungi il nome e l'ID dell'alimento alla mappa
-        String name = (String) food.get("nome alimento");
-        int id = (int) food.get("id");
-        foodList.put(id, name);
 
-        // aggiorna il totale delle calorie, proteine, grassi e carboidrati
-        calorieTot += (double) food.get("Calories");
-        proteineTot += (double) food.get("Protein");
-        grassiTot += (double) food.get("Fat");
-        carboidratiTot += (double) food.get("Carbohydrates");
+        if(food.get("id") != null && food.get("Calories") != null && food.get("Protein") != null
+                && food.get("Fat") != null && food.get("Carbohydrates") != null){
+
+            // aggiungi il nome e l'ID dell'alimento alla mappa
+            String name = (String) food.get("nome alimento");
+            int id = (int) food.get("id");
+
+            foodList.put(id, name);
+
+            // aggiorna il totale delle calorie, proteine, grassi e carboidrati
+            calorieTot += (double) food.get("Calories");
+            proteineTot += (double) food.get("Protein");
+            grassiTot += (double) food.get("Fat");
+            carboidratiTot += (double) food.get("Carbohydrates");
+
+        }else{
+            Log.d("Error", "l'alimento non è stato aggiunto correttamente");
+        }
+
+    }
+
+    public Map<String, String> getMealDetails() {
+        Map<String, String> mealDetails = new HashMap<>();
+        mealDetails.put("calorie_total", Double.toString(calorieTot));
+        mealDetails.put("proteine_total", Double.toString(proteineTot));
+        mealDetails.put("grassi_total", Double.toString(grassiTot));
+        mealDetails.put("carboidrati_total", Double.toString(carboidratiTot));
+        return mealDetails;
     }
 
     public int getId() {
@@ -124,6 +150,12 @@ public class Meal {
 
     public void setCarboidratiTot(double carboidratiTot) {
         this.carboidratiTot = carboidratiTot;
+    }
+
+    public void observe(View.OnClickListener onClickListener, Observer mealObserver) {
+    }
+
+    public void observe(IngredientInfoActivity ingredientInfoActivity, androidx.lifecycle.Observer<Meal> mealObserver) {
     }
 }
 
