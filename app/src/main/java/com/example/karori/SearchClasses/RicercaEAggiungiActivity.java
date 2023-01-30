@@ -64,15 +64,15 @@ public class RicercaEAggiungiActivity extends Fragment {
         txt_select = view.findViewById(R.id.txt_select);
         int idPasto = Integer.parseInt(pasto);
         if (idPasto == 0) {
-            txt_select.setText("Hai Selezionato Colazione");
+            txt_select.setText("Search For a Breakfast Meal");
             selezionato = "colazione";
         }
         if (idPasto == 1) {
-            txt_select.setText("Hai Selezionato Pranzo");
+            txt_select.setText("Search For a Lunch Meal");
             selezionato = "pranzo";
         }
         if (idPasto == 2) {
-            txt_select.setText("Hai Selezionato Cena");
+            txt_select.setText("Search For a Dinner Meal");
             selezionato = "cena";
         }
 

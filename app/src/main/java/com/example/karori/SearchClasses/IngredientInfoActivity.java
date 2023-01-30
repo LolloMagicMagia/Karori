@@ -1,6 +1,8 @@
 package com.example.karori.SearchClasses;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +57,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
     ProgressDialog dialog;
     Map<String, Object> importanti = new HashMap<String, Object>();
     private String selezionato;
+    private String eng;
 
     private static boolean isObserverActive = false;
 
@@ -71,11 +74,19 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
 
         initializeViews(view);
 
-
         id = Integer.parseInt(getArguments().getString("id"));
         amount = Integer.parseInt(getArguments().getString("amount"));
         unit = getArguments().getString("unit");
         selezionato = getArguments().getString("selected");
+        if (selezionato == "colazione") {
+            eng = "Breakfast?";
+        }
+        if (selezionato == "pranzo") {
+            eng = "Lunch?";
+        }
+        if (selezionato == "cena") {
+            eng = "Dinner?";
+        }
         manager = new RequestManager(getActivity());
         manager.getIngredientInfos(infoListener, id, amount, unit);
         dialog = new ProgressDialog(getActivity());
@@ -86,6 +97,21 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
         aggiungi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder allerta = new AlertDialog.Builder(getActivity());
+                allerta.setTitle("Do you really want to add " + "\""+importanti.get("nome alimento")+"\"" + " to " + "\""+eng+"\"");
+                allerta.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), "bravo", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                allerta.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+                allerta.show(); /*
                 Date currentTime = new Date();
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(currentTime);
@@ -95,15 +121,6 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
                 cal.set(Calendar.MILLISECOND, 0);
                 currentTime = cal.getTime();
                 Date finalCurrentTime = currentTime;
-                /*Toast.makeText(IngredientInfoActivity.this, importanti.get("id").toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IngredientInfoActivity.this, importanti.get("amount").toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IngredientInfoActivity.this, importanti.get("nome alimento").toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IngredientInfoActivity.this, importanti.get("Fat").toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IngredientInfoActivity.this, importanti.get("Protein").toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IngredientInfoActivity.this, importanti.get("Calories").toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IngredientInfoActivity.this, importanti.get("Carbohydrates").toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IngredientInfoActivity.this, importanti.get("image").toString(), Toast.LENGTH_SHORT).show();*/
-
 
                 mealViewModel.getMeal(1).observe(getActivity(), new Observer<Meal>() {
                     @Override
@@ -138,7 +155,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
                         }
 
                     }
-                });
+                }); */
 
             }
         });
@@ -191,6 +208,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
             txt_unit.setText(unit);
             importanti.put("id", id);
             importanti.put("amount", amount);
+            importanti.put("selected", selezionato);
             txt_amount.setText(String.valueOf(amount));
             txt_nome.setText(response.name);
             importanti.put("nome alimento", txt_nome.getText().toString());
