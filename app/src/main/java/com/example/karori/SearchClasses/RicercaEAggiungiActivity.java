@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,18 +58,46 @@ public class RicercaEAggiungiActivity extends Fragment {
     ProgressDialog dialog;
     RequestManager manager;
     SearchedIngredientsAdapter adapter;
+    String id;
+    String amount;
+    String unit;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pasto = getActivity().getIntent().getStringExtra("pasto");
+        skip = Boolean.parseBoolean(getActivity().getIntent().getStringExtra("skip"));
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_ricerca_aggiungi, container, false);
-        pasto = getActivity().getIntent().getStringExtra("pasto");
-        skip = Boolean.parseBoolean(getActivity().getIntent().getStringExtra("skip"));
+
+        if (skip == true) {
+            id = getActivity().getIntent().getStringExtra("id");
+            amount= getActivity().getIntent().getStringExtra("amount");
+            unit = getActivity().getIntent().getStringExtra("unit");
+            Bundle bundle = new Bundle();
+            Log.d("VAL", id);
+            Log.d("VAL", amount);
+            Log.d("VAL", unit);
+            bundle.putString("id", id);
+            bundle.putString("amount", amount);
+            bundle.putString("unit", unit);
+            bundle.putString("selected", selezionato);
+            bundle.putString("mode", "update");
+           // Navigation.findNavController(view).navigate(R.id.action_ricercaEAggiungiActivity_to_ingredientInfoActivity, bundle);
+            NavController navController = NavHostFragment.findNavController(this);
+            navController.navigate(
+                    R.id.action_ricercaEAggiungiActivity_to_ingredientInfoActivity,
+                    bundle,
+                    new NavOptions.Builder()
+                            .setEnterAnim(android.R.animator.fade_in)
+                            .setExitAnim(android.R.animator.fade_out)
+                            .build()
+            );
+        }
 
         txt_select = view.findViewById(R.id.txt_select);
         int idPasto = Integer.parseInt(pasto);
@@ -83,7 +114,8 @@ public class RicercaEAggiungiActivity extends Fragment {
             selezionato = "cena";
         }
 
-        check();
+
+
 
         dialog = new ProgressDialog(getActivity());
         dialog.setTitle("Loading");
@@ -111,34 +143,7 @@ public class RicercaEAggiungiActivity extends Fragment {
 
     }
 
-    private void check() {
-        if (skip == true) {
-            String id = getActivity().getIntent().getStringExtra("id");
-            String amount = getActivity().getIntent().getStringExtra("amount");
-            String unit = getActivity().getIntent().getStringExtra("unit");
-            Bundle bundle = new Bundle();
-            bundle.putString("id", id);
-            bundle.putString("amount", amount);
-            bundle.putString("unit", unit);
-            bundle.putString("selected", selezionato);
-            bundle.putString("mode", "update");
-           /* NavController navController = Navigation.findNavController(getActivity(), R.id.nav_ricerca);
-            Navigation.setViewNavController(view, navController);*/
-            try {
-                Navigation.findNavController(getView()).navigate(R.id.action_ricercaEAggiungiActivity_to_ingredientInfoActivity, bundle);
-            }
-            catch (Exception e) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.ricercaEAggiungiActivity, IngredientInfoActivity.class, null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack(null) // name can be null
-                        .commit();
-            }
-        }
-        else
-            return;
-    }
+
 
     private final SearchIngredientsListener ingredientsListener = new SearchIngredientsListener() {
         @Override
