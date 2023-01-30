@@ -1,7 +1,9 @@
 package com.example.karori.Room;
 
+import android.text.style.TabStopSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -11,8 +13,10 @@ import androidx.room.TypeConverters;
 
 import com.example.karori.SearchClasses.IngredientInfoActivity;
 
+import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observer;
 
@@ -32,7 +36,8 @@ public class Meal {
 
     @TypeConverters(FoodListConverter.class)
     @ColumnInfo(name = "food_list")
-    private Map<Integer, String> foodList;
+    private Map<Integer, Map<String, Object>> foodList;
+
 
     @ColumnInfo(name = "calorie_total")
     private double calorieTot;
@@ -59,13 +64,13 @@ public class Meal {
     public void add(Map<String, Object> food) {
 
         if(food.get("id") != null && food.get("Calories") != null && food.get("Protein") != null
-                && food.get("Fat") != null && food.get("Carbohydrates") != null){
+                && food.get("Fat") != null && food.get("Carbohydrates") != null &&
+                food.get("amount") != null && food.get("unit") != null){
 
-            // aggiungi il nome e l'ID dell'alimento alla mappa
-            String name = (String) food.get("nome alimento");
             int id = (int) food.get("id");
+            food.remove("id");
+            foodList.put(id, food);
 
-            foodList.put(id, name);
 
             // aggiorna il totale delle calorie, proteine, grassi e carboidrati
             calorieTot += (double) food.get("Calories");
@@ -104,7 +109,7 @@ public class Meal {
         return type;
     }
 
-    public Map<Integer, String> getFoodList() {
+    public Map<Integer, Map<String, Object>> getFoodList() {
         return foodList;
     }
 
@@ -132,7 +137,7 @@ public class Meal {
         this.type = type;
     }
 
-    public void setFoodList(Map<Integer, String> foodList) {
+    public void setFoodList(Map<Integer, Map<String, Object>> foodList) {
         this.foodList = foodList;
     }
 

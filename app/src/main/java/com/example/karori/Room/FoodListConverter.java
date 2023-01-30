@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-public class FoodListConverter {
+/*public class FoodListConverter {
     @TypeConverter
     public String fromFoodList(Map<Integer, String> foodList) {
         Gson gson = new Gson();
@@ -23,5 +23,23 @@ public class FoodListConverter {
         Map<Integer, String> foodList = gson.fromJson(json, type);
         return foodList;
     }
+}*/
+
+public class FoodListConverter {
+    @TypeConverter
+    public String fromFoodList(Map<Integer, Map<String, Object>> foodList) {
+        Gson gson = new Gson();
+        String json = gson.toJson(foodList);
+        return json;
+    }
+
+    @TypeConverter
+    public Map<Integer, Map<String, Object>> toFoodList(String json) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<Map<Integer, Map<String, Object>>>(){}.getType();
+        Map<Integer, Map<String, Object>> foodList = gson.fromJson(json, type);
+        return foodList;
+    }
 }
+
 

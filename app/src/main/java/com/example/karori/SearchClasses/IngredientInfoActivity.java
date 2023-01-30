@@ -98,11 +98,61 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder allerta = new AlertDialog.Builder(getActivity());
-                allerta.setTitle("Do you really want to add " + importanti.get("amount") + importanti.get("unit") +" \""+importanti.get("nome alimento")+"\"" + " to " + "\""+eng+"\"");
+                allerta.setTitle("Do you really want to add " + importanti.get("amount") +
+                                importanti.get("unit") +" \""+importanti.get("nome alimento")+"\"" +
+                                " to " + "\""+eng+"\"");
                 allerta.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(), "bravo", Toast.LENGTH_SHORT).show();
+
+
+                        Date currentTime = new Date();
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(currentTime);
+                        cal.set(Calendar.HOUR_OF_DAY, 0);
+                        cal.set(Calendar.MINUTE, 0);
+                        cal.set(Calendar.SECOND, 0);
+                        cal.set(Calendar.MILLISECOND, 0);
+                        currentTime = cal.getTime();
+                        Date finalCurrentTime = currentTime;
+
+                        mealViewModel.getMeal(1).observe(getActivity(), new Observer<Meal>() {
+                            @Override
+                            public void onChanged(Meal meal) {
+                                if(!isObserverActive) {
+                                    isObserverActive = true;
+                                    if (meal != null) {
+                                        meal.add(importanti);
+                                        mealViewModel.update(meal);
+                                    } else {
+                                        try {
+                                            Date currentTime = new Date();
+                                            Meal meal1 = new Meal(currentTime, selezionato);
+                                            meal1.add(importanti);
+                                            mealViewModel.insert(meal1);
+                                        } catch (Exception e) {
+                                            Log.d("Tag", "meal1 è già presente dentro il database");
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                        isObserverActive = false;
+                        mealViewModel.getAll().observe(getActivity(), new Observer<List<Meal>>() {
+                            @Override
+                            public void onChanged(List<Meal> meals) {
+                                Log.d("Tag", "stampa");
+                                StringBuilder result = new StringBuilder();
+                                for (Meal meal : meals) {
+                                    Log.d("TAG", String.valueOf(meal.getId()) + "    " + String.valueOf(meal.getCalorieTot()));
+                                }
+
+                            }
+                        });
+
+
                     }
                 });
                 allerta.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -111,51 +161,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
                         return;
                     }
                 });
-                allerta.show(); /*
-                Date currentTime = new Date();
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(currentTime);
-                cal.set(Calendar.HOUR_OF_DAY, 0);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MILLISECOND, 0);
-                currentTime = cal.getTime();
-                Date finalCurrentTime = currentTime;
-
-                mealViewModel.getMeal(1).observe(getActivity(), new Observer<Meal>() {
-                    @Override
-                    public void onChanged(Meal meal) {
-                        if(!isObserverActive) {
-                            isObserverActive = true;
-                            if (meal != null) {
-                                meal.add(importanti);
-                                mealViewModel.update(meal);
-                            } else {
-                                try {
-                                    Date currentTime = new Date();
-                                    Meal meal1 = new Meal(currentTime, selezionato);
-                                    meal1.add(importanti);
-                                    mealViewModel.insert(meal1);
-                                } catch (Exception e) {
-                                    Log.d("Tag", "meal1 è già presente dentro il database");
-                                }
-                            }
-                        }
-                    }
-                });
-
-                isObserverActive = false;
-                mealViewModel.getAll().observe(getActivity(), new Observer<List<Meal>>() {
-                    @Override
-                    public void onChanged(List<Meal> meals) {
-                        Log.d("Tag", "stampa");
-                        StringBuilder result = new StringBuilder();
-                        for (Meal meal : meals) {
-                            Log.d("TAG", String.valueOf(meal.getId()) + "    " + String.valueOf(meal.getCalorieTot()));
-                        }
-
-                    }
-                }); */
+                allerta.show();
 
             }
         });
