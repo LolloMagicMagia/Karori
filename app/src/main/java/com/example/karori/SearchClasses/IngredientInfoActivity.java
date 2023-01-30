@@ -54,6 +54,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
     RequestManager manager;
     ProgressDialog dialog;
     Map<String, Object> importanti = new HashMap<String, Object>();
+    private String selezionato;
 
     private static boolean isObserverActive = false;
 
@@ -74,6 +75,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
         id = Integer.parseInt(getArguments().getString("id"));
         amount = Integer.parseInt(getArguments().getString("amount"));
         unit = getArguments().getString("unit");
+        selezionato = getArguments().getString("selected");
         manager = new RequestManager(getActivity());
         manager.getIngredientInfos(infoListener, id, amount, unit);
         dialog = new ProgressDialog(getActivity());
@@ -114,7 +116,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
                             } else {
                                 try {
                                     Date currentTime = new Date();
-                                    Meal meal1 = new Meal(currentTime, "pranzo");
+                                    Meal meal1 = new Meal(currentTime, selezionato);
                                     meal1.add(importanti);
                                     mealViewModel.insert(meal1);
                                 } catch (Exception e) {

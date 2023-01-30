@@ -44,6 +44,7 @@ public class RicercaEAggiungiActivity extends Fragment {
     private TextView txt_select;
     private RecyclerView rec_pasto;
     private ArrayList<String> flavio;
+    private String selezionato;
 
     ProgressDialog dialog;
     RequestManager manager;
@@ -62,12 +63,18 @@ public class RicercaEAggiungiActivity extends Fragment {
 
         txt_select = view.findViewById(R.id.txt_select);
         int idPasto = Integer.parseInt(pasto);
-        if (idPasto == 0)
+        if (idPasto == 0) {
             txt_select.setText("Hai Selezionato Colazione");
-        if (idPasto == 1)
+            selezionato = "colazione";
+        }
+        if (idPasto == 1) {
             txt_select.setText("Hai Selezionato Pranzo");
-        if (idPasto == 2)
+            selezionato = "pranzo";
+        }
+        if (idPasto == 2) {
             txt_select.setText("Hai Selezionato Cena");
+            selezionato = "cena";
+        }
 
         dialog = new ProgressDialog(getActivity());
         dialog.setTitle("Loading");
@@ -145,6 +152,7 @@ public class RicercaEAggiungiActivity extends Fragment {
                                 bundle.putString("id", id);
                                 bundle.putString("amount", input.getText().toString());
                                 bundle.putString("unit", array[which]);
+                                bundle.putString("selected", selezionato);
                                 Navigation.findNavController(getView()).navigate(R.id.action_ricercaEAggiungiActivity_to_ingredientInfoActivity,bundle);
                                /* startActivity(new Intent(getActivity(), IngredientInfoActivity.class)
                                         .putExtra("id", id)
