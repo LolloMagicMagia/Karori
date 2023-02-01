@@ -3,18 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="menuFragment.FragmentHome">
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="130dp"
+        android:background="@drawable/background_transparent"
+        android:outlineProvider="none"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2">
@@ -22,9 +25,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:background="#FEFEFE"
+            android:background="@android:color/transparent"
             android:orientation="vertical">
 
 
@@ -51,9 +52,12 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/background_transparent" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:background="@drawable/background_transparent"
+                android:backgroundTint="@android:color/transparent"
+                android:foregroundGravity="center_vertical" />
 
 
         </LinearLayout>
@@ -66,6 +70,8 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="25dp"
+        android:outlineProvider="none"
+        app:cardBackgroundColor="#A1FFFFFF"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +79,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/background_transparent">
 
             <TextView
                 android:id="@+id/calorie_calorieTot"
@@ -107,9 +114,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:percent="60"
-                app:progressBarColor="#ff00ff"
+                app:progressBarColor="#FF8A00"
                 app:progressBarWidth="20"
-                app:progressPlaceHolderColor="@color/greywhite"
+                app:progressPlaceHolderColor="#292929"
                 app:progressPlaceHolderWidth="40" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -120,13 +127,12 @@
         android:id="@+id/changeActivity"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="404dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
         android:src="@drawable/shortcut"
         app:civ_border_color="@color/black"
         app:civ_border_width="3dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.958"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

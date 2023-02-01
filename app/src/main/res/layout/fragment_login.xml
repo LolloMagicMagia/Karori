@@ -20,18 +20,19 @@
         android:id="@+id/cardViewSignIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_bias="0.529"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:cardPreventCornerOverlap="false"
+        android:layout_marginBottom="20dp"
+        android:foregroundGravity="center"
         android:outlineProvider="none"
         app:cardBackgroundColor="#97FFFFFF"
         app:cardCornerRadius="40dp"
+        app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Logo_SignIn"
-        android:foregroundGravity="center">
+        app:layout_constraintTop_toBottomOf="@+id/Logo_SignIn">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -47,10 +48,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
                 android:layout_gravity="center"
-                android:orientation="vertical"
-                android:layout_marginRight="20dp"
                 android:layout_marginLeft="5dp"
-                >
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -119,9 +119,9 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="end"
                         android:backgroundTint="@android:color/transparent"
-                        android:orientation="horizontal"
-                        android:layout_gravity="end">
+                        android:orientation="horizontal">
 
                         <Button
                             android:id="@+id/buttonForgotPsw"
@@ -213,13 +213,13 @@
                         android:layout_height="33dp"
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="12dp"
+                        android:gravity="center"
                         android:text="@string/new_karori"
                         android:textSize="19sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/sign_up_button"
                         app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:gravity="center"/>
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <Button
                         android:id="@+id/sign_up_button"

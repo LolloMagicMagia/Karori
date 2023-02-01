@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:background="@drawable/background_transparent"
+    android:backgroundTint="@android:color/transparent"
     android:orientation="vertical"
+    android:outlineProvider="background"
     tools:context="menuFragment.RiassuntoMattina">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,32 +16,40 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardviewMattina"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_transparent"
+        android:backgroundTint="@android:color/transparent"
+        android:foregroundGravity="center_vertical"
+        android:outlineProvider="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/background_transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:outlineProvider="none">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardSaturi"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="35dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginTop="5dp"
+                android:outlineProvider="none"
+                app:cardBackgroundColor="#51FFFFFF"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/TextSaturi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="15dp"
                     android:text="SATURI: "
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -48,18 +60,20 @@
                     android:id="@+id/Saturi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="270dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_gravity="center_vertical|end"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center|end"
                     android:text="10"
                     android:textSize="15sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewCarboidrati"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
+                android:outlineProvider="none"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +83,7 @@
                     android:id="@+id/TextCarboidrati"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
+                    android:padding="15dp"
                     android:text="CARBOIDRATI: "
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -79,9 +93,9 @@
                     android:id="@+id/carboidrati"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="270dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_gravity="center_vertical|end"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="20dp"
                     android:text="10"
                     android:textSize="15sp" />
 
@@ -89,9 +103,10 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewCalorie"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
+                android:outlineProvider="none"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +116,7 @@
                     android:id="@+id/TextCalorie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
+                    android:padding="15dp"
                     android:text="CALORIE: "
                     android:textSize="20sp" />
 
@@ -109,32 +124,30 @@
                     android:id="@+id/calorie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="270dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_gravity="center_vertical|end"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="20dp"
                     android:text="10"
                     android:textSize="15sp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardGrassi"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="21dp"
-                android:layout_marginTop="35dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="35dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="5dp"
+                android:outlineProvider="none"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardViewCalorie">
+                app:layout_constraintTop_toBottomOf="@+id/cardViewCalorie"
+                tools:layout_editor_absoluteX="0dp">
 
                 <TextView
                     android:id="@+id/TextGrassi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
+                    android:padding="15dp"
                     android:text="GRASSI: "
                     android:textSize="20sp" />
 
@@ -142,9 +155,9 @@
                     android:id="@+id/grassi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="270dp"
+                    android:layout_gravity="center_vertical|end"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="20dp"
                     android:text="10"
                     android:textSize="15sp" />
             </androidx.cardview.widget.CardView>
