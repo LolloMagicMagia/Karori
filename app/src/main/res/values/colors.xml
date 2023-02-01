@@ -11,4 +11,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="google_login_text">#505B85</color>
     <color name="lavender">#8692f7</color>
+    <color name="greywhite">#E0E0E0</color>
+    <color name="greyfigo">#BDBDBD</color>
 </resources>

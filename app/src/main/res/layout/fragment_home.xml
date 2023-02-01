@@ -6,80 +6,115 @@
     tools:context="menuFragment.FragmentHome">
 
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
-        android:orientation="vertical"
+        android:layout_height="300dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="130dp"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calorie_calorieTot">
+        app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="center"
-            app:tabIndicatorColor="@color/white">
+            android:layout_height="match_parent"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:background="#FEFEFE"
+            android:orientation="vertical">
 
-            <com.google.android.material.tabs.TabItem
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:tabGravity="center"
+                app:tabIndicatorColor="@color/white">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.tabs.TabLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/breakfast" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/launch" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:icon="@drawable/dinner" />
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@drawable/background_transparent" />
 
 
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-
-    <me.bastanfar.semicirclearcprogressbar.SemiCircleArcProgressBar
-        android:id="@+id/semiCircleArcProgressBar"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="50dp"
+        android:layout_marginEnd="25dp"
+        app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:percent="30"
-        app:progressBarColor="#ff00ff"
-        app:progressBarWidth="10"
-        app:progressPlaceHolderColor="#00ffff"
-        app:progressPlaceHolderWidth="10" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/caloriePercentuali"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/semiCircleArcProgressBar" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/calorie_calorieTot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caloriePercentuali" />
+            <TextView
+                android:id="@+id/calorie_calorieTot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="152dp"
+                android:layout_marginEnd="151dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/caloriePercentuali" />
+
+            <TextView
+                android:id="@+id/caloriePercentuali"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toTopOf="@+id/calorie_calorieTot"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/semiCircleArcProgressBar" />
+
+            <me.bastanfar.semicirclearcprogressbar.SemiCircleArcProgressBar
+                android:id="@+id/semiCircleArcProgressBar"
+                android:layout_width="250dp"
+                android:layout_height="125dp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:percent="60"
+                app:progressBarColor="#ff00ff"
+                app:progressBarWidth="20"
+                app:progressPlaceHolderColor="@color/greywhite"
+                app:progressPlaceHolderWidth="40" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/changeActivity"

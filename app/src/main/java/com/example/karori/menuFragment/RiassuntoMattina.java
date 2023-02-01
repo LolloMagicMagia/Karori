@@ -82,10 +82,10 @@ public class RiassuntoMattina extends Fragment {
     private void setValoriRiassuntivi(Bundle savedInstanceState){
         //vado nel databese
         if(savedInstanceState==null) {
-            tgrassi.setText("Grassi: " + "20");
-            tsaturi.setText("Saturi: " + "70");
-            tcarboidrati.setText("Caboidrati: " + "30");
-            tcalorie.setText("Calorie: " + "40");
+            tgrassi.setText("20");
+            tsaturi.setText("70");
+            tcarboidrati.setText("30");
+            tcalorie.setText("40");
         }
         //qua invece c'ho il bundle che va a salvare tutto
         else{

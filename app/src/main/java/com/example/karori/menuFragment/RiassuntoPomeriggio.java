@@ -1,10 +1,14 @@
 package com.example.karori.menuFragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.karori.R;
@@ -18,6 +22,9 @@ public class RiassuntoPomeriggio extends Fragment {
     private static final String KEY_SATURIP = "SATURIP";
     private static final String KEY_CARBOIDRATIP = "CARBOIDRATIP";
     private static final String KEY_CALORIEP = "CALORIEP";
+
+    CardView card;
+    Dialog myDialog;
 
     public RiassuntoPomeriggio() {
     }
@@ -39,6 +46,17 @@ public class RiassuntoPomeriggio extends Fragment {
         tsaturip= (TextView) view.findViewById(R.id.SaturiP);
         tcaloriep= (TextView) view.findViewById(R.id.calorieP);
         tcarboidratip= (TextView) view.findViewById(R.id.carboidratiP);
+        card = (CardView) view.findViewById(R.id.cardviewPomeriggio) ;
+        myDialog = new Dialog(getContext());
+
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("CARD","POPUP");
+                MyPopupFragment popup = new MyPopupFragment();
+                popup.show(getChildFragmentManager(), "popup");
+            }
+        });
         //pomeriggio,dovrà andare a prendere i valori nel database inizialmente
         setValoriRiassuntivi(savedInstanceState);
 

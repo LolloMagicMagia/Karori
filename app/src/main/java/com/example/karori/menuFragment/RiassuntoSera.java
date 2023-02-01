@@ -1,11 +1,14 @@
 package com.example.karori.menuFragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.karori.R;
@@ -19,6 +22,8 @@ public class RiassuntoSera extends Fragment {
     private static final String KEY_SATURIS = "SATURIS";
     private static final String KEY_CARBOIDRATIS = "CARBOIDRATIS";
     private static final String KEY_CALORIES = "CALORIES";
+    CardView card;
+    Dialog myDialog;
 
     public RiassuntoSera() {
         // Required empty public constructor
@@ -48,6 +53,18 @@ public class RiassuntoSera extends Fragment {
         tsaturis= (TextView) view.findViewById(R.id.SaturiN);
         tcalories= (TextView) view.findViewById(R.id.calorieN);
         tcarboidratis= (TextView) view.findViewById(R.id.carboidratiN);
+
+        card = (CardView) view.findViewById(R.id.cardviewSera) ;
+        myDialog = new Dialog(getContext());
+
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("CARD","POPUP");
+                MyPopupFragment popup = new MyPopupFragment();
+                popup.show(getChildFragmentManager(), "popup");
+            }
+        });
         //sera, dovrà andare a prendere i valori nel database inizialmente
         setValoriRiassuntivi(savedInstanceState);
 

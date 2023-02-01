@@ -1,33 +1,50 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="menuFragment.RiassuntoSera"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/calorieN"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardviewSera"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Calorie: " />
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/carboidratiN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Carboidrati: " />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/grassiN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Grassi: " />
+            <TextView
+            android:id="@+id/calorieN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Calorie: " />
 
-    <TextView
-        android:id="@+id/SaturiN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Saturi: " />
+             <TextView
+            android:id="@+id/carboidratiN"
+            android:layout_width="match_parent"
+            android:text="Carboidrati: "
+                 android:layout_height="wrap_content"/>
+
+            <TextView
+            android:id="@+id/grassiN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Grassi: " />
+
+            <TextView
+            android:id="@+id/SaturiN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Saturi: " />
 
 </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,56 +12,145 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardviewMattina"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/calorie"
-                android:layout_width="402dp"
-                android:layout_height="15dp"
-                android:layout_marginEnd="9dp"
-                android:text="Calorie: "
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardSaturi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="20dp"
+                app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/carboidrati"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Carboidrati: "
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/calorie" />
+                <TextView
+                    android:id="@+id/TextSaturi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:text="SATURI: "
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/grassi" />
 
-            <TextView
-                android:id="@+id/grassi"
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/Saturi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="270dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="4dp"
+                    android:text="10"
+                    android:textSize="15sp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewCarboidrati"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Grassi: "
+                android:layout_marginTop="35dp"
+                app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/carboidrati" />
+                app:layout_constraintTop_toBottomOf="@+id/cardSaturi">
 
-            <TextView
-                android:id="@+id/Saturi"
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/TextCarboidrati"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:text="CARBOIDRATI: "
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/calorie" />
+
+                <TextView
+                    android:id="@+id/carboidrati"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="270dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="4dp"
+                    android:text="10"
+                    android:textSize="15sp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewCalorie"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Saturi: "
+                android:layout_marginTop="35dp"
+                app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/grassi" />
+                app:layout_constraintTop_toBottomOf="@+id/cardViewCarboidrati">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/TextCalorie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:text="CALORIE: "
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/calorie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="270dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="4dp"
+                    android:text="10"
+                    android:textSize="15sp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardGrassi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="35dp"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewCalorie">
+
+                <TextView
+                    android:id="@+id/TextGrassi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:text="GRASSI: "
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/grassi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="270dp"
+                    android:layout_marginTop="4dp"
+                    android:text="10"
+                    android:textSize="15sp" />
+            </androidx.cardview.widget.CardView>
 
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
