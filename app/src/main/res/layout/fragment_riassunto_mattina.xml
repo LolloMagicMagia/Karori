@@ -33,7 +33,7 @@
             android:backgroundTint="@android:color/transparent"
             android:outlineProvider="none">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardSaturi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,9 +66,9 @@
                     android:gravity="center|end"
                     android:text="10"
                     android:textSize="15sp" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardViewCarboidrati"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,9 +99,9 @@
                     android:text="10"
                     android:textSize="15sp" />
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardViewCalorie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -129,9 +129,9 @@
                     android:layout_marginRight="20dp"
                     android:text="10"
                     android:textSize="15sp" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardGrassi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
                     android:layout_marginRight="20dp"
                     android:text="10"
                     android:textSize="15sp" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
