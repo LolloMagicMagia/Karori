@@ -57,14 +57,6 @@ public class RiassuntoSera extends Fragment {
         card = (CardView) view.findViewById(R.id.cardviewSera) ;
         myDialog = new Dialog(getContext());
 
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("CARD","POPUP");
-                MyPopupFragment popup = new MyPopupFragment();
-                popup.show(getChildFragmentManager(), "popup");
-            }
-        });
         //sera, dovrà andare a prendere i valori nel database inizialmente
         setValoriRiassuntivi(savedInstanceState);
 
@@ -74,16 +66,16 @@ public class RiassuntoSera extends Fragment {
     private void setValoriRiassuntivi(Bundle savedInstanceState){
         //vado nel databese
         if(savedInstanceState==null) {
-            tgrassis.setText("Grassi: " + "20");
-            tsaturis.setText("Saturi: " + "60");
-            tcarboidratis.setText("Caboidrati: " + "30");
-            tcalories.setText("Calorie: " + "30");
+            tgrassis.setText("20");
+            tsaturis.setText("60");
+            tcarboidratis.setText("30");
+            tcalories.setText("30");
         }
         else{
-            tgrassis.setText("Grassi: " + savedInstanceState.get(KEY_GRASSIS));
-            tsaturis.setText("Saturi: " + savedInstanceState.get(KEY_SATURIS));
-            tcarboidratis.setText("Caboidrati: " + savedInstanceState.get(KEY_CARBOIDRATIS));
-            tcalories.setText("Calorie: " + savedInstanceState.get(KEY_CALORIES));
+            tgrassis.setText("" + savedInstanceState.get(KEY_GRASSIS));
+            tsaturis.setText("" + savedInstanceState.get(KEY_SATURIS));
+            tcarboidratis.setText("" + savedInstanceState.get(KEY_CARBOIDRATIS));
+            tcalories.setText("" + savedInstanceState.get(KEY_CALORIES));
         }
     }
 }

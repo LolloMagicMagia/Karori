@@ -46,7 +46,7 @@ public class RiassuntoMattina extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_riassunto_mattina, container, false);
-        card = (CardView) view.findViewById(R.id.cardviewMattina) ;
+
         tgrassi= (TextView) view.findViewById(R.id.grassi);
         tsaturi= (TextView) view.findViewById(R.id.Saturi);
         tcalorie= (TextView) view.findViewById(R.id.calorie);
@@ -56,16 +56,6 @@ public class RiassuntoMattina extends Fragment {
 
         //mattina, dovrà andare a prendere i valori nel database inizialmente
         setValoriRiassuntivi(savedInstanceState);
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("CARD","POPUP");
-                MyPopupFragment popup = new MyPopupFragment();
-                popup.show(getChildFragmentManager(), "popup");
-            }
-        });
-
-
 
         // Inflate the layout for this fragment
         return view;
@@ -89,10 +79,10 @@ public class RiassuntoMattina extends Fragment {
         }
         //qua invece c'ho il bundle che va a salvare tutto
         else{
-            tgrassi.setText("Grassi: " + savedInstanceState.get(KEY_GRASSI));
-            tsaturi.setText("Saturi: " + savedInstanceState.get(KEY_SATURI));
-            tcarboidrati.setText("Caboidrati: " + savedInstanceState.get(KEY_CARBOIDRATI));
-            tcalorie.setText("Calorie: " + savedInstanceState.get(KEY_CALORIE));
+            tgrassi.setText("" + savedInstanceState.get(KEY_GRASSI));
+            tsaturi.setText("" + savedInstanceState.get(KEY_SATURI));
+            tcarboidrati.setText("" + savedInstanceState.get(KEY_CARBOIDRATI));
+            tcalorie.setText("" + savedInstanceState.get(KEY_CALORIE));
         }
     }
 }

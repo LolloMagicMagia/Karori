@@ -2,6 +2,7 @@ package com.example.karori.menuFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ public class FragmentHome extends Fragment {
     private ImageButton mattina;
     private ImageButton pomeriggio;
     private ImageButton sera;
+    private Button riassunti;
+    int positionRiassunti;
     private int where_MPS;
     String fronsblix;
     private TextView totProteineBar;
@@ -59,6 +62,7 @@ public class FragmentHome extends Fragment {
         View view =inflater.inflate(R.layout.fragment_home, container, false);
         cal_now= (TextView) view.findViewById(R.id.caloriePercentuali);
 
+        riassunti=view.findViewById(R.id.Riassunti);
         ViewPager2 viewPager = view.findViewById(R.id.pager);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         bottoneChangeActivity = view.findViewById(R.id.changeActivity);
@@ -104,9 +108,19 @@ public class FragmentHome extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                positionRiassunti=position;
                 tabLayout.getTabAt(position).select();
             }
         });
+
+        riassunti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyPopupFragment popup = new MyPopupFragment(positionRiassunti);
+                popup.show(getChildFragmentManager(), "popup");
+            }
+        });
+
 
 
         //barra inizializzazione

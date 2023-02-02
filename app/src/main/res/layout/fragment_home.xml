@@ -138,5 +138,20 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <Button
+        android:id="@+id/Riassunti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="#039587"
+        android:fontFamily="@font/arimo_bold"
+        android:text="Riassunti"
+        android:textColor="#DAD8D8"
+        android:textColorLink="#039587"
+        android:textSize="20sp"
+        app:iconPadding="3dp"/>
+
 
 </LinearLayout>

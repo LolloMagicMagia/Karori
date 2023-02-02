@@ -3,6 +3,7 @@ package com.example.karori.SearchClasses;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,12 +67,14 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
     Map<String, Object> importanti = new HashMap<String, Object>();
     String selezionato;
     String eng;
+    String i;
 
     private static boolean isObserverActive = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        i=getActivity().getIntent().getStringExtra("popUp");
 
     }
 
@@ -81,7 +84,6 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
 
         initializeViews(view);
-
 
         id = Integer.parseInt(getArguments().getString("id"));
         amount = Integer.parseInt(getArguments().getString("amount"));
@@ -179,6 +181,20 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
 
             }
         });
+
+        if(i==null || Integer.parseInt(i)==0){
+
+        }else{
+            i="0";
+            requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    getActivity().finish();
+                }
+            });
+        }
+
+
         return view;
     }
 

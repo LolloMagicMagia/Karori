@@ -49,14 +49,7 @@ public class RiassuntoPomeriggio extends Fragment {
         card = (CardView) view.findViewById(R.id.cardviewPomeriggio) ;
         myDialog = new Dialog(getContext());
 
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("CARD","POPUP");
-                MyPopupFragment popup = new MyPopupFragment();
-                popup.show(getChildFragmentManager(), "popup");
-            }
-        });
+
         //pomeriggio,dovrà andare a prendere i valori nel database inizialmente
         setValoriRiassuntivi(savedInstanceState);
 
@@ -66,16 +59,16 @@ public class RiassuntoPomeriggio extends Fragment {
     private void setValoriRiassuntivi(Bundle savedInstanceState){
         //vado nel databese
         if(savedInstanceState==null) {
-            tgrassip.setText("Grassi: " + "20");
-            tsaturip.setText("Saturi: " + "10");
-            tcarboidratip.setText("Caboidrati: " + "70");
-            tcaloriep.setText("Calorie: " + "40");
+            tgrassip.setText("20");
+            tsaturip.setText("10");
+            tcarboidratip.setText("70");
+            tcaloriep.setText("40");
         }
         else{
-            tgrassip.setText("Grassi: " + savedInstanceState.get(KEY_GRASSIP));
-            tsaturip.setText("Saturi: " + savedInstanceState.get(KEY_SATURIP));
-            tcarboidratip.setText("Caboidrati: " + savedInstanceState.get(KEY_CARBOIDRATIP));
-            tcaloriep.setText("Calorie: " + savedInstanceState.get(KEY_CALORIEP));
+            tgrassip.setText("" + savedInstanceState.get(KEY_GRASSIP));
+            tsaturip.setText("" + savedInstanceState.get(KEY_SATURIP));
+            tcarboidratip.setText("" + savedInstanceState.get(KEY_CARBOIDRATIP));
+            tcaloriep.setText("" + savedInstanceState.get(KEY_CALORIEP));
         }
     }
 }

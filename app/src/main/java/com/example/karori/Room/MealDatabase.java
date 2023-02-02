@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Meal.class}, version = 1, exportSchema = false)
+@Database(entities = {Meal.class}, version = 2, exportSchema = false)
 @TypeConverters({DateConverter.class})
 
 public abstract class MealDatabase extends RoomDatabase {
