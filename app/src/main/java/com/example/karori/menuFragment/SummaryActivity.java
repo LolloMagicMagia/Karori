@@ -30,7 +30,9 @@ public class SummaryActivity extends AppCompatActivity {
                 findFragmentById(R.id.nav_host_fragment);
 
         NavController navController =navHostFragment.getNavController();
+
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
+
 
         AppBarConfiguration appBarConfiguration=new AppBarConfiguration.Builder(
                 R.id.fragmentHome,R.id.fragmentProfilo, R.id.fragment_calendar).build();

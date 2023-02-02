@@ -18,6 +18,7 @@ import com.example.karori.SearchClasses.RicercaEAggiungiActivity;
 import com.example.karori.SearchClasses.SearchActivity;
 import com.google.android.material.tabs.TabLayout;
 
+import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.bastanfar.semicirclearcprogressbar.SemiCircleArcProgressBar;
 
@@ -29,8 +30,8 @@ public class FragmentHome extends Fragment {
     private int where_MPS;
     String fronsblix;
     private TextView totProteineBar;
-    private TextView cal_percentuali;
-    private SemiCircleArcProgressBar progressBar;
+    private TextView cal_now;
+    private CircularProgressIndicator progressBar;
     private String pasto = "";
     private CircleImageView bottoneChangeActivity;
 
@@ -55,8 +56,7 @@ public class FragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_home, container, false);
-        cal_percentuali= (TextView) view.findViewById(R.id.caloriePercentuali);
-        totProteineBar=(TextView) view.findViewById(R.id.calorie_calorieTot);
+        cal_now= (TextView) view.findViewById(R.id.caloriePercentuali);
 
         ViewPager2 viewPager = view.findViewById(R.id.pager);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
@@ -109,13 +109,15 @@ public class FragmentHome extends Fragment {
 
 
         //barra inizializzazione
-        progressBar=(SemiCircleArcProgressBar) view.findViewById(R.id.semiCircleArcProgressBar);
+        progressBar=(CircularProgressIndicator) view.findViewById(R.id.circular_progress);
+        //così va da 0 a 100
+        progressBar.setMaxProgress(100);
 
 
         //SERVE PER CAMBIARE ACTIVITY ALLA PRESSIONE DEL BOTTONE, E POI TRAMITE IL WHERE CHE SAREBBE
         //UN VALORE PER INDICARE SE ERO SU COLAZ/PRANZ... SCELGO IL FRAGMENT DA METTERE SULLA ACTIVITY
 
-        //per capire quanto siamo di percentuale sulla barra delle nostre proteine
+        //tot proteine mi serve per capire a quale percentuale è arrivato , così lascio sempre settato a 100 il max
         progressBarUpdate(200, 300);
 
         // Inflate the layout for this fragment
@@ -130,14 +132,12 @@ public class FragmentHome extends Fragment {
 
     public  void progressBarUpdate(float totProteineAssunte, float totProteine){
         if(totProteineAssunte>totProteine){
-            totProteineBar.setText(">100 %");
-            cal_percentuali.setText(String.valueOf(totProteineAssunte)+" / "+ String.valueOf(totProteine));
-            progressBar.setPercent(100);
+            cal_now.setText(">100 %");
+            progressBar.setCurrentProgress(totProteine);
         }
         else{
-            totProteineBar.setText(String.valueOf((totProteineAssunte/totProteine)*100)+" %");
-            cal_percentuali.setText(String.valueOf(totProteineAssunte)+" / "+ String.valueOf(totProteine));
-            progressBar.setPercent((int)((totProteineAssunte/totProteine)*100));
+            cal_now.setText(String.valueOf(totProteineAssunte)+" / "+ String.valueOf(totProteine));
+            progressBar.setCurrentProgress((int)((totProteineAssunte/totProteine)*100));
         }
 
     }
