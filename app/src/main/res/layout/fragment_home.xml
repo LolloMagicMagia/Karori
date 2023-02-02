@@ -129,6 +129,7 @@
                 android:backgroundTint="#039587"
                 android:fontFamily="@font/arimo_bold"
                 android:text="Add"
+                android:textColor="#DAD8D8"
                 android:textColorLink="#039587"
                 android:textSize="20sp"
                 app:iconPadding="3dp" />
