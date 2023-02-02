@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ public class FragmentHome extends Fragment {
     private TextView cal_now;
     private CircularProgressIndicator progressBar;
     private String pasto = "";
-    private CircleImageView bottoneChangeActivity;
+    private Button bottoneChangeActivity;
 
 
     public FragmentHome() {
