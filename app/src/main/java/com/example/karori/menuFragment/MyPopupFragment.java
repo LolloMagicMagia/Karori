@@ -60,13 +60,13 @@ public class MyPopupFragment extends DialogFragment {
         TextView riassunti=(TextView) view.findViewById(R.id.Riassunti);
         ///////////////prova recycler view
         //alimento specifico deve avere: nome, id, calorie, proteine, grassi, carboidrati, tipo, quantita, unita di misura
-        al1=new AlimentoSpecifico("banana","9266","30","5","70","colazione");
-        al2=new AlimentoSpecifico("banana","2047","30","5","70","colazione");
-        al3=new AlimentoSpecifico("banana","9268","30","5","70","colazione");
-        al4=new AlimentoSpecifico("banana","9269","30","5","70","colazione");
-        al5=new AlimentoSpecifico("banana","9270","30","5","70","colazione");
-        al6=new AlimentoSpecifico("banana","9270","30","5","70","colazione");
-        al7=new AlimentoSpecifico("banana","9270","30","5","70","colazione");
+        al1=new AlimentoSpecifico("banana","9266","30","5","70","colazione","90","100");
+        al2=new AlimentoSpecifico("banana","2047","30","5","70","colazione","90","100");
+        al3=new AlimentoSpecifico("banana","9268","30","5","70","colazione","90","100");
+        al4=new AlimentoSpecifico("banana","9269","30","5","70","colazione","90","100");
+        al5=new AlimentoSpecifico("banana","9270","30","5","70","colazione","90","100");
+        al6=new AlimentoSpecifico("banana","9270","30","5","70","colazione","90","100");
+        al7=new AlimentoSpecifico("banana","9270","30","5","70","colazione","90","100");
         ////////////////////////////////////
         setParteDelGiorno(parteDelGiorno,riassunti);
 

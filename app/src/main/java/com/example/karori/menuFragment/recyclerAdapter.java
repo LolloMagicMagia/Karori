@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karori.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHoleder> {
@@ -32,12 +34,18 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         private TextView proteine;
         private CardView card;
 
+        private TextView carboidrati;
+
+        private TextView grassi;
+
         public MyViewHoleder(final View view){
             super(view);
             nome=view.findViewById(R.id.nomeCiboPopUp);
-            calorie=view.findViewById(R.id.altreInfoPopUp);
+            calorie=view.findViewById(R.id.CaloriePopUp);
             quantità=view.findViewById(R.id.quantitàPopUp);
-            proteine=view.findViewById(R.id.CaloriePopUp);
+            grassi=view.findViewById(R.id.GrassiPopUp);
+            carboidrati=view.findViewById(R.id.CarboidratiPopUp);
+            proteine=view.findViewById(R.id.ProteinePopUp);
             view.setOnClickListener(this);
         }
 
@@ -60,11 +68,15 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
          String calorie=alimentiList.get(position).getCalorie();
          String quantità=alimentiList.get(position).getQuantità();
          String proteine=alimentiList.get(position).getProteine();
+         String carboidrati=alimentiList.get(position).getCarboidrati();
+         String grassi=alimentiList.get(position).getGrassi();
 
          holder.nome.setText(nome);
          holder.calorie.setText(calorie);
          holder.quantità.setText(quantità);
          holder.proteine.setText(proteine);
+         holder.carboidrati.setText(carboidrati);
+         holder.grassi.setText(grassi);
     }
 
     @Override

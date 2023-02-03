@@ -5,16 +5,22 @@ public class AlimentoSpecifico {
     private String id;
     private String calorie;
     private String quantità;
+    String tipo;
     private String proteine;
-    private String tipo;
+    private String carboidrati;
 
-    public AlimentoSpecifico(String nome, String id, String calorie, String quantità, String proteine, String tipo) {
+    private String grassi;
+
+    public AlimentoSpecifico(String nome, String id, String calorie, String quantità, String proteine, String tipo, String grassi, String carboidrati) {
         this.nome = nome;
         this.id = id;
+        //prima l'aveva salvato come carboidrati il tipo
         this.tipo = tipo;
         this.calorie = calorie;
         this.quantità = quantità;
         this.proteine = proteine;
+        this.grassi=grassi;
+        this.carboidrati=carboidrati;
     }
 
     public String getNome() {
@@ -63,5 +69,20 @@ public class AlimentoSpecifico {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+    public String getCarboidrati() {
+        return carboidrati;
+    }
+
+    public void setCarboidrati(String carboidrati) {
+        this.carboidrati = carboidrati;
+    }
+
+    public String getGrassi() {
+        return grassi;
+    }
+
+    public void setGrassi(String grassi) {
+        this.grassi = grassi;
     }
 }
