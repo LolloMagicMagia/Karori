@@ -1,6 +1,8 @@
 package com.example.karori.menuFragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +60,8 @@ public class MyPopupFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.pop_up_riassunto, container, false);
         mRecyclerView=view.findViewById(R.id.recycler_view_riassuntoM);
         TextView riassunti=(TextView) view.findViewById(R.id.Riassunti);
+        //trasparente fragment
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ///////////////prova recycler view
         //alimento specifico deve avere: nome, id, calorie, proteine, grassi, carboidrati, tipo, quantita, unita di misura
         al1=new AlimentoSpecifico("banana","9266","30","5","70","colazione","90","100");
@@ -133,7 +137,7 @@ public class MyPopupFragment extends DialogFragment {
             riassunti.setText("Pomeriggio");
         }
         else{
-            riassunti.setText("Sera");
+            riassunti.setText("Cena");
         }
 
 }
