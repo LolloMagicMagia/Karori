@@ -32,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/arimo_bold"
                 android:text="TextView"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -131,7 +130,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="#039587"
-                android:fontFamily="@font/arimo_bold"
+
                 android:text="See more"
                 android:textColor="#DAD8D8"
                 android:textColorLink="#039587"
@@ -144,16 +143,17 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <Button
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/changeActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="42dp"
+        android:layout_height="51dp"
+        android:layout_gravity="end"
         android:background="@drawable/circle_button"
         android:backgroundTint="#039587"
-        android:fontFamily="@font/arimo_bold"
-        android:text="+"
-        android:textSize="45sp" />
+        android:src="@drawable/plus_button"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="0dp" />
 
 
 </LinearLayout>

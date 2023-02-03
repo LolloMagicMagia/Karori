@@ -37,7 +37,7 @@ public class FragmentHome extends Fragment {
     private TextView cal_now;
     private CircularProgressIndicator progressBar;
     private String pasto = "";
-    private Button bottoneChangeActivity;
+    private CircleImageView bottoneChangeActivity;
 
 
     public FragmentHome() {
