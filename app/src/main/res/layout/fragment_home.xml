@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/login3"
     android:orientation="vertical"
-    android:scrollbarSize="20dp"
+    android:scrollbarSize="45sp"
     tools:context="menuFragment.FragmentHome">
 
 
@@ -34,6 +34,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/arimo_bold"
                 android:text="TextView"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,6 +109,7 @@
                     android:layout_height="wrap_content" />
             </com.google.android.material.tabs.TabLayout>
 
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
@@ -120,38 +122,38 @@
                 android:foregroundGravity="center_vertical" />
 
             <Button
-                android:id="@+id/changeActivity"
+                android:id="@+id/Riassunti"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="start"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
+                android:layout_weight="1"
                 android:backgroundTint="#039587"
                 android:fontFamily="@font/arimo_bold"
-                android:text="Add"
+                android:text="See more"
                 android:textColor="#DAD8D8"
                 android:textColorLink="#039587"
                 android:textSize="20sp"
+                app:cornerRadius="40dp"
                 app:iconPadding="3dp" />
 
-
         </LinearLayout>
+
+
     </com.google.android.material.card.MaterialCardView>
 
     <Button
-        android:id="@+id/Riassunti"
+        android:id="@+id/changeActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/circle_button"
         android:backgroundTint="#039587"
         android:fontFamily="@font/arimo_bold"
-        android:text="Riassunti"
-        android:textColor="#DAD8D8"
-        android:textColorLink="#039587"
-        android:textSize="20sp"
-        app:iconPadding="3dp"/>
+        android:text="+"
+        android:textSize="45sp" />
 
 
 </LinearLayout>
