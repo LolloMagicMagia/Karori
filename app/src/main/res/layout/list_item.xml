@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"
         android:outlineProvider="none"
-        app:cardBackgroundColor="@android:color/transparent"
+        app:cardBackgroundColor="#E4FFFFFF"
         app:cardCornerRadius="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,7 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                app:cardBackgroundColor="#8AFFFFFF"
+                android:outlineProvider="none"
+                app:cardBackgroundColor="#039587"
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
@@ -45,8 +46,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/arimo_bold"
                         android:gravity="center"
-                        android:text="Nome" />
+                        android:text="Nome"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -54,7 +58,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:outlineProvider="none"
+                app:cardBackgroundColor="#D8D8D8"
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
@@ -68,7 +76,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Calorie:" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:text="Calorie:"
+                        android:textColor="#4C4C4C" />
 
                     <TextView
                         android:id="@+id/CaloriePopUp"
@@ -76,8 +86,11 @@
                         android:layout_height="wrap_content"
 
                         android:layout_weight="1"
+                        android:fontFamily="@font/arimo_bold"
                         android:gravity="end"
                         android:text="0"
+                        android:textColor="#4C4C4C"
+                        android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/calorie" />
                 </LinearLayout>
@@ -86,7 +99,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:outlineProvider="none"
+                app:cardBackgroundColor="#D8D8D8"
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
@@ -100,15 +117,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:text="TextView"
+                        android:textColor="#4C4C4C" />
 
                     <TextView
                         android:id="@+id/GrassiPopUp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/arimo_bold"
                         android:gravity="end"
                         android:text="0"
+                        android:textColor="#4C4C4C"
+                        android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/carboidrati" />
@@ -118,7 +140,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:outlineProvider="none"
+                app:cardBackgroundColor="#D8D8D8"
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
@@ -132,15 +158,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:text="TextView"
+                        android:textColor="#4C4C4C" />
 
                     <TextView
                         android:id="@+id/CarboidratiPopUp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/arimo_bold"
                         android:gravity="end"
                         android:text="0"
+                        android:textColor="#4C4C4C"
+                        android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/grassi" />
@@ -150,7 +181,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:outlineProvider="none"
+                app:cardBackgroundColor="#D8D8D8"
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
@@ -164,15 +199,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:text="TextView"
+                        android:textColor="#4C4C4C" />
 
                     <TextView
                         android:id="@+id/ProteinePopUp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/arimo_bold"
                         android:gravity="end"
                         android:text="0"
+                        android:textColor="#4C4C4C"
+                        android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/grassi" />
@@ -182,7 +222,12 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:outlineProvider="none"
+                app:cardBackgroundColor="#D8D8D8"
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
@@ -196,7 +241,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:text="TextView"
+                        android:textColor="#4C4C4C" />
 
                     <TextView
                         android:id="@+id/quantitàPopUp"
@@ -204,8 +251,11 @@
                         android:layout_height="wrap_content"
 
                         android:layout_weight="1"
+                        android:fontFamily="@font/arimo_bold"
                         android:gravity="end"
                         android:text="0"
+                        android:textColor="#4C4C4C"
+                        android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/carboidrati" />
