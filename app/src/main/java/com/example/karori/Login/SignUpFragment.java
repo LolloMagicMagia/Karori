@@ -96,19 +96,13 @@ public class SignUpFragment extends Fragment {
             int height = 0;
             float kilocalorie = 0;
 
-            if(numberOk(ageSt,heightSt,weightSt)){
-                age = Integer.parseInt(ageSt);
-                weight = Float.parseFloat(weightSt);
-                height = Integer.parseInt(heightSt);
-
-            } else{
-                userViewModel.setAuthenticationError(true);
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
-            }
 
 
-            if (isEmailOk(email) & isPasswordOk(password, cnfpsw)) {
+            if (isEmailOk(email) & isPasswordOk(password, cnfpsw) & numberOk(ageSt,heightSt,weightSt)) {
+                    age = Integer.parseInt(ageSt);
+                    weight = Float.parseFloat(weightSt);
+                    height = Integer.parseInt(heightSt);
+
                 if (!userViewModel.isAuthenticationError()) {
 
                     int finalAge = age;
