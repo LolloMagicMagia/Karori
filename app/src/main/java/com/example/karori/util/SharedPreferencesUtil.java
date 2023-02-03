@@ -17,11 +17,18 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
 
-    public void writeIntData(String sharedPreferencesFileName, String key, int value){
+    public static void writeIntData(String sharedPreferencesFileName, String key, int value){
         SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(key,value);
+        editor.apply();
+    }
+    public static void writeFloatData(String sharedPreferencesFileName, String key, float value){
+        SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putFloat(key,value);
         editor.apply();
     }
 

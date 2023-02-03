@@ -12,7 +12,7 @@ public class User implements Parcelable {
     private int weight;
     private int height;
     private int kilocalorie;
-    private int goal;
+    private int age;
 
 
     public User( String name, String email, String idToken){
@@ -22,16 +22,16 @@ public class User implements Parcelable {
         this.weight = 0;
         this.height = 0;
         this.kilocalorie = 0;
-        this.goal = 0;
+        this.age = 0;
     }
-    public User(String email, String idToken, int weight, int height, int kilokalorie, int goal){
+    public User(String name, String email, String idToken, int weight, int height, int kilokalorie, int age){
         this.name = name;
         this.email       = email;
         this.idToken     = idToken;
         this.weight      = weight;
         this.height      = height;
         this.kilocalorie = kilokalorie;
-        this.goal        = goal;
+        this.age        = age;
     }
 
 
@@ -64,9 +64,9 @@ public class User implements Parcelable {
 
     public void setKilocalorie() {this.kilocalorie=kilocalorie;}
 
-    public int getGoal() {return goal;}
+    public int getAge() {return age;}
 
-    public void setGoal(int goal) {this.goal = goal;}
+    public void setAge(int goal) {this.age = age;}
 
 
     @Override
@@ -78,7 +78,7 @@ public class User implements Parcelable {
                 ", weight=" + weight +
                 ", height=" + height +
                 ", kilokalorie=" + kilocalorie +
-                ", goal=" + goal +
+                ", age=" + age +
                 '}';
     }
 
@@ -95,7 +95,7 @@ public class User implements Parcelable {
         dest.writeInt(this.height);
         dest.writeInt(this.weight);
         dest.writeInt(this.kilocalorie);
-        dest.writeInt(this.goal);
+        dest.writeInt(this.age);
 
     }
 
@@ -106,7 +106,7 @@ public class User implements Parcelable {
         this.weight = source.readInt();
         this.height = source.readInt();
         this.kilocalorie = source.readInt();
-        this.goal = source.readInt();
+        this.age = source.readInt();
     }
 
     protected User(Parcel in) {
@@ -116,7 +116,7 @@ public class User implements Parcelable {
         this.weight = in.readInt();
         this.height = in.readInt();
         this.kilocalorie = in.readInt();
-        this.goal = in.readInt();
+        this.age = in.readInt();
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {

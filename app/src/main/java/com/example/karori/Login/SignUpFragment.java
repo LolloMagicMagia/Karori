@@ -1,5 +1,8 @@
 package com.example.karori.Login;
 
+
+import static com.example.karori.util.SharedPreferencesUtil.writeFloatData;
+import static com.example.karori.util.SharedPreferencesUtil.writeIntData;
 import static com.example.karori.util.SharedPreferencesUtil.writeStringData;
 
 import android.annotation.SuppressLint;
@@ -41,6 +44,10 @@ public class SignUpFragment extends Fragment {
     private EditText editTextPsw;
     private EditText editTextCnfPsw;
     private UserViewModel userViewModel;
+    private EditText editTextAge;
+    private EditText editTextWeight;
+    private EditText editTextHeight;
+
 
 
     public SignUpFragment() {
@@ -67,6 +74,9 @@ public class SignUpFragment extends Fragment {
         editTextEmail = view.findViewById(R.id.Mail_input_SU);
         editTextPsw= view.findViewById(R.id.Psw_input_su);
         editTextCnfPsw= view.findViewById(R.id.ConfirmPsw_Input_SU);
+        editTextAge = view.findViewById(R.id.ageTextView);
+        editTextHeight = view.findViewById(R.id.heightTextView);
+        editTextWeight = view.findViewById(R.id.weightTextView);
 
         final Button buttonRegistration = view.findViewById(R.id.RegisterUserButton);
         final Button buttonback = view.findViewById(R.id.backbuttonsignup);
@@ -78,14 +88,39 @@ public class SignUpFragment extends Fragment {
             String email = editTextEmail.getText().toString().trim();
             String password = editTextPsw.getText().toString().trim();
             String cnfpsw =editTextCnfPsw.getText().toString().trim();
+            String ageSt = editTextAge.getText().toString().trim();
+            String heightSt = editTextHeight.getText().toString().trim();
+            String weightSt = editTextWeight.getText().toString().trim();
+            int age = 0;
+            float weight = 0;
+            int height = 0;
+            float kilocalorie = 0;
+
+            if(numberOk(ageSt,heightSt,weightSt)){
+                age = Integer.parseInt(ageSt);
+                weight = Float.parseFloat(weightSt);
+                height = Integer.parseInt(heightSt);
+
+            } else{
+                userViewModel.setAuthenticationError(true);
+                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                        R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
+            }
+
 
             if (isEmailOk(email) & isPasswordOk(password, cnfpsw)) {
                 if (!userViewModel.isAuthenticationError()) {
+
+                    int finalAge = age;
+                    float finalWeight = weight;
+                    int finalHeight = height;
+                    float finalKilocalorie = (float) (1.2*(66+(13.7* weight)+(5+height)-(6.8+age)));
+
                     userViewModel.getUserMutableLiveData(email, password, false).observe(
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
                                     User user = ((Result.UserResponseSuccess) result).getData();
-                                    saveLoginData(email, password, user.getIdToken());
+                                    saveLoginData(email, password, user.getIdToken(), finalAge, finalWeight, finalHeight, finalKilocalorie);
                                     userViewModel.setAuthenticationError(false);
                                     Navigation.findNavController(view).navigate(
                                             R.id.action_signUpFragment_to_loginFragment2);
@@ -118,10 +153,21 @@ public class SignUpFragment extends Fragment {
         }
     }
 
-    private void saveLoginData(String email, String password, String idToken) {
+    private void saveLoginData(String email, String password, String idToken, int age, float weight, int height, float kilocalorie) {
         writeStringData("com.example.karori.save_file.txt", "email:", email);
-        ;
+
         writeStringData("com.example.karori.save_file.txt", "idToken:", idToken);
+
+        writeIntData("com.example.karori.save_file.txt", "age: ", age);
+
+        writeFloatData("com.example.karori.save_file.txt", "weight: ", weight);
+
+        writeIntData("com.example.karori.save_file.txt", "height: ", height);
+
+        writeFloatData("com.example.karori.save_file.txt", "kilocalorie: ", kilocalorie);
+
+
+
     }
 
     private boolean isEmailOk(String email) {
@@ -175,7 +221,58 @@ public class SignUpFragment extends Fragment {
         return true;
     }
 
+    private boolean numberOk(String age, String weight, String height){
+        boolean check = true;
+        if (age.isEmpty()){
+            editTextAge.setError("The age is required");
+            editTextAge.requestFocus();
+            check = false;
+        }
+        else if (isNumeric(age)){
+            check = check & true;
+        }else{
+            editTextAge.setError("Please insert a number!");
+            editTextAge.requestFocus();
+            check = false;
+        }
+
+
+        if (weight.isEmpty()){
+            editTextWeight.setError("The weight is required");
+            editTextWeight.requestFocus();
+            check = false;
+        }
+        else if (isNumeric(weight)){
+            check = check & true;
+        }else{
+            editTextWeight.setError("Please insert a number!");
+            editTextWeight.requestFocus();
+            check = false;
+        }
+
+
+        if (height.isEmpty()){
+            editTextHeight.setError("The age is required");
+            editTextHeight.requestFocus();
+            check = false;
+        }
+        else if (isNumeric(height)){
+            check = check & true;
+        }else {
+            editTextHeight.setError("Please insert a number!");
+            editTextHeight.requestFocus();
+            check = false;
+        }
+
+        return  check;
     }
+
+
+    public boolean isNumeric(String str) {
+        return str.matches("\\d+(\\.\\d+)?");
+    }
+
+}
 
 
 

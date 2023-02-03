@@ -40,7 +40,11 @@
             android:outlineProvider="none"
             app:cardBackgroundColor="@android:color/transparent">
 
-            <LinearLayout
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="334dp"
                 android:layout_height="524dp"
@@ -48,99 +52,171 @@
                 android:outlineProvider="none"
                 android:backgroundTint="#97FFFFFF">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="cursive"
-                    android:text="@string/sign_up"
-                    android:textColor="#364450"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:outlineProvider="none"
-                    app:boxBackgroundColor="#00D5D5D5"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp"
-                    app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="cursive"
+                        android:text="@string/sign_up"
+                        android:textColor="#364450"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/Mail_input_SU"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_email"
-                        android:inputType="textEmailAddress"
-                        tools:ignore="TextContrastCheck" />
+                        android:layout_marginTop="20dp"
+                        android:outlineProvider="none"
+                        app:boxBackgroundColor="#00D5D5D5"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/Mail_input_SU"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/prompt_email"
+                            android:inputType="textEmailAddress"
+                            tools:ignore="TextContrastCheck" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:outlineProvider="none"
-                    app:boxBackgroundColor="#00D5D5D5"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp"
-                    app:passwordToggleEnabled="true"
-                    app:startIconDrawable="@drawable/ic_baseline_lock_24">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/Psw_input_su"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password"
-                        android:inputType="textPassword"
-                        tools:ignore="TextContrastCheck" />
+                        android:layout_marginTop="20dp"
+                        android:outlineProvider="none"
+                        app:boxBackgroundColor="#00D5D5D5"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp">
 
-                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:outlineProvider="none"
-                    app:boxBackgroundColor="#00D5D5D5"
-                    app:boxCornerRadiusBottomEnd="20dp"
-                    app:boxCornerRadiusBottomStart="20dp"
-                    app:boxCornerRadiusTopEnd="20dp"
-                    app:boxCornerRadiusTopStart="20dp"
-                    app:passwordToggleEnabled="true"
-                    app:startIconDrawable="@drawable/ic_baseline_lock_24">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/ageTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="age"
+                            android:inputType="number"
+                            tools:ignore="TextContrastCheck" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ConfirmPsw_Input_SU"
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/repeat_password"
-                        android:inputType="textPassword"
-                        tools:ignore="TextContrastCheck" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/RegisterUserButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/sign_up" />
+                        android:layout_marginTop="20dp"
+                        android:outlineProvider="none"
+                        app:boxBackgroundColor="#00D5D5D5"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp">
 
 
-            </LinearLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/heightTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="height"
+                            android:inputType="numberDecimal"
+                            tools:ignore="TextContrastCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:outlineProvider="none"
+                        app:boxBackgroundColor="#00D5D5D5"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp">
+
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/weightTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="weight"
+                            android:inputType="numberDecimal"
+                            tools:ignore="TextContrastCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:outlineProvider="none"
+                        app:boxBackgroundColor="#00D5D5D5"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:passwordToggleEnabled="true"
+                        app:startIconDrawable="@drawable/ic_baseline_lock_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/Psw_input_su"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/prompt_password"
+                            android:inputType="textPassword"
+                            tools:ignore="TextContrastCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:outlineProvider="none"
+                        app:boxBackgroundColor="#00D5D5D5"
+                        app:boxCornerRadiusBottomEnd="20dp"
+                        app:boxCornerRadiusBottomStart="20dp"
+                        app:boxCornerRadiusTopEnd="20dp"
+                        app:boxCornerRadiusTopStart="20dp"
+                        app:passwordToggleEnabled="true"
+                        app:startIconDrawable="@drawable/ic_baseline_lock_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/ConfirmPsw_Input_SU"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/repeat_password"
+                            android:inputType="textPassword"
+                            tools:ignore="TextContrastCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/RegisterUserButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/sign_up" />
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
 
         </androidx.cardview.widget.CardView>
 
