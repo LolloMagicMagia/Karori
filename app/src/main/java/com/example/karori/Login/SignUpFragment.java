@@ -99,9 +99,9 @@ public class SignUpFragment extends Fragment {
 
 
             if (isEmailOk(email) & isPasswordOk(password, cnfpsw) & numberOk(ageSt,heightSt,weightSt)) {
-                    age = Integer.parseInt(ageSt);
-                    weight = Float.parseFloat(weightSt);
-                    height = Integer.parseInt(heightSt);
+                weight = Float.parseFloat(weightSt);
+                height = Integer.parseInt(heightSt);
+                age = Integer.parseInt(ageSt);
 
                 if (!userViewModel.isAuthenticationError()) {
 
@@ -217,6 +217,7 @@ public class SignUpFragment extends Fragment {
 
     private boolean numberOk(String age, String weight, String height){
         boolean check = true;
+        int i= 0;
         if (age.isEmpty()){
             editTextAge.setError("The age is required");
             editTextAge.requestFocus();
@@ -228,8 +229,13 @@ public class SignUpFragment extends Fragment {
             editTextAge.setError("Please insert a number!");
             editTextAge.requestFocus();
             check = false;
+        }try {
+            i = Integer.parseInt(age);
+        } catch (NumberFormatException e){
+            editTextAge.setError("the age must be int");
+            editTextAge.requestFocus();
+            check = false;
         }
-
 
         if (weight.isEmpty()){
             editTextWeight.setError("The weight is required");
@@ -257,7 +263,14 @@ public class SignUpFragment extends Fragment {
             editTextHeight.requestFocus();
             check = false;
         }
-
+        try {
+            i = Integer.parseInt(age);
+            check = check & true;
+        } catch (NumberFormatException e){
+            editTextAge.setError("the height must be int");
+            editTextAge.requestFocus();
+            check = false;
+    }
         return  check;
     }
 
