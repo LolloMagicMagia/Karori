@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login3"
     tools:context="SearchClasses.IngredientInfoActivity"
     android:orientation="vertical">
 
     <Toolbar
-        android:background="@color/purple_200"
+        android:background="#039587"
         android:title="Selected Ingredient Details"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
@@ -20,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="Add Aliment"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
     </Toolbar>
@@ -34,7 +36,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.cardview.widget.CardView
+                android:layout_margin="15dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <TextView
+                android:gravity="center"
                 android:id="@+id/txt_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,6 +55,8 @@
                 android:textStyle="bold" />
 
             <ImageView
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60dp"
                 android:id="@+id/img_foto"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -53,11 +64,14 @@
                 android:src="@drawable/ic_launcher_foreground" />
 
             <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="170dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <TextView
+                    android:layout_marginBottom="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -67,6 +81,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:layout_marginBottom="8dp"
                     android:id="@+id/txt_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,15 +90,17 @@
                     android:text="Amount"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
-
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="220dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <TextView
+                    android:layout_marginBottom="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -93,6 +110,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:layout_marginBottom="8dp"
                     android:id="@+id/txt_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,25 +119,46 @@
                     android:text="Unit"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
-
             </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="#BC4A4A4A"
+                app:cardCornerRadius="80dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <TextView
+                android:gravity="center"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="Principal Informations:"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="80dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                 <TextView
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -128,9 +167,10 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-
                 <TextView
+                    android:layout_marginBottom="8dp"
                     android:id="@+id/txt_cal"
+                    android:layout_marginLeft="240dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -138,15 +178,25 @@
                     android:text="42"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
-
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="80dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                 <TextView
+                    android:layout_marginBottom="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -161,17 +211,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="240dp"
+                    android:layout_marginBottom="8dp"
                     android:padding="10dp"
                     android:text="42"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="80dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -179,11 +241,14 @@
                     android:layout_marginTop="10dp"
                     android:padding="10dp"
                     android:text="Fat:"
+                    android:layout_marginBottom="8dp"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="240dp"
                     android:id="@+id/txt_fat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -193,24 +258,89 @@
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
+                </androidx.cardview.widget.CardView>
+
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="80dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Carbohydrates:"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="240dp"
+                    android:id="@+id/txt_carbo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="42"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#BC4A4A4A"
+                app:cardCornerRadius="80dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
             <TextView
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="Properties:"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+            </androidx.cardview.widget.CardView>
+
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
+                <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="80dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                 <TextView
+                    android:layout_marginBottom="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -220,6 +350,8 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:layout_marginLeft="240dp"
+                    android:layout_marginBottom="8dp"
                     android:id="@+id/txt_gly_ind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -229,23 +361,36 @@
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
+
+                <androidx.cardview.widget.CardView
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="80dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:padding="10dp"
+                    android:layout_marginBottom="8dp"
                     android:text="Glycemic Load:"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
                 <TextView
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="240dp"
                     android:id="@+id/txt_gly_load"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -255,19 +400,47 @@
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#BC4A4A4A"
+                app:cardCornerRadius="80dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
             <TextView
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="Secondary Informations:"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="15dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -275,7 +448,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="0dp"
                     android:padding="10dp"
                     android:text="Saturated Fat:"
                     android:textColor="@color/black"
@@ -286,7 +459,6 @@
                     android:id="@+id/txt_sat_fat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:padding="10dp"
                     android:text="42"
                     android:textColor="@color/black"
@@ -295,33 +467,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="10dp"
-                    android:text="Carbohydrates:"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txt_carbo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="10dp"
-                    android:text="42"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
+                android:layout_marginTop="50dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -349,6 +495,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="100dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -376,6 +523,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="150dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -403,6 +551,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="200dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -430,6 +579,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="250dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -457,6 +607,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="300dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -484,6 +635,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="350dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -511,6 +663,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="400dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -538,6 +691,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="450dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -565,6 +719,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="500dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -592,6 +747,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="550dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -619,6 +775,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="600dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -646,6 +803,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="650dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -673,6 +831,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="700dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -700,6 +859,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="750dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -727,6 +887,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="800dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -754,6 +915,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="850dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -781,6 +943,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="900dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -808,6 +971,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="950dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -835,6 +999,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="1000dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -862,6 +1027,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="1050dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -889,6 +1055,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="1100dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -916,6 +1083,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="1150dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -943,6 +1111,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="1200dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -969,6 +1139,8 @@
 
             </LinearLayout>
 
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

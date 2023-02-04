@@ -3,7 +3,6 @@ package com.example.karori.SearchClasses;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,16 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -31,21 +25,18 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karori.Adapter.SearchedIngredientsAdapter;
+import com.example.karori.Adapter.SearchedRecipesAdapter;
 import com.example.karori.Listeners.IngredientIdListener;
 import com.example.karori.Listeners.IngredientInfoListener;
+import com.example.karori.Listeners.RecipeIdListener;
 import com.example.karori.Listeners.SearchIngredientsListener;
+import com.example.karori.Listeners.SearchRecipesListener;
 import com.example.karori.Models.IngredientInfoResponse;
-import com.example.karori.Models.Nutrient;
-import com.example.karori.Models.Nutrition;
-import com.example.karori.Models.Property;
 import com.example.karori.Models.SearchIngredientsResponse;
+import com.example.karori.Models.SearchRecipesResponse;
 import com.example.karori.R;
-import com.squareup.picasso.Picasso;
-
-import org.apache.commons.collections.functors.ExceptionPredicate;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RicercaEAggiungiActivity extends Fragment {
     private String pasto;
@@ -56,9 +47,13 @@ public class RicercaEAggiungiActivity extends Fragment {
     private String selezionato;
     private boolean skip = false;
 
+    Button btnIngredients, btnRecipes;
+    private String cerca = "ingredienti";
+
     ProgressDialog dialog;
     RequestManager manager;
-    SearchedIngredientsAdapter adapter;
+    SearchedIngredientsAdapter ingredientsAdapter;
+    SearchedRecipesAdapter recipesAdapter;
     String id;
     String amount;
     String unit;
@@ -74,6 +69,23 @@ public class RicercaEAggiungiActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_ricerca_aggiungi, container, false);
+
+        btnIngredients = view.findViewById(R.id.button3);
+        btnRecipes = view.findViewById(R.id.button4);
+
+        btnIngredients.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cerca = "ingredienti";
+            }
+        });
+
+        btnRecipes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cerca = "ricette";
+            }
+        });
 
         if (skip == true) {
             skip = false;
@@ -103,7 +115,7 @@ public class RicercaEAggiungiActivity extends Fragment {
 
         }
 
-        txt_select = view.findViewById(R.id.txt_select);
+        txt_select = view.findViewById(R.id.txt_selected);
         int idPasto = Integer.parseInt(pasto);
         if (idPasto == 0) {
             txt_select.setText("Search For a Breakfast Meal");
@@ -119,8 +131,6 @@ public class RicercaEAggiungiActivity extends Fragment {
         }
 
 
-
-
         dialog = new ProgressDialog(getActivity());
         dialog.setTitle("Loading");
         manager = new RequestManager(getActivity());
@@ -132,7 +142,10 @@ public class RicercaEAggiungiActivity extends Fragment {
                 txt_select.setVisibility(View.GONE);
                 rec_pasto.setVisibility(View.VISIBLE);
                 dialog.show();
-                manager.getIngredientSearchResult(ingredientsListener, query);
+                if (cerca == "ingredienti")
+                    manager.getIngredientSearchResult(ingredientsListener, query);
+                if (cerca == "ricette")
+                    manager.getRecipeSearchResult(recipesListener, query);
                 return true;
             }
 
@@ -147,9 +160,6 @@ public class RicercaEAggiungiActivity extends Fragment {
 
     }
 
-
-
-
     private final SearchIngredientsListener ingredientsListener = new SearchIngredientsListener() {
         @Override
         public void didFetch(SearchIngredientsResponse response, String message) {
@@ -157,13 +167,37 @@ public class RicercaEAggiungiActivity extends Fragment {
             rec_pasto = getView().findViewById(R.id.colazione_cercata);
             rec_pasto.setHasFixedSize(true);
             rec_pasto.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-            adapter = new SearchedIngredientsAdapter(getActivity(), response.results, idListener);
-            rec_pasto.setAdapter(adapter);
+            ingredientsAdapter = new SearchedIngredientsAdapter(getActivity(), response.results, idListener);
+            rec_pasto.setAdapter(ingredientsAdapter);
         }
 
         @Override
         public void didError(String error) {
             Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private final SearchRecipesListener recipesListener = new SearchRecipesListener() {
+        @Override
+        public void didFetch(SearchRecipesResponse response, String message) {
+            dialog.dismiss();
+            rec_pasto = getView().findViewById(R.id.colazione_cercata);
+            rec_pasto.setHasFixedSize(true);
+            rec_pasto.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+            recipesAdapter = new SearchedRecipesAdapter(getActivity(), response.results, recipeIdListener);
+            rec_pasto.setAdapter(recipesAdapter);
+        }
+
+        @Override
+        public void didError(String error) {
+            Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private final RecipeIdListener recipeIdListener = new RecipeIdListener() {
+        @Override
+        public void onClickedIngredient(String id) {
+            Toast.makeText(getActivity(), "great job", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -227,11 +261,12 @@ public class RicercaEAggiungiActivity extends Fragment {
         @Override
         public void didFetch(IngredientInfoResponse response, String message) {
             flavio = response.possibleUnits;
+            dialog.dismiss();
         }
 
         @Override
         public void didError(String message) {
-            return;
+            Toast.makeText(getActivity(), "riprova", Toast.LENGTH_SHORT).show();
         }
     };
 

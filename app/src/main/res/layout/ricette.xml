@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/alimenti_card"
+    android:id="@+id/ricette_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
@@ -23,21 +23,21 @@
             android:textColor="#039587"
             android:textStyle="bold"
             android:layout_marginLeft="20dp"
-            android:id="@+id/testo_alimento"
-            android:text="Aliment Name"
+            android:id="@+id/testo_ricetta"
+            android:text="Recipe Name"
             android:layout_width="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_height="wrap_content"/>
 
-            <ImageView
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center"
-                android:scaleType="centerCrop"
-                android:id="@+id/aliment_image"
-                android:src="@drawable/ic_launcher_foreground"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
+        <ImageView
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:id="@+id/ricetta_image"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
 
     </LinearLayout>
 

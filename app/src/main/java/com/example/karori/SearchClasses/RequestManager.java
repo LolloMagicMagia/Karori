@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.example.karori.Listeners.IngredientInfoListener;
 import com.example.karori.Listeners.SearchIngredientsListener;
+import com.example.karori.Listeners.SearchRecipesListener;
 import com.example.karori.Models.IngredientInfoResponse;
 import com.example.karori.Models.SearchIngredientsResponse;
+import com.example.karori.Models.SearchRecipesResponse;
 import com.example.karori.R;
 
 import retrofit2.Call;
@@ -31,7 +33,7 @@ public class RequestManager {
 
     public void getIngredientSearchResult(SearchIngredientsListener listener, String query) {
         CallSearchIngredients callSearchIngredients = retrofit.create(CallSearchIngredients.class);
-        Call<SearchIngredientsResponse> call = callSearchIngredients.callSearchIngredient(context.getString(R.string.api_key), query, "calories", "desc", "10");
+        Call<SearchIngredientsResponse> call = callSearchIngredients.callSearchIngredient(context.getString(R.string.api_key), query, "", "desc", "10");
         call.enqueue(new Callback<SearchIngredientsResponse>() {
             @Override
             public void onResponse(Call<SearchIngredientsResponse> call, Response<SearchIngredientsResponse> response) {
@@ -46,6 +48,28 @@ public class RequestManager {
 
             @Override
             public void onFailure(Call<SearchIngredientsResponse> call, Throwable t) {
+                listener.didError(t.getMessage());
+            }
+        });
+    }
+
+    public void getRecipeSearchResult(SearchRecipesListener listener, String query) {
+        CallSearchRecipes callSearchRecipes = retrofit.create(CallSearchRecipes.class);
+        Call<SearchRecipesResponse> call = callSearchRecipes.callSearchRecipes(context.getString(R.string.api_key), query, "", "desc", "10");
+        call.enqueue(new Callback<SearchRecipesResponse>() {
+            @Override
+            public void onResponse(Call<SearchRecipesResponse> call, Response<SearchRecipesResponse> response) {
+                if(!response.isSuccessful()) {
+                    listener.didError(response.message());
+                    return;
+                }
+                else {
+                    listener.didFetch(response.body(), response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchRecipesResponse> call, Throwable t) {
                 listener.didError(t.getMessage());
             }
         });
@@ -76,6 +100,17 @@ public class RequestManager {
     private interface CallSearchIngredients {
         @GET("food/ingredients/search")
         Call<SearchIngredientsResponse> callSearchIngredient(
+                @Query("apiKey") String apiKey,
+                @Query("query") String query,
+                @Query("sort") String sort,
+                @Query("sortDirection") String sortDirection,
+                @Query("number") String number
+        );
+    }
+
+    private interface CallSearchRecipes {
+        @GET("recipes/complexSearch")
+        Call<SearchRecipesResponse> callSearchRecipes(
                 @Query("apiKey") String apiKey,
                 @Query("query") String query,
                 @Query("sort") String sort,
