@@ -6,6 +6,8 @@ import static com.example.karori.util.SharedPreferencesUtil.writeIntData;
 import static com.example.karori.util.SharedPreferencesUtil.writeStringData;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Application;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,7 +27,9 @@ import android.widget.Toast;
 
 import com.example.karori.Models.Result;
 import com.example.karori.R;
+import com.example.karori.Source.User.UserDataRemoteDataSource;
 import com.example.karori.data.User.User;
+import com.example.karori.util.SharedPreferencesUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -47,7 +51,8 @@ public class SignUpFragment extends Fragment {
     private EditText editTextAge;
     private EditText editTextWeight;
     private EditText editTextHeight;
-
+    private UserDataRemoteDataSource userDataRemoteDataSource;
+    private EditText editTextgoal;
 
 
     public SignUpFragment() {
@@ -59,6 +64,10 @@ public class SignUpFragment extends Fragment {
         super.onCreate(savedInstanceState);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.setAuthenticationError(false);
+
+        Activity activity = getActivity();
+        SharedPreferencesUtil sharedPreferencesUtil = activity != null ? new SharedPreferencesUtil(activity.getApplication()) : null;
+        userDataRemoteDataSource = sharedPreferencesUtil != null ? new UserDataRemoteDataSource(sharedPreferencesUtil) : null;
     }
 
     @Override
@@ -77,6 +86,7 @@ public class SignUpFragment extends Fragment {
         editTextAge = view.findViewById(R.id.ageTextView);
         editTextHeight = view.findViewById(R.id.heightTextView);
         editTextWeight = view.findViewById(R.id.weightTextView);
+        editTextgoal = view.findViewById(R.id.goalTextView);
 
         final Button buttonRegistration = view.findViewById(R.id.RegisterUserButton);
         final Button buttonback = view.findViewById(R.id.backbuttonsignup);
@@ -91,30 +101,33 @@ public class SignUpFragment extends Fragment {
             String ageSt = editTextAge.getText().toString().trim();
             String heightSt = editTextHeight.getText().toString().trim();
             String weightSt = editTextWeight.getText().toString().trim();
+            String goalSt = editTextgoal.getText().toString().trim();
             int age = 0;
             float weight = 0;
             int height = 0;
             float kilocalorie = 0;
+            float goal = 0;
 
 
 
-            if (isEmailOk(email) & isPasswordOk(password, cnfpsw) & numberOk(ageSt,heightSt,weightSt)) {
+            if (isEmailOk(email) & isPasswordOk(password, cnfpsw) & numberOk(ageSt,heightSt,weightSt, goalSt)) {
                 weight = Float.parseFloat(weightSt);
                 height = Integer.parseInt(heightSt);
                 age = Integer.parseInt(ageSt);
+                goal = Float.parseFloat(goalSt);
 
                 if (!userViewModel.isAuthenticationError()) {
 
                     int finalAge = age;
                     float finalWeight = weight;
                     int finalHeight = height;
-                    float finalKilocalorie = (float) (1.2*(66+(13.7* weight)+(5+height)-(6.8+age)));
-
+                    float finalKilocalorie = (float) (1.2*(66+(13.7* goal)+(5+height)-(6.8+age)));
+                    float finalGoal = goal;
                     userViewModel.getUserMutableLiveData(email, password, false).observe(
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
                                     User user = ((Result.UserResponseSuccess) result).getData();
-                                    saveLoginData(email, password, user.getIdToken(), finalAge, finalWeight, finalHeight, finalKilocalorie);
+                                    saveLoginData(email, password, user.getIdToken(), finalWeight, finalHeight, finalKilocalorie, finalAge, finalGoal);
                                     userViewModel.setAuthenticationError(false);
                                     Navigation.findNavController(view).navigate(
                                             R.id.action_signUpFragment_to_loginFragment2);
@@ -147,7 +160,7 @@ public class SignUpFragment extends Fragment {
         }
     }
 
-    private void saveLoginData(String email, String password, String idToken, int age, float weight, int height, float kilocalorie) {
+    private void saveLoginData(String email, String password, String idToken, float weight, int height, float kilocalorie, int age, float goal) {
         writeStringData("com.example.karori.save_file.txt", "email:", email);
 
         writeStringData("com.example.karori.save_file.txt", "idToken:", idToken);
@@ -160,7 +173,11 @@ public class SignUpFragment extends Fragment {
 
         writeFloatData("com.example.karori.save_file.txt", "kilocalorie: ", kilocalorie);
 
+        writeFloatData("com.example.karori.save_file.txt", "goal: ", goal);
 
+        User user = new User("", email, idToken, weight, height, kilocalorie, age, goal);
+
+        userDataRemoteDataSource.saveUserData(user);
 
     }
 
@@ -215,7 +232,7 @@ public class SignUpFragment extends Fragment {
         return true;
     }
 
-    private boolean numberOk(String age, String weight, String height){
+    private boolean numberOk(String age, String weight, String height, String goal){
         boolean check = true;
         int i= 0;
         if (age.isEmpty()){
@@ -250,7 +267,6 @@ public class SignUpFragment extends Fragment {
             check = false;
         }
 
-
         if (height.isEmpty()){
             editTextHeight.setError("The age is required");
             editTextHeight.requestFocus();
@@ -264,13 +280,25 @@ public class SignUpFragment extends Fragment {
             check = false;
         }
         try {
-            i = Integer.parseInt(age);
+            i = Integer.parseInt(height);
             check = check & true;
         } catch (NumberFormatException e){
             editTextAge.setError("the height must be int");
             editTextAge.requestFocus();
             check = false;
-    }
+        }
+        if (goal.isEmpty()){
+            editTextgoal.setError("The weight goal is required");
+            editTextgoal.requestFocus();
+            check = false;
+        }
+        else if (isNumeric(goal)){
+            check = check & true;
+        }else{
+            editTextgoal.setError("Please insert a number!");
+            editTextgoal.requestFocus();
+            check = false;
+        }
         return  check;
     }
 

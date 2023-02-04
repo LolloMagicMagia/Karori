@@ -9,10 +9,11 @@ public class User implements Parcelable {
     private String name;
     private String email;
     private String idToken;
-    private int weight;
+    private float weight;
     private int height;
-    private int kilocalorie;
+    private float kilocalorie;
     private int age;
+    private float goal;
 
 
     public User( String name, String email, String idToken){
@@ -23,15 +24,17 @@ public class User implements Parcelable {
         this.height = 0;
         this.kilocalorie = 0;
         this.age = 0;
+        this.goal =0;
     }
-    public User(String name, String email, String idToken, int weight, int height, int kilokalorie, int age){
+    public User(String name, String email, String idToken, float weight, int height, float kilocalorie, int age, float goal){
         this.name = name;
-        this.email       = email;
-        this.idToken     = idToken;
-        this.weight      = weight;
-        this.height      = height;
-        this.kilocalorie = kilokalorie;
-        this.age        = age;
+        this.email = email;
+        this.idToken = idToken;
+        this.weight  = weight;
+        this.height = height;
+        this.kilocalorie = kilocalorie;
+        this.age = age;
+        this.goal = goal;
     }
 
 
@@ -52,7 +55,7 @@ public class User implements Parcelable {
 
     public void setIdToken(String idToken) {this.idToken = idToken;}
 
-    public int getWeight() {return weight;}
+    public float getWeight() {return weight;}
 
     public void setWeight(int weight) {this.weight = weight;}
 
@@ -60,7 +63,7 @@ public class User implements Parcelable {
 
     public void setHeight(int height) {this.height = height;}
 
-    public int getKilocalorie() {return kilocalorie;}
+    public float getKilocalorie() {return kilocalorie;}
 
     public void setKilocalorie() {this.kilocalorie=kilocalorie;}
 
@@ -68,6 +71,13 @@ public class User implements Parcelable {
 
     public void setAge(int goal) {this.age = age;}
 
+    public float getGoal() {
+        return goal;
+    }
+
+    public void setGoal(float goal) {
+        this.goal = goal;
+    }
 
     @Override
     public String toString() {
@@ -79,6 +89,7 @@ public class User implements Parcelable {
                 ", height=" + height +
                 ", kilokalorie=" + kilocalorie +
                 ", age=" + age +
+                ", goal=" + goal +
                 '}';
     }
 
@@ -93,9 +104,10 @@ public class User implements Parcelable {
         dest.writeString(this.email);
         dest.writeString(this.idToken);
         dest.writeInt(this.height);
-        dest.writeInt(this.weight);
-        dest.writeInt(this.kilocalorie);
+        dest.writeFloat(this.weight);
+        dest.writeFloat(this.kilocalorie);
         dest.writeInt(this.age);
+        dest.writeFloat(this.goal);
 
     }
 
@@ -103,20 +115,22 @@ public class User implements Parcelable {
         this.name = source.readString();
         this.email = source.readString();
         this.idToken = source.readString();
-        this.weight = source.readInt();
+        this.weight = source.readFloat();
         this.height = source.readInt();
-        this.kilocalorie = source.readInt();
+        this.kilocalorie = source.readFloat();
         this.age = source.readInt();
+        this.goal= source.readFloat();
     }
 
     protected User(Parcel in) {
         this.name = in.readString();
         this.email = in.readString();
         this.idToken = in.readString();
-        this.weight = in.readInt();
+        this.weight = in.readFloat();
         this.height = in.readInt();
-        this.kilocalorie = in.readInt();
+        this.kilocalorie = in.readFloat();
         this.age = in.readInt();
+        this.goal=in.readFloat();
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
