@@ -127,7 +127,7 @@ public class SignUpFragment extends Fragment {
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
                                     User user = ((Result.UserResponseSuccess) result).getData();
-                                    saveLoginData(email, password, user.getIdToken(), finalWeight, finalHeight, finalKilocalorie, finalAge, finalGoal);
+                                    saveLoginData(email, user.getIdToken(), finalWeight, finalHeight, finalKilocalorie, finalAge, finalGoal);
                                     userViewModel.setAuthenticationError(false);
                                     Navigation.findNavController(view).navigate(
                                             R.id.action_signUpFragment_to_loginFragment2);
@@ -160,7 +160,7 @@ public class SignUpFragment extends Fragment {
         }
     }
 
-    private void saveLoginData(String email, String password, String idToken, float weight, int height, float kilocalorie, int age, float goal) {
+    private void saveLoginData(String email, String idToken, float weight, int height, float kilocalorie, int age, float goal) {
         writeStringData("com.example.karori.save_file.txt", "email:", email);
 
         writeStringData("com.example.karori.save_file.txt", "idToken:", idToken);
@@ -175,9 +175,7 @@ public class SignUpFragment extends Fragment {
 
         writeFloatData("com.example.karori.save_file.txt", "goal: ", goal);
 
-        User user = new User("", email, idToken, weight, height, kilocalorie, age, goal);
-
-        userDataRemoteDataSource.saveUserData(user);
+        userDataRemoteDataSource.SaveinfoUser(idToken, weight, height, kilocalorie, age,  goal);
 
     }
 

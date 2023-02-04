@@ -61,4 +61,12 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteSource{
         });
     }
 
+    public void SaveinfoUser(String idToken, float weight, int height, float kilocalorie, int age, float goal){
+        databaseReference.child("users").child(idToken).child("age").setValue(age);
+        databaseReference.child("users").child(idToken).child("goal").setValue(goal);
+        databaseReference.child("users").child(idToken).child("height").setValue(height);
+        databaseReference.child("users").child(idToken).child("kilocalorie").setValue(kilocalorie);
+        databaseReference.child("users").child(idToken).child("weight").setValue(weight);
+
+    }
 }
