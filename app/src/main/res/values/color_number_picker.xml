@@ -1,0 +1,5 @@
+<resources>
+    <style name="NumberPickerStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColor">#49454F</item> <!-- colore desiderato per i numeri -->
+    </style>
+</resources>
