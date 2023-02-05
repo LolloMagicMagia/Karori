@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.cardview.widget.CardView
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="#B9FFFFFF"
                     app:cardCornerRadius="80dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.cardview.widget.CardView
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="#B9FFFFFF"
                     app:cardCornerRadius="80dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
@@ -228,7 +228,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.cardview.widget.CardView
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="#B9FFFFFF"
                     app:cardCornerRadius="80dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
@@ -269,7 +269,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.cardview.widget.CardView
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="#B9FFFFFF"
                     app:cardCornerRadius="80dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
@@ -332,7 +332,7 @@
                 android:layout_height="wrap_content" >
 
                 <androidx.cardview.widget.CardView
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="#B9FFFFFF"
                     app:cardCornerRadius="80dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
@@ -371,7 +371,7 @@
                 android:layout_height="wrap_content" >
 
                 <androidx.cardview.widget.CardView
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="#B9FFFFFF"
                     app:cardCornerRadius="80dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
@@ -434,7 +434,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_margin="15dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="#B9FFFFFF"
                 app:cardCornerRadius="40dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

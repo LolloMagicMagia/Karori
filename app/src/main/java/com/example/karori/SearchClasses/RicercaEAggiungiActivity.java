@@ -73,10 +73,38 @@ public class RicercaEAggiungiActivity extends Fragment {
         btnIngredients = view.findViewById(R.id.button3);
         btnRecipes = view.findViewById(R.id.button4);
 
+        txt_select = view.findViewById(R.id.txt_selected);
+        int idPasto = Integer.parseInt(pasto);
+
+        if (idPasto == 0) {
+            txt_select.setText("Search For a Breakfast Ingredient");
+            selezionato = "colazione";
+        }
+        if (idPasto == 1) {
+            txt_select.setText("Search For a Lunch Ingredient");
+            selezionato = "pranzo";
+        }
+        if (idPasto == 2) {
+            txt_select.setText("Search For a Dinner Ingredient");
+            selezionato = "cena";
+        }
+
         btnIngredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cerca = "ingredienti";
+                if (idPasto == 0) {
+                    txt_select.setText("Search For a Breakfast Ingredient");
+                    selezionato = "colazione";
+                }
+                if (idPasto == 1) {
+                    txt_select.setText("Search For a Lunch Ingredient");
+                    selezionato = "pranzo";
+                }
+                if (idPasto == 2) {
+                    txt_select.setText("Search For a Dinner Ingredient");
+                    selezionato = "cena";
+                }
             }
         });
 
@@ -84,6 +112,18 @@ public class RicercaEAggiungiActivity extends Fragment {
             @Override
             public void onClick(View v) {
                 cerca = "ricette";
+                if (idPasto == 0) {
+                    txt_select.setText("Search For a Breakfast Recipe");
+                    selezionato = "colazione";
+                }
+                if (idPasto == 1) {
+                    txt_select.setText("Search For a Lunch Recipe");
+                    selezionato = "pranzo";
+                }
+                if (idPasto == 2) {
+                    txt_select.setText("Search For a Dinner Recipe");
+                    selezionato = "cena";
+                }
             }
         });
 
@@ -114,22 +154,6 @@ public class RicercaEAggiungiActivity extends Fragment {
             );
 
         }
-
-        txt_select = view.findViewById(R.id.txt_selected);
-        int idPasto = Integer.parseInt(pasto);
-        if (idPasto == 0) {
-            txt_select.setText("Search For a Breakfast Meal");
-            selezionato = "colazione";
-        }
-        if (idPasto == 1) {
-            txt_select.setText("Search For a Lunch Meal");
-            selezionato = "pranzo";
-        }
-        if (idPasto == 2) {
-            txt_select.setText("Search For a Dinner Meal");
-            selezionato = "cena";
-        }
-
 
         dialog = new ProgressDialog(getActivity());
         dialog.setTitle("Loading");

@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#00FFFFFF"
-            android:text="Type To Search For Ingredients"
+            android:text="Search And Select Food To Add To Your Meal"
             android:textSize="20sp"
             android:textStyle="bold" />
 
