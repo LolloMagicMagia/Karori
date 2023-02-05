@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
     <Toolbar
+        android:titleTextColor="@color/black"
         android:background="#039587"
         android:title="Selected Ingredient Details"
         android:layout_width="match_parent"
