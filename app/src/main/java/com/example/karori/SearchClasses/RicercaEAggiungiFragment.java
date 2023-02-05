@@ -94,15 +94,21 @@ public class RicercaEAggiungiFragment extends Fragment {
             public void onClick(View v) {
                 cerca = "ingredienti";
                 if (idPasto == 0) {
+                    rec_pasto.setVisibility(View.GONE);
                     txt_select.setText("Search For a Breakfast Ingredient");
+                    txt_select.setVisibility(View.VISIBLE);
                     selezionato = "colazione";
                 }
                 if (idPasto == 1) {
+                    rec_pasto.setVisibility(View.GONE);
                     txt_select.setText("Search For a Lunch Ingredient");
+                    txt_select.setVisibility(View.VISIBLE);
                     selezionato = "pranzo";
                 }
                 if (idPasto == 2) {
+                    rec_pasto.setVisibility(View.GONE);
                     txt_select.setText("Search For a Dinner Ingredient");
+                    txt_select.setVisibility(View.VISIBLE);
                     selezionato = "cena";
                 }
             }
@@ -113,15 +119,21 @@ public class RicercaEAggiungiFragment extends Fragment {
             public void onClick(View v) {
                 cerca = "ricette";
                 if (idPasto == 0) {
+                    rec_pasto.setVisibility(View.GONE);
                     txt_select.setText("Search For a Breakfast Recipe");
+                    txt_select.setVisibility(View.VISIBLE);
                     selezionato = "colazione";
                 }
                 if (idPasto == 1) {
+                    rec_pasto.setVisibility(View.GONE);
                     txt_select.setText("Search For a Lunch Recipe");
+                    txt_select.setVisibility(View.VISIBLE);
                     selezionato = "pranzo";
                 }
                 if (idPasto == 2) {
+                    rec_pasto.setVisibility(View.GONE);
                     txt_select.setText("Search For a Dinner Recipe");
+                    txt_select.setVisibility(View.VISIBLE);
                     selezionato = "cena";
                 }
             }
