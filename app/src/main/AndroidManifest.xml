@@ -24,6 +24,7 @@
         <activity
             android:name=".SearchClasses.SearchActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
