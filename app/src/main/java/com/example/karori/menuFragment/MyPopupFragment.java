@@ -4,25 +4,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karori.R;
-import com.example.karori.SearchClasses.IngredientInfoActivity;
 import com.example.karori.SearchClasses.SearchActivity;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

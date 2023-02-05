@@ -1,30 +1,24 @@
 package com.example.karori.menuFragment;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.karori.Adapter.AdapterChangeRiassunti;
 import com.example.karori.R;
-import com.example.karori.SearchClasses.RicercaEAggiungiActivity;
 import com.example.karori.SearchClasses.SearchActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.bastanfar.semicirclearcprogressbar.SemiCircleArcProgressBar;
 
 public class FragmentHome extends Fragment {
     private static final String KEY_INDEX="index";

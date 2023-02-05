@@ -1,9 +1,7 @@
 package com.example.karori.Room;
 
-import android.text.style.TabStopSpan;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -11,13 +9,10 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.example.karori.SearchClasses.IngredientInfoActivity;
+import com.example.karori.SearchClasses.IngredientInfoFragment;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Observer;
 
@@ -166,7 +161,7 @@ public class Meal {
     public void observe(View.OnClickListener onClickListener, Observer mealObserver) {
     }
 
-    public void observe(IngredientInfoActivity ingredientInfoActivity, androidx.lifecycle.Observer<Meal> mealObserver) {
+    public void observe(IngredientInfoFragment ingredientInfoFragment, androidx.lifecycle.Observer<Meal> mealObserver) {
     }
 }
 

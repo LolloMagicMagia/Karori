@@ -3,29 +3,20 @@ package com.example.karori.SearchClasses;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.karori.Listeners.IngredientInfoListener;
 import com.example.karori.Models.IngredientInfoResponse;
@@ -37,19 +28,12 @@ import com.example.karori.Room.Meal;
 import com.example.karori.Room.MealViewModel;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Calendar;
-import java.util.Date;
 
-public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
+public class IngredientInfoFragment extends Fragment implements LifecycleOwner {
     int id;
     int amount;
     boolean skip = false;
@@ -186,7 +170,7 @@ public class IngredientInfoActivity extends Fragment implements LifecycleOwner {
 
         }else{
             i="0";
-            requireActivity().getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
                 @Override
                 public void handleOnBackPressed() {
                     getActivity().finish();

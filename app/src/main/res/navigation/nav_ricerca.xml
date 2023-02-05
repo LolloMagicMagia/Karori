@@ -6,11 +6,11 @@
 
     <fragment
         android:id="@+id/ricercaEAggiungiActivity"
-        android:name="com.example.karori.SearchClasses.RicercaEAggiungiActivity"
+        android:name="com.example.karori.SearchClasses.RicercaEAggiungiFragment"
         android:label="RicercaEAggiungiActivity" >
         <action
             android:id="@+id/action_ricercaEAggiungiActivity_to_ingredientInfoActivity"
-            app:destination="@id/ingredientInfoActivity" />
+            app:destination="@id/ingredientInfoFragment" />
         <argument
             android:name="id"
             app:argType="string" />
@@ -29,8 +29,8 @@
 
     </fragment>
     <fragment
-        android:id="@+id/ingredientInfoActivity"
-        android:name="com.example.karori.SearchClasses.IngredientInfoActivity"
+        android:id="@+id/ingredientInfoFragment"
+        android:name="com.example.karori.SearchClasses.IngredientInfoFragment"
         android:label="IngredientInfoActivity"
         >
 

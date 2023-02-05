@@ -38,7 +38,7 @@ import com.example.karori.R;
 
 import java.util.ArrayList;
 
-public class RicercaEAggiungiActivity extends Fragment {
+public class RicercaEAggiungiFragment extends Fragment {
     private String pasto;
     private androidx.appcompat.widget.SearchView srchIngredient;
     private TextView txt_select;
@@ -262,7 +262,7 @@ public class RicercaEAggiungiActivity extends Fragment {
                                 bundle.putString("selected", selezionato);
                                 bundle.putString("mode", "add");
                                 Navigation.findNavController(getView()).navigate(R.id.action_ricercaEAggiungiActivity_to_ingredientInfoActivity,bundle);
-                               /* startActivity(new Intent(getActivity(), IngredientInfoActivity.class)
+                               /* startActivity(new Intent(getActivity(), IngredientInfoFragment.class)
                                         .putExtra("id", id)
                                         .putExtra("amount", input.getText().toString())
                                         .putExtra("unit", array[which]));*/
