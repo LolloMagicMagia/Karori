@@ -433,6 +433,7 @@
             android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
+                app:cardElevation=""
                 android:layout_margin="15dp"
                 app:cardBackgroundColor="#B9FFFFFF"
                 app:cardCornerRadius="40dp"
