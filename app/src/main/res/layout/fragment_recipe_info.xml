@@ -112,17 +112,38 @@
                 app:layout_constraintTop_toBottomOf="@+id/cardView4"
                 app:layout_constraintVertical_bias="0.48000002">
 
-                <TextView
-                    android:maxLines="16"
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:id="@+id/riassunto"
-                    android:text="Prova"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:padding="10dp"/>
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:maxLines="8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:id="@+id/riassunto"
+                        android:text="Prova"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:padding="10dp"/>
+
+                    <TextView
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:id="@+id/details"
+                        android:text="More Infos"
+                        android:textColor="@color/ic_launcher_background"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:padding="10dp"/>
+
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 

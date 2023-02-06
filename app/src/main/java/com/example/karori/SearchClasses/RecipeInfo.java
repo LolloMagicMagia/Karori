@@ -39,7 +39,7 @@ public class RecipeInfo extends Fragment implements LifecycleOwner {
     int id;
     String selezionato = "";
     private ArrayList<String> flavio;
-    TextView nome_ricetta, riassunto, link;
+    TextView nome_ricetta, riassunto, link, details;
     ImageView img_ricetta;
     RecyclerView rec_ricette;
     RecyclerView rec_ingredienti;
@@ -68,10 +68,25 @@ public class RecipeInfo extends Fragment implements LifecycleOwner {
         dialog.setTitle("Loading Information");
         dialog.show();
 
+        details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (riassunto.getMaxLines() == 8) {
+                    riassunto.setMaxLines(1000);
+                    details.setText("Hide Infos");
+                } else {
+                    riassunto.setMaxLines(8);
+                    details.setText("More Infos");
+                }
+            }
+        });
+
+
         return view;
     }
 
     private void initializeViews(View view) {
+        details = view.findViewById(R.id.details);
         link = view.findViewById(R.id.txt_ricetta_link);
         nome_ricetta = view.findViewById(R.id.txt_ricetta_nome);
         riassunto = view.findViewById(R.id.riassunto);
