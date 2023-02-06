@@ -225,6 +225,8 @@ public class FragmentProfilo extends Fragment {
             }
         });
 
+        numberPickerHeight.setEnabled(false);
+
 
         return view;
     }
