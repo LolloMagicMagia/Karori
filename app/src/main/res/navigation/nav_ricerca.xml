@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_ricerca"
     app:startDestination="@id/ricercaEAggiungiActivity">
 
@@ -26,6 +27,9 @@
         <argument
             android:name="mode"
             app:argType="string" />
+        <action
+            android:id="@+id/action_ricercaEAggiungiActivity_to_recipeInfo"
+            app:destination="@id/recipeInfo" />
 
     </fragment>
     <fragment
@@ -34,6 +38,15 @@
         android:label="IngredientInfoActivity"
         >
 
+    </fragment>
+    <fragment
+        android:id="@+id/recipeInfo"
+        android:name="com.example.karori.SearchClasses.RecipeInfo"
+        android:label="fragment_recipe_info"
+        tools:layout="@layout/fragment_recipe_info" >
+        <action
+            android:id="@+id/action_recipeInfo_to_ingredientInfoFragment"
+            app:destination="@id/ingredientInfoFragment" />
     </fragment>
 
 </navigation>

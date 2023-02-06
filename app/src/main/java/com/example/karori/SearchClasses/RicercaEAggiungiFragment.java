@@ -233,7 +233,10 @@ public class RicercaEAggiungiFragment extends Fragment {
     private final RecipeIdListener recipeIdListener = new RecipeIdListener() {
         @Override
         public void onClickedIngredient(String id) {
-            Toast.makeText(getActivity(), "great job", Toast.LENGTH_SHORT).show();
+            Bundle bundle = new Bundle();
+            bundle.putString("id", id);
+            bundle.putString("selected", selezionato);
+            Navigation.findNavController(getView()).navigate(R.id.action_ricercaEAggiungiActivity_to_recipeInfo,bundle);
         }
     };
 

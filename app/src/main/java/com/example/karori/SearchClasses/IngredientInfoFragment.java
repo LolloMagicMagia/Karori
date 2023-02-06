@@ -59,7 +59,6 @@ public class IngredientInfoFragment extends Fragment implements LifecycleOwner {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         i=getActivity().getIntent().getStringExtra("popUp");
-
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -322,6 +321,5 @@ public class IngredientInfoFragment extends Fragment implements LifecycleOwner {
             return;
         }
     };
-
 
 }

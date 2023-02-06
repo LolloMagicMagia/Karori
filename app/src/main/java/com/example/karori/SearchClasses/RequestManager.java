@@ -3,9 +3,11 @@ package com.example.karori.SearchClasses;
 import android.content.Context;
 
 import com.example.karori.Listeners.IngredientInfoListener;
+import com.example.karori.Listeners.RecipeInfoListener;
 import com.example.karori.Listeners.SearchIngredientsListener;
 import com.example.karori.Listeners.SearchRecipesListener;
 import com.example.karori.Models.IngredientInfoResponse;
+import com.example.karori.Models.RecipeInfoResponse;
 import com.example.karori.Models.SearchIngredientsResponse;
 import com.example.karori.Models.SearchRecipesResponse;
 import com.example.karori.R;
@@ -33,7 +35,8 @@ public class RequestManager {
 
     public void getIngredientSearchResult(SearchIngredientsListener listener, String query) {
         CallSearchIngredients callSearchIngredients = retrofit.create(CallSearchIngredients.class);
-        Call<SearchIngredientsResponse> call = callSearchIngredients.callSearchIngredient(context.getString(R.string.api_key), query, "", "desc", "10");
+        Call<SearchIngredientsResponse> call = callSearchIngredients
+                .callSearchIngredient(context.getString(R.string.api_key), query, "", "desc", "10");
         call.enqueue(new Callback<SearchIngredientsResponse>() {
             @Override
             public void onResponse(Call<SearchIngredientsResponse> call, Response<SearchIngredientsResponse> response) {
@@ -45,7 +48,6 @@ public class RequestManager {
                     listener.didFetch(response.body(), response.message());
                 }
             }
-
             @Override
             public void onFailure(Call<SearchIngredientsResponse> call, Throwable t) {
                 listener.didError(t.getMessage());
@@ -96,6 +98,27 @@ public class RequestManager {
         });
     }
 
+    public void getRecipeInfos(RecipeInfoListener infoListener, int id, boolean includeNutrition) {
+        CallRecipesInformation callRecipesInformation = retrofit.create(CallRecipesInformation.class);
+        Call<RecipeInfoResponse> call = callRecipesInformation.callRecipeInfo(id,context.getString(R.string.api_key), includeNutrition);
+        call.enqueue(new Callback<RecipeInfoResponse>() {
+            @Override
+            public void onResponse(Call<RecipeInfoResponse> call, Response<RecipeInfoResponse> response) {
+                if(!response.isSuccessful()) {
+                    infoListener.didError(response.message());
+                    return;
+                }
+                else {
+                    infoListener.didFetch(response.body(), response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<RecipeInfoResponse> call, Throwable t) {
+                infoListener.didError(t.getMessage());
+            }
+        });
+    }
+
     //interfacce per effettuare le differenti call
     private interface CallSearchIngredients {
         @GET("food/ingredients/search")
@@ -126,6 +149,15 @@ public class RequestManager {
                 @Query("apiKey") String apiKey,
                 @Query("amount") int amount,
                 @Query("unit") String unit
+        );
+    }
+
+    private interface CallRecipesInformation {
+        @GET("recipes/{id}/information")
+        Call<RecipeInfoResponse> callRecipeInfo(
+                @Path("id") int id,
+                @Query("apiKey") String apiKey,
+                @Query("includeNutrition") boolean includeNutrition
         );
     }
 }

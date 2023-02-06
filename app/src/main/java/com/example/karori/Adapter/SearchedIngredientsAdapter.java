@@ -9,13 +9,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karori.Listeners.IngredientIdListener;
+import com.example.karori.Models.ExtendedIngredient;
 import com.example.karori.Models.Result;
 import com.example.karori.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchedIngredientsAdapter extends RecyclerView.Adapter<SearchedIngredientsViewHolder>{
