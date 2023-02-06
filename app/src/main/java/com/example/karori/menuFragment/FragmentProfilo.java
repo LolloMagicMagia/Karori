@@ -199,15 +199,19 @@ public class FragmentProfilo extends Fragment {
         numberPickerHeight = (NumberPicker) view.findViewById(R.id.height);
         numberPickerWeight = (NumberPicker) view.findViewById(R.id.weight);
 
+        //per settare i valori massimi e minimi
         numberPickerWeight.setMaxValue(130);
-        numberPickerWeight.setMinValue(50);
+        numberPickerWeight.setMinValue(35);
 
-        numberPickerHeight.setMaxValue(200);
-        numberPickerHeight.setMinValue(150);
+        numberPickerHeight.setMaxValue(250);
+        numberPickerHeight.setMinValue(140);
 
+        //per settare il valore in cui si vuole mostrare il number picker
         numberPickerWeight.setValue(valueWeight);
         numberPickerHeight.setValue(valueHeight);
 
+
+        //metodo per cambiare valore al peso e alla altezza
         numberPickerHeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {

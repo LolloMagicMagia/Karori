@@ -327,7 +327,7 @@
                     android:padding="10dp"
                     android:text="Cambia Pw"
                     android:fontFamily="@font/arimo_bold"
-                    android:textColor="@color/teal_200"
+                    android:textColor="#039587"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/CalorieMax" />
