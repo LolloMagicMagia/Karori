@@ -99,15 +99,16 @@ public class FragmentProfilo extends Fragment {
 
         final Switch modifica_switch = view.findViewById(R.id.switch_modifche);
 
-
-        editTextAge.setEnabled(false);
-        editTextGoal.setEnabled(false);
-
         numberPickerWeight.setMaxValue(1500);
-        numberPickerWeight.setMinValue(450);
+        numberPickerWeight.setMinValue(300);
+        numberPickerWeight.setEnabled(false);
 
         numberPickerHeight.setMaxValue(230);
         numberPickerHeight.setMinValue(100);
+        numberPickerHeight.setEnabled(false);
+
+        editTextAge.setEnabled(false);
+        editTextGoal.setEnabled(false);
 
         if (userViewModel.getLoggedUser() != null) {
             User user = userViewModel.getLoggedUser();
