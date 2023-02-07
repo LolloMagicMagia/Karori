@@ -69,13 +69,13 @@
                         app:strokeWidth="3dp">
 
                         <TextView
-                            android:id="@+id/TextProteine"
+                            android:id="@+id/TextCalorie"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/arimo_bold"
                             android:padding="15dp"
-                            android:text="PROTEINS: "
+                            android:text="CALORIES: "
                             android:textColor="#49454F"
                             android:textSize="15sp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +83,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/grassi" />
 
                         <TextView
-                            android:id="@+id/Saturi"
+                            android:id="@+id/Calorie"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|center_vertical|end"
@@ -109,17 +109,17 @@
                         app:strokeWidth="3dp">
 
                         <TextView
-                            android:id="@+id/TextCalorie"
+                            android:id="@+id/TextProteine"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/arimo_bold"
                             android:padding="15dp"
-                            android:text="CALORIES: "
+                            android:text="PROTEINS: "
                             android:textColor="#49454F"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/calorie"
+                            android:id="@+id/Protein"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|end"
@@ -204,7 +204,7 @@
                             android:textColor="#49454F"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/calorie" />
+                            app:layout_constraintTop_toBottomOf="@+id/Protein" />
 
                         <TextView
                             android:id="@+id/carboidrati"

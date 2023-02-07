@@ -2,7 +2,6 @@ package com.example.karori.menuFragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +49,8 @@ public class RiassuntoSera extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_riassunto_sera, container, false);
         tgrassis= (TextView) view.findViewById(R.id.grassiN);
-        tsaturis= (TextView) view.findViewById(R.id.SaturiN);
-        tcalories= (TextView) view.findViewById(R.id.calorieN);
+        tsaturis= (TextView) view.findViewById(R.id.CalorieN);
+        tcalories= (TextView) view.findViewById(R.id.proteineN);
         tcarboidratis= (TextView) view.findViewById(R.id.carboidratiN);
 
         card = (CardView) view.findViewById(R.id.cardviewSera) ;

@@ -2,7 +2,6 @@ package com.example.karori.menuFragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ public class RiassuntoPomeriggio extends Fragment {
         View view = inflater.inflate(R.layout.fragment_riassunto_pomeriggio, container, false);
         tgrassip= (TextView) view.findViewById(R.id.grassiP);
         tsaturip= (TextView) view.findViewById(R.id.SaturiP);
-        tcaloriep= (TextView) view.findViewById(R.id.calorieP);
+        tcaloriep= (TextView) view.findViewById(R.id.proteineP);
         tcarboidratip= (TextView) view.findViewById(R.id.carboidratiP);
         card = (CardView) view.findViewById(R.id.cardviewPomeriggio) ;
         myDialog = new Dialog(getContext());
