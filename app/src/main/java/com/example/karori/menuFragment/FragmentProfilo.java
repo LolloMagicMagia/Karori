@@ -64,12 +64,12 @@ public class FragmentProfilo extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+       /* userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.setAuthenticationError(false);
 
         Activity activity = getActivity();
         SharedPreferencesUtil sharedPreferencesUtil = activity != null ? new SharedPreferencesUtil(activity.getApplication()) : null;
-        userDataRemoteDataSource = sharedPreferencesUtil != null ? new UserDataRemoteDataSource(sharedPreferencesUtil) : null;
+        userDataRemoteDataSource = sharedPreferencesUtil != null ? new UserDataRemoteDataSource(sharedPreferencesUtil) : null;*/
     }
 
     @Override
@@ -103,13 +103,13 @@ public class FragmentProfilo extends Fragment {
         editTextAge.setEnabled(false);
         editTextGoal.setEnabled(false);
 
-        numberPickerWeight.setMaxValue(30000);
-        numberPickerWeight.setMinValue(1500);
+        numberPickerWeight.setMaxValue(1500);
+        numberPickerWeight.setMinValue(450);
 
         numberPickerHeight.setMaxValue(230);
         numberPickerHeight.setMinValue(100);
 
-        if(userViewModel.getLoggedUser()!= null) {
+        /*if(userViewModel.getLoggedUser()!= null) {
             User user = userViewModel.getLoggedUser();
 
             editTextGoal.setText(user.getGoal());
@@ -221,13 +221,34 @@ public class FragmentProfilo extends Fragment {
                 }
             });
 
-        }
-        editTextGoal.setText("ERROR");
+        }*/
+        /*editTextGoal.setText("ERROR");
         editTextAge.setText("ERROR");
         textViewKilocalorie.setText("ERROR");
         numberPickerWeight.setValue(0);
         numberPickerHeight.setValue(0);
-        textViewMail.setText("ERROR");
+        textViewMail.setText("ERROR");*/
+        numberPickerWeight.setValue(450);
+        numberPickerHeight.setValue(170);
+
+        modifica_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b==true){
+                    editTextAge.setEnabled(true);
+                    editTextGoal.setEnabled(true);
+                    numberPickerWeight.setEnabled(true);
+                    numberPickerHeight.setEnabled(true);
+                }
+                else{
+                    numberPickerWeight.setEnabled(false);
+                    numberPickerHeight.setEnabled(false);
+                    editTextAge.setEnabled(false);
+                    editTextGoal.setEnabled(false);
+                    //invia i dati a firebase o a ROOM
+                }
+            }
+        });
 
 
     }
