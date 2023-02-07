@@ -145,11 +145,11 @@
 
                 <EditText
                     android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="10dp"
-                    android:backgroundTint="@color/greyfigo"
+                    android:backgroundTint="#49454F"
                     android:gravity="center_vertical|end"
                     android:inputType="number"
                     android:outlineProvider="none"
@@ -184,11 +184,11 @@
 
                 <EditText
                     android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="10dp"
-                    android:backgroundTint="@color/greyfigo"
+                    android:backgroundTint="#49454F"
                     android:gravity="center_vertical|end"
                     android:inputType="number"
                     android:padding="10sp"
