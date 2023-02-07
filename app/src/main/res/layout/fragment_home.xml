@@ -91,22 +91,27 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="20dp"
                 android:background="@drawable/background_transparent"
                 app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                app:tabMaxWidth="40dp"
                 app:tabIndicatorColor="@color/white">
 
                 <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/circle" />
 
                 <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/circle"/>
 
                 <com.google.android.material.tabs.TabItem
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:icon="@drawable/circle"/>
             </com.google.android.material.tabs.TabLayout>
 
 
@@ -115,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="2"
                 android:background="@drawable/background_transparent"
                 android:backgroundTint="@android:color/transparent"
@@ -131,7 +136,6 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="#039587"
-
                 android:text="See more"
                 android:textColor="#DAD8D8"
                 android:textColorLink="#039587"
@@ -146,7 +150,6 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="20dp"
                 android:backgroundTint="#039587"
-                android:fontFamily="@font/arimo_bold"
                 android:text="Add"
                 android:textColor="#DAD8D8"
                 android:textSize="20sp" />
