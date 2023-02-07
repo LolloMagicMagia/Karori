@@ -138,7 +138,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:padding="10dp"
-                    android:text="PESO OBIETTIVO"
+                    android:text="WEIGHT GOAL:"
                     android:textColor="#49454F"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -178,7 +178,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:padding="10dp"
-                    android:text="ETA'"
+                    android:text="AGE:"
                     android:textColor="#49454F"
                     android:textSize="15sp" />
 
@@ -215,7 +215,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:padding="10dp"
-                    android:text="KILOCALORIE"
+                    android:text="CALORIC NEEDS:"
 
                     android:textColor="#49454F"
                     app:layout_constraintStart_toStartOf="parent"
@@ -329,7 +329,7 @@
                     android:gravity="center"
                     android:outlineProvider="none"
                     android:padding="10dp"
-                    android:text="Cambia Pw"
+                    android:text="Change Your Password"
 
                     android:textColor="#039587"
                     android:textSize="14sp"
@@ -347,7 +347,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="5dp"
-        android:text="Modifica"
+        android:text="Enable Modify View"
         android:fontFamily="@font/arimo_bold"
         android:textColor="@color/white"
         android:textSize="14sp" />
@@ -359,7 +359,7 @@
             android:layout_gravity="bottom"
             android:layout_marginTop="0dp"
             android:backgroundTint="@color/teal_700"
-            android:text="Log out"
+            android:text="Log Out"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardViewPw">

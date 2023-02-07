@@ -7,7 +7,7 @@
 
     <item android:id="@+id/fragmentProfilo"
         android:enabled="true"
-        android:title="Profilo"
+        android:title="Profile"
         android:icon="@drawable/user"/>
 
     <item android:id="@+id/fragment_calendar"
