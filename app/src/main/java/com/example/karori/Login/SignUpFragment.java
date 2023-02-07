@@ -103,26 +103,26 @@ public class SignUpFragment extends Fragment {
             String weightSt = editTextWeight.getText().toString().trim();
             String goalSt = editTextgoal.getText().toString().trim();
             int age = 0;
-            float weight = 0;
+            int weight = 0;
             int height = 0;
             float kilocalorie = 0;
-            float goal = 0;
+            int goal = 0;
 
 
 
             if (isEmailOk(email) & isPasswordOk(password, cnfpsw) & numberOk(ageSt,heightSt,weightSt, goalSt)) {
-                weight = Float.parseFloat(weightSt);
+                weight = Integer.parseInt(weightSt);
                 height = Integer.parseInt(heightSt);
                 age = Integer.parseInt(ageSt);
-                goal = Float.parseFloat(goalSt);
+                goal = Integer.parseInt(goalSt);
 
                 if (!userViewModel.isAuthenticationError()) {
 
                     int finalAge = age;
-                    float finalWeight = weight;
+                    int finalWeight = weight;
                     int finalHeight = height;
-                    float finalKilocalorie = (float) (1.2*(66+(13.7* goal)+(5+height)-(6.8+age)));
-                    float finalGoal = goal;
+                    int finalKilocalorie = (int) (1.2*(66+(13.7* (goal/100))+(5+height)-(6.8+age)));
+                    int finalGoal = goal;
                     userViewModel.getUserMutableLiveData(email, password, false).observe(
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
@@ -160,7 +160,7 @@ public class SignUpFragment extends Fragment {
         }
     }
 
-    private void saveLoginData(String email, String idToken, float weight, int height, float kilocalorie, int age, float goal) {
+    private void saveLoginData(String email, String idToken, int weight, int height, int kilocalorie, int age, int goal) {
         writeStringData("com.example.karori.save_file.txt", "email:", email);
 
         writeStringData("com.example.karori.save_file.txt", "idToken:", idToken);

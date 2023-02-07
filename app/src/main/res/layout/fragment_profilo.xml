@@ -43,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:fontFamily="@font/arimo_bold"
-                        android:text="Weight"
+                        android:text="Weight(dag)"
                         android:textColor="#49454F"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -81,7 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Height"
+                        android:text="Height (cm)"
                         android:textColor="#49454F"
                         android:fontFamily="@font/arimo_bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -138,21 +138,22 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:padding="10dp"
-                    android:text="PESO OBBIETTIVO"
+                    android:text="PESO OBIETTIVO"
                     android:fontFamily="@font/arimo_bold"
                     android:textColor="#49454F"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
+                <EditText
                     android:id="@+id/textView12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|end"
-                    android:outlineProvider="none"
                     android:fontFamily="@font/arimo_bold"
+                    android:gravity="center_vertical|end"
+                    android:inputType="number"
+                    android:outlineProvider="none"
                     android:padding="10dp"
-                    android:text="TextView"
+                    android:text=""
                     android:textColor="#49454F" />
             </androidx.cardview.widget.CardView>
 
@@ -181,14 +182,15 @@
                     android:textColor="#49454F"
                     android:textSize="15sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/textView13"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|end"
                     android:fontFamily="@font/arimo_bold"
+                    android:gravity="center_vertical|end"
+                    android:inputType="number"
                     android:padding="10sp"
-                    android:text="TextView"
+                    android:text=""
                     android:textColor="#49454F" />
             </androidx.cardview.widget.CardView>
 
@@ -211,7 +213,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:padding="10dp"
-                    android:text="CALORIE MAX"
+                    android:text="KILOCALORIE"
                     android:fontFamily="@font/arimo_bold"
                     android:textColor="#49454F"
                     app:layout_constraintStart_toStartOf="parent"
@@ -221,10 +223,10 @@
                     android:id="@+id/textView14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/arimo_bold"
                     android:gravity="center_vertical|end"
                     android:padding="10dp"
-                    android:fontFamily="@font/arimo_bold"
-                    android:text="TextView"
+                    android:text=""
                     android:textColor="#49454F" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -338,12 +340,12 @@
     </androidx.cardview.widget.CardView>
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/switch_modifche"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_gravity="end"
-        android:text="Switch" />
+        android:text="Modifica" />
 
         <Button
             android:id="@+id/LogOut"
