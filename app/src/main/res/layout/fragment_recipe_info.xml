@@ -59,7 +59,7 @@
 
                 <TextView
                     android:autoLink="web"
-                    android:textColorLink="@color/ic_launcher_background"
+                    android:textColorLink="#039587"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:text="Follow The Link For Infos"
-                    android:textColor="@color/ic_launcher_background"
+                    android:textColor="#039587"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -138,7 +138,7 @@
                         android:layout_marginRight="8dp"
                         android:id="@+id/details"
                         android:text="More Infos"
-                        android:textColor="@color/ic_launcher_background"
+                        android:textColor="#039587"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:padding="10dp"/>
