@@ -232,13 +232,19 @@ public class LoginFragment extends Fragment {
 
             GoogleSignInAccount gAccount=GoogleSignIn.getLastSignedInAccount(getContext());
 
+            //MI SONO GIA' LOGGATO CON GOOGLE
             if(gAccount != null){
-                Log.d("Tag", "ciao login google");
+                Log.d("Tag", gAccount.getEmail());
+                //SE MI SONO GIA' loggato allora l'email è già su firebase con i relativi valori
+                //e vado a settare i valori in profilo come con il login normale
+
+                //modifica questo
                 Intent intent=new Intent(getActivity(),SummaryActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }
 
+            //se non lo sono invece ed è la prima volta
             ActivityResultLauncher<Intent> activityResultLauncher=registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                     new ActivityResultCallback<ActivityResult>() {
                         @Override
@@ -247,7 +253,12 @@ public class LoginFragment extends Fragment {
                                 Intent data = result.getData();
                                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                                 try{
+                                    /*vado a vedere tramite il metodo "GoogleSignIn.getLastSignedInAccount(getContext()).getEmail()"
+                                    * se l'email è già salvata su firebase, se lo è allora prendo quei valori
+                                    * se non è salvata apre un altro fragment che richiede i parametri per la formula
+                                    * per poi andare a salvare su firebase tutto questo*/
                                     task.getResult(ApiException.class);
+                                    Log.d("Tag", GoogleSignIn.getLastSignedInAccount(getContext()).getEmail());
                                     Intent intent = new Intent(getActivity(),SummaryActivity.class);
                                     startActivity(intent);
                                     getActivity().finish();
