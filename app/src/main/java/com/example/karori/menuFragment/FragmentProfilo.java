@@ -27,11 +27,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.karori.Login.SignUpFragment;
 import com.example.karori.Login.UserViewModel;
+import com.example.karori.Login.UserViewModelFactory;
 import com.example.karori.R;
 import com.example.karori.Login.WelcomeActivity;
 import com.example.karori.Source.User.UserDataRemoteDataSource;
 import com.example.karori.data.User.User;
 import com.example.karori.Login.Forgot_Password_Fragment;
+import com.example.karori.repository.User.IUserRepository;
+import com.example.karori.util.ServiceLocator;
 import com.example.karori.util.SharedPreferencesUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -69,7 +72,11 @@ public class FragmentProfilo extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                requireActivity(),
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
         userViewModel.setAuthenticationError(false);
 
         Activity activity = getActivity();
@@ -113,9 +120,9 @@ public class FragmentProfilo extends Fragment {
         if (userViewModel.getLoggedUser() != null) {
             User user = userViewModel.getLoggedUser();
 
-            editTextGoal.setText(user.getGoal());
-            editTextAge.setText(user.getAge());
-            textViewKilocalorie.setText(user.getKilocalorie());
+            editTextGoal.setText(String.valueOf(user.getGoal()));
+            editTextAge.setText(String.valueOf(user.getAge()));
+            textViewKilocalorie.setText(String.valueOf(user.getKilocalorie()));;
             numberPickerWeight.setValue(user.getWeight());
             numberPickerHeight.setValue(user.getHeight());
             textViewMail.setText(user.getEmail());
@@ -153,9 +160,9 @@ public class FragmentProfilo extends Fragment {
                         numberPickerHeight.setEnabled(false);
                         numberPickerWeight.setEnabled(false);
 
-                        editTextGoal.setText(user.getGoal());
-                        editTextAge.setText(user.getAge());
-                        textViewKilocalorie.setText(user.getKilocalorie());
+                        editTextGoal.setText(String.valueOf(user.getGoal()));
+                        editTextAge.setText(String.valueOf(user.getAge()));
+                        textViewKilocalorie.setText(String.valueOf(user.getKilocalorie()));
                         numberPickerWeight.setValue(user.getWeight());
                         numberPickerHeight.setValue(user.getHeight());
                         textViewMail.setText(user.getEmail());

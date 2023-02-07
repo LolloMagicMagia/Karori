@@ -100,6 +100,7 @@ public class LoginFragment extends Fragment {
         userViewModel = new ViewModelProvider(
                 requireActivity(),
                 new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+
         oneTapClient = Identity.getSignInClient(requireActivity());
         signInRequest = BeginSignInRequest.builder()
                 .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
@@ -107,14 +108,12 @@ public class LoginFragment extends Fragment {
                         .build())
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
-                        // Your server's client ID, not your Android client ID.
                         .setServerClientId(getString(R.string.Web_id_client))
-                        // Only show accounts previously used to sign in.
                         .setFilterByAuthorizedAccounts(false)
                         .build())
-                // Automatically sign in when exactly one credential is retrieved.
-                .setAutoSelectEnabled(true)
-                .build();
+                        .setAutoSelectEnabled(true)
+                        .build();
+
         startIntentSenderForResult = new ActivityResultContracts.StartIntentSenderForResult();
 
         activityResultLauncher = registerForActivityResult(startIntentSenderForResult, activityResult -> {
@@ -233,10 +232,12 @@ public class LoginFragment extends Fragment {
             GoogleSignInAccount gAccount=GoogleSignIn.getLastSignedInAccount(getContext());
 
             //MI SONO GIA' LOGGATO CON GOOGLE
-            if(gAccount != null){
+            if(gAccount != null ){
                 Log.d("Tag", gAccount.getEmail());
                 //SE MI SONO GIA' loggato allora l'email è già su firebase con i relativi valori
                 //e vado a settare i valori in profilo come con il login normale
+
+
 
                 //modifica questo
                 Intent intent=new Intent(getActivity(),SummaryActivity.class);

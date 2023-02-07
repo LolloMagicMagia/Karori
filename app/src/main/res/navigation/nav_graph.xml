@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_loginFragment_to_summaryActivity"
             app:destination="@id/summaryActivity" />
+        <action
+            android:id="@+id/action_loginFragment_to_google_dataUserFragment"
+            app:destination="@id/google_dataUserFragment" />
 
     </fragment>
     <fragment
@@ -43,4 +46,8 @@
         android:id="@+id/summaryActivity"
         android:name="com.example.karori.Login.SummaryActivity"
         android:label="SummaryActivity" />
+    <fragment
+        android:id="@+id/google_dataUserFragment"
+        android:name="com.example.karori.Login.google_dataUserFragment"
+        android:label="google_dataUserFragment" />
 </navigation>
