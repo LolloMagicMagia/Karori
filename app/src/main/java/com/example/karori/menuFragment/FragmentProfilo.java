@@ -202,6 +202,7 @@ public class FragmentProfilo extends Fragment {
             reset_psw_card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //devi cambiare email in base a quella con cui sei loggato
 
                     mAuth.sendPasswordResetEmail("montilorenzo62@gmail.com").addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
