@@ -38,7 +38,7 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/arimo_bold"
                 android:gravity="center"
-                android:text="Colazione"
+                android:text="Breakfast"
                 android:textColor="#49454F"
                 android:textSize="30sp" />
 
@@ -69,13 +69,13 @@
                         app:strokeWidth="3dp">
 
                         <TextView
-                            android:id="@+id/TextSaturi"
+                            android:id="@+id/TextProteine"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/arimo_bold"
                             android:padding="15dp"
-                            android:text="SATURI: "
+                            android:text="PROTEINS: "
                             android:textColor="#49454F"
                             android:textSize="15sp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -114,7 +114,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/arimo_bold"
                             android:padding="15dp"
-                            android:text="CALORIE: "
+                            android:text="CALORIES: "
                             android:textColor="#49454F"
                             android:textSize="15sp" />
 
@@ -164,7 +164,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/arimo_bold"
                             android:padding="15dp"
-                            android:text="GRASSI: "
+                            android:text="FAT: "
                             android:textColor="#49454F"
                             android:textSize="15sp" />
 
@@ -200,7 +200,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/arimo_bold"
                             android:padding="15dp"
-                            android:text="CARBOIDRATI: "
+                            android:text="CARBOHYDRATES: "
                             android:textColor="#49454F"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"

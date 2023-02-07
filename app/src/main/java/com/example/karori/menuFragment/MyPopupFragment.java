@@ -124,13 +124,13 @@ public class MyPopupFragment extends DialogFragment {
 
     public void setParteDelGiorno(int pdg, TextView riassunti){
         if(pdg==0){
-            riassunti.setText("Mattina");
+            riassunti.setText("Breakfast");
         }
         else if(pdg==1){
-            riassunti.setText("Pomeriggio");
+            riassunti.setText("Lunch");
         }
         else{
-            riassunti.setText("Cena");
+            riassunti.setText("Dinner");
         }
 
 }

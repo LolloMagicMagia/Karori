@@ -77,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/arimo_bold"
-                        android:text="Calorie:"
+                        android:text="Calories:"
                         android:textColor="#4C4C4C" />
 
                     <TextView
@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/arimo_bold"
-                        android:text="TextView"
+                        android:text="Proteins"
                         android:textColor="#4C4C4C" />
 
                     <TextView
@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/arimo_bold"
-                        android:text="TextView"
+                        android:text="Fat"
                         android:textColor="#4C4C4C" />
 
                     <TextView
@@ -200,7 +200,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/arimo_bold"
-                        android:text="TextView"
+                        android:text="Carbohydrates"
                         android:textColor="#4C4C4C" />
 
                     <TextView
@@ -242,7 +242,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/arimo_bold"
-                        android:text="TextView"
+                        android:text="Quantità"
                         android:textColor="#4C4C4C" />
 
                     <TextView
