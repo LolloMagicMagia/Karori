@@ -46,7 +46,7 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/logokarori"
                 android:scrollbarSize="20dp"
                 app:fillBackground="false"
@@ -91,31 +91,22 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="0dp"
                 android:background="@drawable/background_transparent"
                 app:tabGravity="center"
-                app:tabIndicatorColor="#039587"
-                app:tabIndicatorHeight="0dp"
-                app:tabMaxWidth="45dp"
-                app:tabMode="fixed">
+                app:tabIndicatorColor="@color/white">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="false"
-                    android:icon="@drawable/circle" />
+                    android:layout_height="wrap_content" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="false"
-                    android:icon="@drawable/circle" />
+                    android:layout_height="wrap_content" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="false"
-                    android:icon="@drawable/circle" />
+                    android:layout_height="wrap_content" />
             </com.google.android.material.tabs.TabLayout>
 
 
@@ -124,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="20dp"
                 android:layout_weight="2"
                 android:background="@drawable/background_transparent"
                 android:backgroundTint="@android:color/transparent"
@@ -140,6 +131,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="#039587"
+
                 android:text="See more"
                 android:textColor="#DAD8D8"
                 android:textColorLink="#039587"
@@ -147,21 +139,22 @@
                 app:cornerRadius="40dp"
                 app:iconPadding="3dp" />
 
+            <Button
+                android:id="@+id/changeActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="#039587"
+                android:fontFamily="@font/arimo_bold"
+                android:text="Add"
+                android:textColor="#DAD8D8"
+                android:textSize="20sp" />
+
         </LinearLayout>
 
 
     </com.google.android.material.card.MaterialCardView>
-
-
-    <Button
-        android:id="@+id/changeActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:textColor="#DAD8D8"
-        android:layout_marginEnd="20dp"
-        android:backgroundTint="#039587"
-        android:text="Add" />
 
 
 </LinearLayout>
