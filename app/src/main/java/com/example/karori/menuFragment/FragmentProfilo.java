@@ -7,6 +7,7 @@ import static com.example.karori.util.SharedPreferencesUtil.writeStringData;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.karori.Login.SignUpFragment;
 import com.example.karori.Login.UserViewModel;
 import com.example.karori.R;
 import com.example.karori.Login.WelcomeActivity;
@@ -39,9 +41,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
 
 public class FragmentProfilo extends Fragment {
 
+    private static final String TAG = SignUpFragment.class.getSimpleName();
     private EditText editTextGoal;
     private EditText editTextAge;
     private TextView textViewKilocalorie;
@@ -64,12 +69,12 @@ public class FragmentProfilo extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.setAuthenticationError(false);
 
         Activity activity = getActivity();
         SharedPreferencesUtil sharedPreferencesUtil = activity != null ? new SharedPreferencesUtil(activity.getApplication()) : null;
-        userDataRemoteDataSource = sharedPreferencesUtil != null ? new UserDataRemoteDataSource(sharedPreferencesUtil) : null;*/
+        userDataRemoteDataSource = sharedPreferencesUtil != null ? new UserDataRemoteDataSource(sharedPreferencesUtil) : null;
     }
 
     @Override
@@ -88,23 +93,30 @@ public class FragmentProfilo extends Fragment {
         numberPickerHeight = view.findViewById(R.id.height);
         numberPickerWeight = view.findViewById(R.id.weight);
         textViewMail = view.findViewById(R.id.textView15);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+
 
 
         final Switch modifica_switch = view.findViewById(R.id.switch_modifche);
 
-        editTextAge.setEnabled(false);
-        editTextGoal.setEnabled(false);
-
-        numberPickerWeight.setMaxValue(1500);
-        numberPickerWeight.setMinValue(450);
+        numberPickerWeight.setMaxValue(300);
+        numberPickerWeight.setMinValue(15);
         numberPickerWeight.setEnabled(false);
 
         numberPickerHeight.setMaxValue(230);
         numberPickerHeight.setMinValue(100);
         numberPickerHeight.setEnabled(false);
 
+        editTextAge.setEnabled(false);
+        editTextGoal.setEnabled(false);
 
-        /*if(userViewModel.getLoggedUser()!= null) {
+        numberPickerWeight.setMaxValue(30000);
+        numberPickerWeight.setMinValue(1500);
+
+        numberPickerHeight.setMaxValue(230);
+        numberPickerHeight.setMinValue(100);
+
+        if (userViewModel.getLoggedUser() != null) {
             User user = userViewModel.getLoggedUser();
 
             editTextGoal.setText(user.getGoal());
@@ -141,7 +153,7 @@ public class FragmentProfilo extends Fragment {
                     } else {
                         user.setGoal(Integer.parseInt(editTextGoal.getText().toString().trim()));
                         user.setAge(Integer.parseInt(editTextAge.getText().toString().trim()));
-                        user.setKilocalorie((int) (1.2 * (66 + (13.7 * (user.getGoal() / 100)) + (5 + user.getHeight()) - (6.8 + user.getAge()))));
+                        user.setKilocalorie((int) (1.2 * (66 + (13.7 * (user.getGoal() / 100)) + (5 * user.getHeight()) - (6.8 * user.getAge()))));
                         editTextGoal.setEnabled(false);
                         editTextAge.setEnabled(false);
                         numberPickerHeight.setEnabled(false);
@@ -159,7 +171,44 @@ public class FragmentProfilo extends Fragment {
                 }
             });
 
-            mAuth = FirebaseAuth.getInstance();
+        } else if (account!=null){
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            String gemail = account.getEmail();
+            String gidToken = account.getIdToken();
+            firebaseAuth.fetchSignInMethodsForEmail(gemail)
+                    .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                            if (task.isSuccessful()) {
+                                SignInMethodQueryResult result = task.getResult();
+                                if (result.getSignInMethods().isEmpty()) {
+                                    // non esiste un utente con la mail specificata
+                                    Log.d(TAG, "utente senza mail non ancora registrato");
+                                    //creare un utente su firebase con gmail e idtoken.
+                                    saveLoginData(gemail, gidToken, 0, 0,0,0,0);
+                                    Log.d(TAG, "utente senza mail registrato");
+                                } else {
+                                    // esiste un utente con la mail specificata
+
+
+                                }
+                            } else {
+                                // c'è stato un errore durante la verifica
+                            }
+                        }
+                    });
+
+        }
+        else{
+            editTextGoal.setText("ERROR");
+            editTextAge.setText("ERROR");
+            textViewKilocalorie.setText("ERROR");
+            numberPickerWeight.setValue(0);
+            numberPickerHeight.setValue(0);
+            textViewMail.setText("ERROR");
+        }
+
+        mAuth = FirebaseAuth.getInstance();
             log_out = view.findViewById(R.id.LogOut);
             changePw = new Forgot_Password_Fragment();
             gOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -216,36 +265,6 @@ public class FragmentProfilo extends Fragment {
                     });
                 }
             });
-
-        }*/
-        /*editTextGoal.setText("ERROR");
-        editTextAge.setText("ERROR");
-        textViewKilocalorie.setText("ERROR");
-        numberPickerWeight.setValue(0);
-        numberPickerHeight.setValue(0);
-        textViewMail.setText("ERROR");*/
-        numberPickerWeight.setValue(450);
-        numberPickerHeight.setValue(170);
-
-        modifica_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b==true){
-                    editTextAge.setEnabled(true);
-                    editTextGoal.setEnabled(true);
-                    numberPickerWeight.setEnabled(true);
-                    numberPickerHeight.setEnabled(true);
-                }
-                else{
-                    numberPickerWeight.setEnabled(false);
-                    numberPickerHeight.setEnabled(false);
-                    editTextAge.setEnabled(false);
-                    editTextGoal.setEnabled(false);
-                    //invia i dati a firebase o a ROOM
-                }
-            }
-        });
-
 
     }
 

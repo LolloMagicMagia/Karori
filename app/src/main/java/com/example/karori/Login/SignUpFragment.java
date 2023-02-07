@@ -121,7 +121,7 @@ public class SignUpFragment extends Fragment {
                     int finalAge = age;
                     int finalWeight = weight;
                     int finalHeight = height;
-                    int finalKilocalorie = (int) (1.2*(66+(13.7* (goal/100))+(5+height)-(6.8+age)));
+                    int finalKilocalorie = (int) (1.2*(66+(13.7* (goal/100))+(5*height)-(6.8*age)));
                     int finalGoal = goal;
                     userViewModel.getUserMutableLiveData(email, password, false).observe(
                             getViewLifecycleOwner(), result -> {
