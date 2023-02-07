@@ -63,7 +63,7 @@ public class IngredientInfoFragment extends Fragment implements LifecycleOwner {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_ingredient_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_info, container, false);
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
 
         initializeViews(view);

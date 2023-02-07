@@ -3,42 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_ricerca"
-    app:startDestination="@id/ricercaEAggiungiActivity">
+    app:startDestination="@id/ricercaEAggiungiFragment">
 
-    <fragment
-        android:id="@+id/ricercaEAggiungiActivity"
-        android:name="com.example.karori.SearchClasses.RicercaEAggiungiFragment"
-        android:label="RicercaEAggiungiActivity" >
-        <action
-            android:id="@+id/action_ricercaEAggiungiActivity_to_ingredientInfoActivity"
-            app:destination="@id/ingredientInfoFragment" />
-        <argument
-            android:name="id"
-            app:argType="string" />
-        <argument
-            android:name="amount"
-            app:argType="string" />
-        <argument
-            android:name="unit"
-            app:argType="string" />
-        <argument
-            android:name="selected"
-            app:argType="string" />
-        <argument
-            android:name="mode"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_ricercaEAggiungiActivity_to_recipeInfo"
-            app:destination="@id/recipeInfo" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/ingredientInfoFragment"
-        android:name="com.example.karori.SearchClasses.IngredientInfoFragment"
-        android:label="IngredientInfoActivity"
-        >
-
-    </fragment>
     <fragment
         android:id="@+id/recipeInfo"
         android:name="com.example.karori.SearchClasses.RecipeInfo"
@@ -48,5 +14,22 @@
             android:id="@+id/action_recipeInfo_to_ingredientInfoFragment"
             app:destination="@id/ingredientInfoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/ricercaEAggiungiFragment"
+        android:name="com.example.karori.SearchClasses.RicercaEAggiungiFragment"
+        android:label="fragment_ricerca_aggiungi"
+        tools:layout="@layout/fragment_ricerca_aggiungi" >
+        <action
+            android:id="@+id/action_ricercaEAggiungiFragment_to_recipeInfo"
+            app:destination="@id/recipeInfo" />
+        <action
+            android:id="@+id/action_ricercaEAggiungiFragment_to_ingredientInfoFragment"
+            app:destination="@id/ingredientInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ingredientInfoFragment"
+        android:name="com.example.karori.SearchClasses.IngredientInfoFragment"
+        android:label="fragment_ingredient_info"
+        tools:layout="@layout/fragment_ingredient_info" />
 
 </navigation>

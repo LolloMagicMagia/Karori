@@ -68,7 +68,7 @@ public class RicercaEAggiungiFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_ricerca_aggiungi, container, false);
+        View view = inflater.inflate(R.layout.fragment_ricerca_aggiungi, container, false);
 
         btnIngredients = view.findViewById(R.id.button3);
         btnRecipes = view.findViewById(R.id.button4);
@@ -157,7 +157,7 @@ public class RicercaEAggiungiFragment extends Fragment {
            // Navigation.findNavController(view).navigate(R.id.action_ricercaEAggiungiActivity_to_ingredientInfoActivity, bundle);
             NavController navController = NavHostFragment.findNavController(this);
             navController.navigate(
-                    R.id.action_ricercaEAggiungiActivity_to_ingredientInfoActivity,
+                    R.id.action_ricercaEAggiungiFragment_to_ingredientInfoFragment,
                     bundle,
                     new NavOptions.Builder()
                             .setEnterAnim(android.R.animator.fade_in)
@@ -236,7 +236,7 @@ public class RicercaEAggiungiFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("id", id);
             bundle.putString("selected", selezionato);
-            Navigation.findNavController(getView()).navigate(R.id.action_ricercaEAggiungiActivity_to_recipeInfo,bundle);
+            Navigation.findNavController(getView()).navigate(R.id.action_ricercaEAggiungiFragment_to_recipeInfo,bundle);
         }
     };
 
@@ -276,7 +276,7 @@ public class RicercaEAggiungiFragment extends Fragment {
                                 bundle.putString("unit", array[which]);
                                 bundle.putString("selected", selezionato);
                                 bundle.putString("mode", "add");
-                                Navigation.findNavController(getView()).navigate(R.id.action_ricercaEAggiungiActivity_to_ingredientInfoActivity,bundle);
+                                Navigation.findNavController(getView()).navigate(R.id.action_ricercaEAggiungiFragment_to_ingredientInfoFragment,bundle);
                                /* startActivity(new Intent(getActivity(), IngredientInfoFragment.class)
                                         .putExtra("id", id)
                                         .putExtra("amount", input.getText().toString())
