@@ -117,7 +117,7 @@ public class FragmentProfilo extends Fragment {
         editTextAge.setEnabled(false);
         editTextGoal.setEnabled(false);
 
-        if (userViewModel.getLoggedUser() != null) {
+       /* if (userViewModel.getLoggedUser() != null) {
             User user = userViewModel.getLoggedUser();
 
             editTextGoal.setText(String.valueOf(user.getGoal()));
@@ -265,7 +265,7 @@ public class FragmentProfilo extends Fragment {
                         }
                     });
                 }
-            });
+            });*/
 
     }
 

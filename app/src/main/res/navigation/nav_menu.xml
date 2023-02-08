@@ -14,7 +14,7 @@
         android:id="@+id/fragment_calendar"
         android:name="com.example.karori.menuFragment.FragmentCalendar"
         android:label="FragmentSettings"
-        tools:layout="@layout/dacancellare"/>
+        tools:layout="@layout/fragment_calendar_corretto"/>
     <fragment
         android:id="@+id/fragmentProfilo"
         android:name="com.example.karori.menuFragment.FragmentProfilo"

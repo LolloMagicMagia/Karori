@@ -348,7 +348,6 @@
         android:layout_gravity="end"
         android:layout_marginTop="5dp"
         android:text="Enable Modify View"
-        android:fontFamily="@font/arimo_bold"
         android:textColor="@color/white"
         android:textSize="14sp" />
 
