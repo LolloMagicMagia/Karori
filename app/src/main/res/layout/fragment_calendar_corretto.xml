@@ -20,23 +20,14 @@
             android:orientation="horizontal"
             android:outlineProvider="none">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:outlineProvider="none"
-                app:cardBackgroundColor="#B4FFFFFF"
-                app:cardCornerRadius="40dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="DATA SELEZIONATA: "
-                    android:textColor="#49454F"
-                    android:textSize="15sp"
-                    app:cardBackgroundColor="#B4FFFFFF" />
-            </androidx.cardview.widget.CardView>
+                android:text="DATA SELEZIONATA: "
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:cardBackgroundColor="#B4FFFFFF" />
 
             <TextView
                 android:id="@+id/show_selected_date"
@@ -83,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:outlineProvider="none"
@@ -268,7 +259,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:outlineProvider="none"
