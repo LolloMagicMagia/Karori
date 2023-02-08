@@ -9,12 +9,19 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.karori.R;
+import com.example.karori.Room.Meal;
+import com.example.karori.Room.MealViewModel;
+
+import java.text.DecimalFormat;
+import java.time.LocalDate;
 
 public class RiassuntoPomeriggio extends Fragment {
     private TextView tgrassip;
-    private TextView tsaturip;
+    private TextView tproteinep;
     private TextView tcarboidratip;
     private TextView tcaloriep;
     private static final String KEY_GRASSIP = "GRASSIP";
@@ -24,6 +31,7 @@ public class RiassuntoPomeriggio extends Fragment {
 
     CardView card;
     Dialog myDialog;
+    DecimalFormat df ;
 
     public RiassuntoPomeriggio() {
     }
@@ -41,33 +49,38 @@ public class RiassuntoPomeriggio extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_riassunto_pomeriggio, container, false);
+        MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
         tgrassip= (TextView) view.findViewById(R.id.grassiP);
-        tsaturip= (TextView) view.findViewById(R.id.SaturiP);
-        tcaloriep= (TextView) view.findViewById(R.id.proteineP);
+        df = new DecimalFormat("#.00");
+        tproteinep= (TextView) view.findViewById(R.id.proteineP);
+        tcaloriep= (TextView) view.findViewById(R.id.calorieP);
         tcarboidratip= (TextView) view.findViewById(R.id.carboidratiP);
         card = (CardView) view.findViewById(R.id.cardviewPomeriggio) ;
         myDialog = new Dialog(getContext());
-
-
-        //pomeriggio,dovrà andare a prendere i valori nel database inizialmente
-        setValoriRiassuntivi(savedInstanceState);
+        setValoriRiassuntivi(mealViewModel);
 
         return view;
     }
 
-    private void setValoriRiassuntivi(Bundle savedInstanceState){
-        //vado nel databese
-        if(savedInstanceState==null) {
-            tgrassip.setText("20");
-            tsaturip.setText("10");
-            tcarboidratip.setText("70");
-            tcaloriep.setText("40");
-        }
-        else{
-            tgrassip.setText("" + savedInstanceState.get(KEY_GRASSIP));
-            tsaturip.setText("" + savedInstanceState.get(KEY_SATURIP));
-            tcarboidratip.setText("" + savedInstanceState.get(KEY_CARBOIDRATIP));
-            tcaloriep.setText("" + savedInstanceState.get(KEY_CALORIEP));
-        }
+    private void setValoriRiassuntivi(MealViewModel mealViewModel){
+
+        LocalDate currentTime = LocalDate.now();
+        mealViewModel.getMealFromDate(currentTime, "pranzo").observe(getActivity(), new Observer<Meal>() {
+            @Override
+            public void onChanged(Meal meal) {
+                if(meal != null){
+                    tgrassip.setText(df.format(meal.getGrassiTot()));
+                    tproteinep.setText(df.format(meal.getProteineTot()));
+                    tcarboidratip.setText(df.format(meal.getCarboidratiTot()));
+                    tcaloriep.setText(df.format(meal.getCalorieTot()));
+                }else {
+                    tgrassip.setText("0");
+                    tproteinep.setText("0");
+                    tcarboidratip.setText("0");
+                    tcaloriep.setText("0");
+                }
+            }
+        });
+
     }
 }

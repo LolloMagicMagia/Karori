@@ -16,6 +16,7 @@ import com.example.karori.R;
 import com.example.karori.Room.Meal;
 import com.example.karori.Room.MealViewModel;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 
 public class RiassuntoMattina extends Fragment {
@@ -30,6 +31,7 @@ public class RiassuntoMattina extends Fragment {
     private TextView tcalorie;
     CardView card;
     Dialog myDialog;
+    DecimalFormat df ;
 
 
 
@@ -52,7 +54,7 @@ public class RiassuntoMattina extends Fragment {
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_riassunto_mattina, container, false);
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
-
+        df = new DecimalFormat("#.00");
         tgrassi= (TextView) view.findViewById(R.id.grassi);
         tproteine = (TextView) view.findViewById(R.id.Protein);
         tcalorie= (TextView) view.findViewById(R.id.Calorie);
@@ -60,31 +62,23 @@ public class RiassuntoMattina extends Fragment {
         myDialog = new Dialog(getContext());
 
         //mattina, dovrà andare a prendere i valori nel database inizialmente
-        setValoriRiassuntivi(savedInstanceState, mealViewModel);
+        setValoriRiassuntivi(mealViewModel);
 
         // Inflate the layout for this fragment
         return view;
     }
 
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString(KEY_CALORIE, "40");
-        savedInstanceState.putString(KEY_SATURI, "20");
-        savedInstanceState.putString(KEY_CARBOIDRATI, "20");
-        savedInstanceState.putString(KEY_GRASSI, "10");
-    }
-
-    private void setValoriRiassuntivi(Bundle savedInstanceState, MealViewModel mealViewModel){
+    private void setValoriRiassuntivi(MealViewModel mealViewModel){
 
         LocalDate currentTime = LocalDate.now();
         mealViewModel.getMealFromDate(currentTime, "colazione").observe(getActivity(), new Observer<Meal>() {
             @Override
             public void onChanged(Meal meal) {
                     if(meal != null){
-                        tgrassi.setText(String.valueOf(meal.getGrassiTot()));
-                        tproteine.setText(String.valueOf(meal.getProteineTot()));
-                        tcarboidrati.setText(String.valueOf(meal.getCarboidratiTot()));
-                        tcalorie.setText(String.valueOf(meal.getCalorieTot()));
+                        tgrassi.setText(df.format(meal.getGrassiTot()));
+                        tproteine.setText(df.format(meal.getProteineTot()));
+                        tcarboidrati.setText(df.format(meal.getCarboidratiTot()));
+                        tcalorie.setText(df.format(meal.getCalorieTot()));
                     }else {
                         tgrassi.setText("0");
                         tproteine.setText("0");
