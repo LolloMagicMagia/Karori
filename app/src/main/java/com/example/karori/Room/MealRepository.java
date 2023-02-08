@@ -7,8 +7,8 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class MealRepository {
     private MealDao mealDao;
@@ -100,4 +100,68 @@ public class MealRepository {
         public void execute(int meal) {
         }
     }
+
+///_-------------------------------------------------------------------------------------
+
+
+
+    /*public void updateMeal(LocalDate date, String type, Map<String, Object> food){
+        Long dateConv = DateConverter.localDateToTimestamp(date);
+        Meal meal = mealDao.getMealFromDate1(dateConv, type);
+
+        if (meal != null) {
+            meal.add(food);
+            new UpdateAsyncTask(mealDao).execute(meal);
+        } else {
+            try {
+                Log.d("GetMealFromDate", "MEAL IS NULL");
+                LocalDate currentTime = LocalDate.now();
+                Meal meal1 = new Meal(currentTime, type);
+                meal1.add(food);
+                new InsertAsyncTask(mealDao).execute(meal);
+            } catch (Exception e) {
+                Log.d("Tag", "meal1 è già presente dentro il database");
+            }
+        }
+    }*/
+
+    public void updateMeal(LocalDate date, String type, Map<String, Object> food){
+        new UpdateMealAsyncTask(mealDao).execute(date, type, food);
+    }
+
+    private static class UpdateMealAsyncTask extends AsyncTask<Object, Void, Void> {
+        private MealDao mealDao;
+        UpdateMealAsyncTask(MealDao dao) {
+            mealDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Object... params) {
+            LocalDate date = (LocalDate) params[0];
+            String type = (String) params[1];
+            Map<String, Object> food = (Map<String, Object>) params[2];
+
+            Long dateConv = DateConverter.localDateToTimestamp(date);
+            Meal meal = mealDao.getMealFromDate1(dateConv, type);
+
+            if (meal != null) {
+                meal.add(food);
+                mealDao.update(meal);
+            } else {
+                try {
+                    Log.d("GetMealFromDate", "MEAL IS NULL");
+                    LocalDate currentTime = LocalDate.now();
+                    Meal meal1 = new Meal(currentTime, type);
+                    meal1.add(food);
+                    mealDao.insert(meal1);
+                } catch (Exception e) {
+                    Log.d("Tag", "meal1 è già presente dentro il database");
+                }
+            }
+            return null;
+        }
+    }
+
+
+
 }

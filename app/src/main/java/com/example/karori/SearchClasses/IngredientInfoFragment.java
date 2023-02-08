@@ -114,30 +114,9 @@ public class IngredientInfoFragment extends Fragment implements LifecycleOwner {
 
                         Log.d("Date", String.valueOf(currentTime));
 
-                        mealViewModel.getMealFromDate(currentTime,selezionato).observe(getActivity(), new Observer<Meal>() {
-                            @Override
-                            public void onChanged(Meal meal) {
-                                if(!isObserverActive) {
-                                    isObserverActive = true;
-                                    if (meal != null) {
-                                        meal.add(importanti);
-                                        mealViewModel.update(meal);
-                                    } else {
-                                        try {
-                                            Log.d("GetMealFromDate", "MEAL IS NULL");
-                                            LocalDate currentTime = LocalDate.now();
-                                            Meal meal1 = new Meal(currentTime, selezionato);
-                                            meal1.add(importanti);
-                                            mealViewModel.insert(meal1);
-                                        } catch (Exception e) {
-                                            Log.d("Tag", "meal1 è già presente dentro il database");
-                                        }
-                                    }
-                                }
-                            }
-                        });
 
                         isObserverActive = false;
+
                         mealViewModel.getAll().observe(getActivity(), new Observer<List<Meal>>() {
                             @Override
                             public void onChanged(List<Meal> meals) {
@@ -150,6 +129,10 @@ public class IngredientInfoFragment extends Fragment implements LifecycleOwner {
 
                             }
                         });
+
+                        mealViewModel.updateMeal(currentTime, selezionato, importanti);
+
+
 
 
                     }

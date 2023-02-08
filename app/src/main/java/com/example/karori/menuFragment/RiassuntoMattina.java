@@ -9,8 +9,14 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.karori.R;
+import com.example.karori.Room.Meal;
+import com.example.karori.Room.MealViewModel;
+
+import java.time.LocalDate;
 
 public class RiassuntoMattina extends Fragment {
     private static final String KEY_GRASSI = "GRASSIM";
@@ -19,7 +25,7 @@ public class RiassuntoMattina extends Fragment {
     private static final String KEY_CALORIE = "CALORIEM";
 
     private TextView tgrassi;
-    private TextView tsaturi;
+    private TextView tproteine;
     private TextView tcarboidrati;
     private TextView tcalorie;
     CardView card;
@@ -45,16 +51,16 @@ public class RiassuntoMattina extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_riassunto_mattina, container, false);
+        MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
 
         tgrassi= (TextView) view.findViewById(R.id.grassi);
-        tsaturi= (TextView) view.findViewById(R.id.Calorie);
-        tcalorie= (TextView) view.findViewById(R.id.Protein);
+        tproteine = (TextView) view.findViewById(R.id.Protein);
+        tcalorie= (TextView) view.findViewById(R.id.Calorie);
         tcarboidrati= (TextView) view.findViewById(R.id.carboidrati);
         myDialog = new Dialog(getContext());
 
-
         //mattina, dovrà andare a prendere i valori nel database inizialmente
-        setValoriRiassuntivi(savedInstanceState);
+        setValoriRiassuntivi(savedInstanceState, mealViewModel);
 
         // Inflate the layout for this fragment
         return view;
@@ -68,20 +74,25 @@ public class RiassuntoMattina extends Fragment {
         savedInstanceState.putString(KEY_GRASSI, "10");
     }
 
-    private void setValoriRiassuntivi(Bundle savedInstanceState){
-        //vado nel databese
-        if(savedInstanceState==null) {
-            tgrassi.setText("20");
-            tsaturi.setText("70");
-            tcarboidrati.setText("30");
-            tcalorie.setText("40");
-        }
-        //qua invece c'ho il bundle che va a salvare tutto
-        else{
-            tgrassi.setText("" + savedInstanceState.get(KEY_GRASSI));
-            tsaturi.setText("" + savedInstanceState.get(KEY_SATURI));
-            tcarboidrati.setText("" + savedInstanceState.get(KEY_CARBOIDRATI));
-            tcalorie.setText("" + savedInstanceState.get(KEY_CALORIE));
-        }
+    private void setValoriRiassuntivi(Bundle savedInstanceState, MealViewModel mealViewModel){
+
+        LocalDate currentTime = LocalDate.now();
+        mealViewModel.getMealFromDate(currentTime, "colazione").observe(getActivity(), new Observer<Meal>() {
+            @Override
+            public void onChanged(Meal meal) {
+                    if(meal != null){
+                        tgrassi.setText(String.valueOf(meal.getGrassiTot()));
+                        tproteine.setText(String.valueOf(meal.getProteineTot()));
+                        tcarboidrati.setText(String.valueOf(meal.getCarboidratiTot()));
+                        tcalorie.setText(String.valueOf(meal.getCalorieTot()));
+                    }else {
+                        tgrassi.setText("0");
+                        tproteine.setText("0");
+                        tcarboidrati.setText("0");
+                        tcalorie.setText("0");
+                    }
+                }
+        });
+
     }
 }

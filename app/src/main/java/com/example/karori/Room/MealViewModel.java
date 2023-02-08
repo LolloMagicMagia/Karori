@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class MealViewModel extends AndroidViewModel {
     private MealRepository mealRepository;
@@ -47,4 +48,8 @@ public class MealViewModel extends AndroidViewModel {
     }
 
     public void update(Meal meal) {mealRepository.update(meal);}
+
+    public void updateMeal(LocalDate date, String type, Map<String, Object> food){
+        mealRepository.updateMeal(date, type, food);
+    }
 }

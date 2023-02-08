@@ -35,4 +35,7 @@ public interface MealDao {
 
     @Update
     void update(Meal meal);
+
+    @Query("SELECT * FROM meals WHERE date = :date AND type = :type")
+    Meal getMealFromDate1(Long date, String type);
 }
