@@ -72,12 +72,14 @@ public class FragmentCalendar extends Fragment {
                         // if the user clicks on the positive
                         // button that is ok button update the
                         // selected date
-                        Log.d("data",""+materialDatePicker.getHeaderText());
                         show_selected_date.setText(""+materialDatePicker.getHeaderText());
+                        String dateString = materialDatePicker.getHeaderText();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+                        LocalDate date = LocalDate.parse(dateString, formatter);
                         // in the above statement, getHeaderText
                         // will return selected date preview from the
                         // dialog
-                        /*mealViewModel.getMealFromDate(currentTime, "colazione").observe(getActivity(), new Observer<Meal>() {
+                        /*mealViewModel.getMealFromDate(date, "colazione").observe(getActivity(), new Observer<Meal>() {
                             @Override
                             public void onChanged(Meal meal) {
                                 if(meal != null){

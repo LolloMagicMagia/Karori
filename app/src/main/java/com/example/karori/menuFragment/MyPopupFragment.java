@@ -10,13 +10,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karori.R;
+import com.example.karori.Room.Meal;
+import com.example.karori.Room.MealViewModel;
 import com.example.karori.SearchClasses.SearchActivity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MyPopupFragment extends DialogFragment {
@@ -53,9 +58,37 @@ public class MyPopupFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.pop_up_riassunto, container, false);
         mRecyclerView=view.findViewById(R.id.recycler_view_riassuntoM);
         TextView riassunti=(TextView) view.findViewById(R.id.Riassunti);
+        mAlimentoSpecificoArrayList=new ArrayList<>();
+        LocalDate currentTime = LocalDate.now();
+        MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
         //trasparente fragment
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ///////////////prova recycler view
+        if(parteDelGiorno==0){
+            mealViewModel.getMealFromDate(currentTime, "colazione").observe(getActivity(), new Observer<Meal>() {
+                @Override
+                public void onChanged(Meal meal) {
+                    mAlimentoSpecificoArrayList=meal.getFoodListPopUp();
+
+                }
+            });
+        }
+        else if(parteDelGiorno==1){
+            mealViewModel.getMealFromDate(currentTime, "pranzo").observe(getActivity(), new Observer<Meal>() {
+                @Override
+                public void onChanged(Meal meal) {
+                    mAlimentoSpecificoArrayList=meal.getFoodListPopUp();
+                }
+            });
+        }
+        else{
+            mealViewModel.getMealFromDate(currentTime, "cena").observe(getActivity(), new Observer<Meal>() {
+                @Override
+                public void onChanged(Meal meal) {
+                    mAlimentoSpecificoArrayList=meal.getFoodListPopUp();
+                }
+            });
+        }
+       /* ///////////////prova recycler view
         //alimento specifico deve avere: nome, id, calorie, proteine, grassi, carboidrati, tipo, quantita, unita di misura
         al1=new AlimentoSpecifico("banana","9266","30","5","70","colazione","90","100");
         al2=new AlimentoSpecifico("banana","2047","30","5","70","colazione","90","100");
@@ -64,18 +97,16 @@ public class MyPopupFragment extends DialogFragment {
         al5=new AlimentoSpecifico("banana","9270","30","5","70","colazione","90","100");
         al6=new AlimentoSpecifico("banana","9270","30","5","70","colazione","90","100");
         al7=new AlimentoSpecifico("banana","9270","30","5","70","colazione","90","100");
-        ////////////////////////////////////
+        ////////////////////////////////////*/
         setParteDelGiorno(parteDelGiorno,riassunti);
 
-        mAlimentoSpecificoArrayList=new ArrayList<>();
-
-        setmAlimentoInfo();
+        /*setmAlimentoInfo();*/
         setAdapter();
 
         return view;
     }
 
-    private void setmAlimentoInfo(){
+    /*private void setmAlimentoInfo(){
         mAlimentoSpecificoArrayList.add(al1);
         mAlimentoSpecificoArrayList.add(al2);
         mAlimentoSpecificoArrayList.add(al3);
@@ -83,7 +114,7 @@ public class MyPopupFragment extends DialogFragment {
         mAlimentoSpecificoArrayList.add(al5);
         mAlimentoSpecificoArrayList.add(al6);
         mAlimentoSpecificoArrayList.add(al7);
-    }
+    }*/
 
     private void setAdapter(){
         setOnClickListener();

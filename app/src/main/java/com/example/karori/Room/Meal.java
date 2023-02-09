@@ -10,14 +10,17 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.example.karori.SearchClasses.IngredientInfoFragment;
+import com.example.karori.menuFragment.AlimentoSpecifico;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observer;
 
 
-@TypeConverters({DateConverter.class})
+@TypeConverters({DateConverter.class,AlimentoSpecificoConverter.class})
+
 @Entity(tableName = "meals", indices = {@Index(value = {"date","type"}, unique = true)})
 public class Meal {
 
@@ -47,11 +50,15 @@ public class Meal {
     //@ColumnInfo(name = "carboidrati_total")
     private double carboidratiTot;
 
+    @TypeConverters(AlimentoSpecificoConverter.class)
+    public ArrayList<AlimentoSpecifico> foodListPopUp;
+
     public Meal(LocalDate date, String type) {
         if(date != null && type != null){
             this.date = date;
             this.type = type;
             foodList = new HashMap<>();
+            foodListPopUp=new ArrayList<>();
             calorieTot = 0;
             proteineTot = 0;
             grassiTot = 0;
@@ -72,6 +79,12 @@ public class Meal {
             food.remove("id");
             foodList.put(id, food);
 
+            AlimentoSpecifico al1=new AlimentoSpecifico("banana",String.valueOf(food.get("id")),
+                    String.valueOf(food.get("Calories")),
+                    String.valueOf(food.get("unit")),String.valueOf(food.get("Protein")),
+                    type,String.valueOf(food.get("Fat")),String.valueOf(food.get("Carbohydrates")));
+
+            foodListPopUp.add(al1);
 
             // aggiorna il totale delle calorie, proteine, grassi e carboidrati
             calorieTot += (double) food.get("Calories");
@@ -129,6 +142,11 @@ public class Meal {
     public double getCarboidratiTot() {
         return carboidratiTot;
     }
+
+    public ArrayList<AlimentoSpecifico> getFoodListPopUp() {
+        return foodListPopUp;
+    }
+
 
     public void setDate(LocalDate date) {
         this.date = date;
