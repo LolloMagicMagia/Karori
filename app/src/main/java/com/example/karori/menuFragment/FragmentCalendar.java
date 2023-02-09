@@ -24,7 +24,20 @@ import java.util.Locale;
 public class FragmentCalendar extends Fragment {
     private TextView show_selected_date;
     private Button calendar;
+    double cocar;
+    double cofatt;
+    double coprotetins;
+    double cocalories;
 
+    double prcar;
+    double prfatt;
+    double prproteins;
+    double prcalories;
+
+    double secar;
+    double sefatt;
+    double seproteins ;
+    double secalories;
 
     public FragmentCalendar() {
         // Required empty public constructor
@@ -48,6 +61,11 @@ public class FragmentCalendar extends Fragment {
         View view=inflater.inflate(R.layout.fragment_calendar_corretto, container, false);
         show_selected_date=view.findViewById(R.id.show_selected_date);
         calendar=view.findViewById(R.id.calendar);
+        TextView carboidrati=view.findViewById(R.id.carbohhydratesCalendar);
+        TextView fat=view.findViewById(R.id.fatCalendar);
+        TextView proteine=view.findViewById(R.id.proteineCalendar);
+        TextView calorie=view.findViewById(R.id.calorieCalendar);
+
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
 
         MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker();
@@ -75,28 +93,85 @@ public class FragmentCalendar extends Fragment {
                         show_selected_date.setText(""+materialDatePicker.getHeaderText());
                         String dateString = materialDatePicker.getHeaderText();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                        LocalDate date = LocalDate.parse(dateString, formatter);
+                        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MMM d, yyyy");
+                        materialDatePicker.getArguments();
+                        LocalDate date;
+                        try {
+                            date = LocalDate.parse(dateString, formatter);
+                        }catch(Exception e){
+                            date = LocalDate.parse(dateString, formatter2);
+                        }
+                        Log.d("calendar",""+date);
                         // in the above statement, getHeaderText
                         // will return selected date preview from the
                         // dialog
-                        /*mealViewModel.getMealFromDate(date, "colazione").observe(getActivity(), new Observer<Meal>() {
+                            mealViewModel.getMealFromDate(date, "colazione").observe(getActivity(), new Observer<Meal>() {
+                                @Override
+                                public void onChanged(Meal meal) {
+                                    if (meal == null) {
+                                        cocar=0;
+                                        cofatt=0;
+                                        coprotetins=0;
+                                        cocalories=0;
+                                    }else{
+                                        cocar=meal.getCarboidratiTot();
+                                        cofatt=meal.getGrassiTot();
+                                        coprotetins=meal.getProteineTot();
+                                        cocalories=meal.getCalorieTot();
+                                    }
+                                }
+                            });
+                            mealViewModel.getMealFromDate(date, "pranzo").observe(getActivity(), new Observer<Meal>() {
+                                @Override
+                                public void onChanged(Meal meal) {
+                                    if(meal==null){
+                                        prcar=0;
+                                        prfatt=0;
+                                        prproteins=0;
+                                        prcalories=0;
+                                    }else{
+                                        prcar=meal.getCarboidratiTot();
+                                        prfatt=meal.getGrassiTot();
+                                        prproteins=meal.getProteineTot();
+                                        prcalories=meal.getCalorieTot();
+                                    }
+
+                                }
+                            });
+                        mealViewModel.getMealFromDate(date, "cena").observe(getActivity(), new Observer<Meal>() {
                             @Override
                             public void onChanged(Meal meal) {
-                                if(meal != null){
-                                    tgrassi.setText(df.format(meal.getGrassiTot()));
-                                    tproteine.setText(df.format(meal.getProteineTot()));
-                                    tcarboidrati.setText(df.format(meal.getCarboidratiTot()));
-                                    tcalorie.setText(df.format(meal.getCalorieTot()));
+                                if(meal==null){
+                                    secar=0;
+                                    sefatt=0;
+                                    seproteins=0;
+                                    secalories=0;
                                 }else {
-                                    tgrassi.setText("0");
-                                    tproteine.setText("0");
-                                    tcarboidrati.setText("0");
-                                    tcalorie.setText("0");
+                                    secar=meal.getCarboidratiTot();
+                                    sefatt=meal.getGrassiTot();
+                                    seproteins=meal.getProteineTot();
+                                    secalories=meal.getCalorieTot();
                                 }
+
                             }
-                        });*/
+                        });
 
 
+                        Log.d("calendar",""+materialDatePicker.getHeaderText());
+                        Log.d("calendar","car "+secar);
+                        Log.d("calendar","car "+prcar);
+                        Log.d("calendar","car "+cocar);
+                        Log.d("calendar","fatt "+sefatt);
+                        Log.d("calendar","fatt "+prfatt);
+                        Log.d("calendar","fatt "+cofatt);
+                        Log.d("calendar","proteins "+seproteins);
+                        Log.d("calendar","proteins "+prproteins);
+                        Log.d("calendar","proteins "+coprotetins);
+
+                        carboidrati.setText(Double.toString(cocar+prcar+secar));
+                        fat.setText(Double.toString(cofatt+prfatt+sefatt));
+                        proteine.setText(Double.toString(coprotetins+prproteins+seproteins));
+                        calorie.setText(Double.toString(cocalories+prcalories+secalories));
                     }
                 });
 
