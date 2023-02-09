@@ -73,13 +73,15 @@ public class Meal {
 
         if(food.get("id") != null && food.get("Calories") != null && food.get("Protein") != null
                 && food.get("Fat") != null && food.get("Carbohydrates") != null &&
-                food.get("amount") != null && food.get("unit") != null){
+                food.get("amount") != null && food.get("unit") != null && food.get("unit") != null
+                && food.get("nome alimento") != null){
 
             int id = (int) food.get("id");
             food.remove("id");
             foodList.put(id, food);
 
-            AlimentoSpecifico al1=new AlimentoSpecifico("banana",String.valueOf(food.get("id")),
+            AlimentoSpecifico al1=new AlimentoSpecifico(String.valueOf(food.get("nome alimento")),
+                    String.valueOf(food.get("id")),
                     String.valueOf(food.get("Calories")),
                     String.valueOf(food.get("unit")),String.valueOf(food.get("Protein")),
                     type,String.valueOf(food.get("Fat")),String.valueOf(food.get("Carbohydrates")));

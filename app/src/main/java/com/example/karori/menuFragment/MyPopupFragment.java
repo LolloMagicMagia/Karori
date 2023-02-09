@@ -23,6 +23,7 @@ import com.example.karori.SearchClasses.SearchActivity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MyPopupFragment extends DialogFragment {
     private ArrayList<AlimentoSpecifico> mAlimentoSpecificoArrayList;
@@ -63,31 +64,25 @@ public class MyPopupFragment extends DialogFragment {
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
         //trasparente fragment
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        String tipo;
         if(parteDelGiorno==0){
-            mealViewModel.getMealFromDate(currentTime, "colazione").observe(getActivity(), new Observer<Meal>() {
+            tipo="colazione";
+        }else if(parteDelGiorno==1){
+            tipo="pranzo";
+        }else{
+            tipo="cena";
+        }
+            mealViewModel.getMealFromDate(currentTime, tipo).observe(requireActivity(), new Observer<Meal>() {
                 @Override
                 public void onChanged(Meal meal) {
                     mAlimentoSpecificoArrayList=meal.getFoodListPopUp();
+                    /*setmAlimentoInfo();*/
+                    if(getActivity()!=null) {
+                        setAdapter();
+                    }
+                }
+            });
 
-                }
-            });
-        }
-        else if(parteDelGiorno==1){
-            mealViewModel.getMealFromDate(currentTime, "pranzo").observe(getActivity(), new Observer<Meal>() {
-                @Override
-                public void onChanged(Meal meal) {
-                    mAlimentoSpecificoArrayList=meal.getFoodListPopUp();
-                }
-            });
-        }
-        else{
-            mealViewModel.getMealFromDate(currentTime, "cena").observe(getActivity(), new Observer<Meal>() {
-                @Override
-                public void onChanged(Meal meal) {
-                    mAlimentoSpecificoArrayList=meal.getFoodListPopUp();
-                }
-            });
-        }
        /* ///////////////prova recycler view
         //alimento specifico deve avere: nome, id, calorie, proteine, grassi, carboidrati, tipo, quantita, unita di misura
         al1=new AlimentoSpecifico("banana","9266","30","5","70","colazione","90","100");
@@ -100,8 +95,6 @@ public class MyPopupFragment extends DialogFragment {
         ////////////////////////////////////*/
         setParteDelGiorno(parteDelGiorno,riassunti);
 
-        /*setmAlimentoInfo();*/
-        setAdapter();
 
         return view;
     }
@@ -119,7 +112,7 @@ public class MyPopupFragment extends DialogFragment {
     private void setAdapter(){
         setOnClickListener();
         recyclerAdapter adapter=new recyclerAdapter(mAlimentoSpecificoArrayList,listener);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity().getApplicationContext());
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(requireActivity().getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(adapter);
