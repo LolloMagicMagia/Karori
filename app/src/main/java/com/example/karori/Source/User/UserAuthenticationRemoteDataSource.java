@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.karori.data.User.User;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -13,11 +14,17 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRemoteDataSource {
 
     private final FirebaseAuth firebaseAuth;
     private static final String TAG = UserAuthenticationRemoteDataSource.class.getSimpleName();
+
 
     public UserAuthenticationRemoteDataSource() {
         firebaseAuth = FirebaseAuth.getInstance();
@@ -27,9 +34,43 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     public User getLoggedUser() {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if(firebaseUser != null ){
-            return new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid());
-        }
-        return null;
+
+            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+            String idToken = firebaseUser.getUid();
+            String name = firebaseUser.getDisplayName();
+            String email = firebaseUser.getEmail();
+
+            User user = new User(name,email, idToken);
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            databaseReference.child("users").child(idToken);
+
+            /*ValueEventListener userListener =(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            User userLogged = snapshot.getValue(User.class);
+                            user.setAge(userLogged.getAge());
+                            user.setGoal(userLogged.getGoal());
+                            user.setKilocalorie(userLogged.getKilocalorie());
+                            user.setWeight(userLogged.getWeight());
+                            user.setHeight(userLogged.getHeight());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            user.setAge(35);
+                        }
+
+                    }
+            );
+            databaseReference.addValueEventListener(userListener);
+
+            */
+            return user;
+            };
+            Log.d(TAG, "non entra da nessuna parte");
+            return null;
     }
 
     @Override
@@ -125,4 +166,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
         }
         return "Errore inatteso";
     }
+
+
 }
+

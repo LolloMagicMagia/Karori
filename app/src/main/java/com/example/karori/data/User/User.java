@@ -37,6 +37,26 @@ public class User implements Parcelable {
         this.goal = goal;
     }
 
+    public User(int age, String email, int goal, int height, int kilocalorie, int weight ){
+        this.age = age;
+        this.email=email;
+        this.goal=goal;
+        this.height=height;
+        this.kilocalorie=kilocalorie;
+        this.weight = weight;
+    }
+
+    public User() {
+        this.name = "";
+        this.email = "";
+        this.idToken = "";
+        this.weight = 0;
+        this.height = 0;
+        this.kilocalorie = 0;
+        this.age = 0;
+        this.goal =0;
+    }
+
 
     public String getName() {
         return name;
@@ -69,7 +89,7 @@ public class User implements Parcelable {
 
     public int getAge() {return age;}
 
-    public void setAge(int goal) {this.age = age;}
+    public void setAge(int age) {this.age = age;}
 
     public int getGoal() {
         return goal;

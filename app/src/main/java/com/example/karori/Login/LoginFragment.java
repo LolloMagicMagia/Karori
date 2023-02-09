@@ -156,7 +156,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         //lascia questo pezzo , mi serve per il debug della mia parte
         View view=inflater.inflate(R.layout.fragment_login, container, false);
-        provaSummaryActivity=(Button)view.findViewById(R.id.provaSummaryActivity);
+       /* provaSummaryActivity=(Button)view.findViewById(R.id.provaSummaryActivity);
         provaSummaryActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,7 +164,7 @@ public class LoginFragment extends Fragment {
                 startActivity(intent);
                 getActivity().finish();
             }
-        });
+        });*/
         // Inflate the layout for this fragment
         return view;
     }

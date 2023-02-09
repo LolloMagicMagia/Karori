@@ -30,6 +30,7 @@ import com.example.karori.Login.UserViewModel;
 import com.example.karori.Login.UserViewModelFactory;
 import com.example.karori.R;
 import com.example.karori.Login.WelcomeActivity;
+import com.example.karori.Source.User.UserCallback;
 import com.example.karori.Source.User.UserDataRemoteDataSource;
 import com.example.karori.data.User.User;
 import com.example.karori.Login.Forgot_Password_Fragment;
@@ -44,7 +45,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
 
 public class FragmentProfilo extends Fragment {
@@ -59,6 +59,11 @@ public class FragmentProfilo extends Fragment {
     private UserViewModel userViewModel;
     private TextView textViewMail;
     private UserDataRemoteDataSource userDataRemoteDataSource;
+    private String ageNew;
+    private int weightNew;
+    private int heightNew;
+    private String goalNew;
+    private int kilocalorieNew;
 
     CardView reset_psw_card;
     Button log_out;
@@ -101,7 +106,10 @@ public class FragmentProfilo extends Fragment {
         numberPickerWeight = view.findViewById(R.id.weight);
         textViewMail = view.findViewById(R.id.textView15);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
-
+        ageNew = "";
+        weightNew = 0;
+        heightNew = 0;
+        goalNew = "";
 
 
         final Switch modifica_switch = view.findViewById(R.id.switch_modifche);
@@ -117,8 +125,12 @@ public class FragmentProfilo extends Fragment {
         editTextAge.setEnabled(false);
         editTextGoal.setEnabled(false);
 
-       /* if (userViewModel.getLoggedUser() != null) {
-            User user = userViewModel.getLoggedUser();
+
+        if (userViewModel.getLoggedUser() != null) {
+         User loggedUser = userViewModel.getLoggedUser();
+         User user= userDataRemoteDataSource.getUserInfo(loggedUser);
+
+            //User user = userDataRemoteDataSource.GetUserInfo(user);
 
             editTextGoal.setText(String.valueOf(user.getGoal()));
             editTextAge.setText(String.valueOf(user.getAge()));
@@ -136,9 +148,10 @@ public class FragmentProfilo extends Fragment {
                         numberPickerHeight.setEnabled(true);
                         numberPickerWeight.setEnabled(true);
 
+
                         numberPickerHeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                             public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
-                                user.setWeight(newValue);
+                                weightNew = newValue;
                             }
                         });
 
@@ -146,22 +159,30 @@ public class FragmentProfilo extends Fragment {
                         numberPickerWeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                             @Override
                             public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
-                                user.setHeight(newValue);
+                                heightNew = newValue;
                             }
                         });
 
+                        ageNew = editTextAge.getText().toString().trim();
+                        goalNew = editTextGoal.getText().toString().trim();
+
 
                     } else {
-                        user.setGoal(Integer.parseInt(editTextGoal.getText().toString().trim()));
-                        user.setAge(Integer.parseInt(editTextAge.getText().toString().trim()));
+                        ageNew = editTextAge.getText().toString().trim();
+                        goalNew = editTextGoal.getText().toString().trim();
+                        user.setHeight(heightNew);
+                        user.setWeight(weightNew);
+                        user.setGoal(Integer.parseInt(goalNew));
+                        user.setAge(Integer.parseInt(ageNew));
                         user.setKilocalorie((int) (1.2 * (66 + (13.7 * (user.getGoal() / 100)) + (5 * user.getHeight()) - (6.8 * user.getAge()))));
+                        kilocalorieNew = (int) (1.2 * (66 + (13.7 * (user.getGoal() / 100)) + (5 * user.getHeight()) - (6.8 * user.getAge())));
                         editTextGoal.setEnabled(false);
                         editTextAge.setEnabled(false);
                         numberPickerHeight.setEnabled(false);
                         numberPickerWeight.setEnabled(false);
 
-                        editTextGoal.setText(String.valueOf(user.getGoal()));
-                        editTextAge.setText(String.valueOf(user.getAge()));
+                        editTextGoal.setText(String.valueOf(goalNew));
+                        editTextAge.setText(String.valueOf(ageNew));
                         textViewKilocalorie.setText(String.valueOf(user.getKilocalorie()));
                         numberPickerWeight.setValue(user.getWeight());
                         numberPickerHeight.setValue(user.getHeight());
@@ -265,7 +286,7 @@ public class FragmentProfilo extends Fragment {
                         }
                     });
                 }
-            });*/
+            });
 
     }
 

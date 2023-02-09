@@ -232,17 +232,7 @@
                         app:layout_constraintStart_toEndOf="@+id/textView2" />
 
 
-                    <Button
-                        android:id="@+id/provaSummaryActivity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_weight="1"
-                        android:text="provaSummaryActivity"
-                        android:textAllCaps="false"
-                        android:textColor="#065FD6"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
