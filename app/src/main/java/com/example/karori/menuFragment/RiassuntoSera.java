@@ -54,7 +54,7 @@ public class RiassuntoSera extends Fragment {
         View view = inflater.inflate(R.layout.fragment_riassunto_sera, container, false);
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
         tgrassis= (TextView) view.findViewById(R.id.grassiN);
-        df = new DecimalFormat("#.00");
+        df = new DecimalFormat("#,##0.00");
         tproteines= (TextView) view.findViewById(R.id.proteineN);
         tcalories= (TextView) view.findViewById(R.id.CalorieN);
         tcarboidratis= (TextView) view.findViewById(R.id.carboidratiN);
