@@ -10,14 +10,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karori.R;
+import com.example.karori.Room.Meal;
+import com.example.karori.Room.MealViewModel;
 import com.example.karori.SearchClasses.SearchActivity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MyPopupFragment extends DialogFragment {
     private ArrayList<AlimentoSpecifico> mAlimentoSpecificoArrayList;
@@ -53,9 +59,31 @@ public class MyPopupFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.pop_up_riassunto, container, false);
         mRecyclerView=view.findViewById(R.id.recycler_view_riassuntoM);
         TextView riassunti=(TextView) view.findViewById(R.id.Riassunti);
+        mAlimentoSpecificoArrayList=new ArrayList<>();
+        LocalDate currentTime = LocalDate.now();
+        MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
         //trasparente fragment
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ///////////////prova recycler view
+        String tipo;
+        if(parteDelGiorno==0){
+            tipo="colazione";
+        }else if(parteDelGiorno==1){
+            tipo="pranzo";
+        }else{
+            tipo="cena";
+        }
+            mealViewModel.getMealFromDate(currentTime, tipo).observe(requireActivity(), new Observer<Meal>() {
+                @Override
+                public void onChanged(Meal meal) {
+                    mAlimentoSpecificoArrayList=meal.getFoodListPopUp();
+                    /*setmAlimentoInfo();*/
+                    if(getActivity()!=null) {
+                        setAdapter();
+                    }
+                }
+            });
+
+       /* ///////////////prova recycler view
         //alimento specifico deve avere: nome, id, calorie, proteine, grassi, carboidrati, tipo, quantita, unita di misura
         al1=new AlimentoSpecifico("banana","9266","30","5","70","colazione","90","100");
         al2=new AlimentoSpecifico("banana","2047","30","5","70","colazione","90","100");
@@ -64,18 +92,14 @@ public class MyPopupFragment extends DialogFragment {
         al5=new AlimentoSpecifico("banana","9270","30","5","70","colazione","90","100");
         al6=new AlimentoSpecifico("banana","9270","30","5","70","colazione","90","100");
         al7=new AlimentoSpecifico("banana","9270","30","5","70","colazione","90","100");
-        ////////////////////////////////////
+        ////////////////////////////////////*/
         setParteDelGiorno(parteDelGiorno,riassunti);
 
-        mAlimentoSpecificoArrayList=new ArrayList<>();
-
-        setmAlimentoInfo();
-        setAdapter();
 
         return view;
     }
 
-    private void setmAlimentoInfo(){
+    /*private void setmAlimentoInfo(){
         mAlimentoSpecificoArrayList.add(al1);
         mAlimentoSpecificoArrayList.add(al2);
         mAlimentoSpecificoArrayList.add(al3);
@@ -83,12 +107,12 @@ public class MyPopupFragment extends DialogFragment {
         mAlimentoSpecificoArrayList.add(al5);
         mAlimentoSpecificoArrayList.add(al6);
         mAlimentoSpecificoArrayList.add(al7);
-    }
+    }*/
 
     private void setAdapter(){
         setOnClickListener();
         recyclerAdapter adapter=new recyclerAdapter(mAlimentoSpecificoArrayList,listener);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity().getApplicationContext());
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(requireActivity().getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(adapter);

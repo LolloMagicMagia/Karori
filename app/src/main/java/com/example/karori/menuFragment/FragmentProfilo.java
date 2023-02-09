@@ -105,6 +105,7 @@ public class FragmentProfilo extends Fragment {
         numberPickerHeight = view.findViewById(R.id.height);
         numberPickerWeight = view.findViewById(R.id.weight);
         textViewMail = view.findViewById(R.id.textView15);
+
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
         ageNew = "";
         weightNew = 0;
