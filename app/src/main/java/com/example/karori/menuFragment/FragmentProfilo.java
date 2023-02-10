@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -44,8 +45,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class FragmentProfilo extends Fragment {
 
@@ -57,9 +68,12 @@ public class FragmentProfilo extends Fragment {
     private NumberPicker numberPickerWeight;
     private NumberPicker numberPickerHeight;
     private UserViewModel userViewModel;
+    Map<String,Object> userdata;
     private TextView textViewMail;
     private UserDataRemoteDataSource userDataRemoteDataSource;
     private String ageNew;
+    List<String> dataUser;
+    ArrayAdapter adapter;
     private int weightNew;
     private int heightNew;
     private String goalNew;
@@ -126,21 +140,48 @@ public class FragmentProfilo extends Fragment {
         editTextAge.setEnabled(false);
         editTextGoal.setEnabled(false);
 
+        /*FirebaseDatabase.getInstance("https://karori-b3226-default-rtdb.europe-west1.firebasedatabase.app/");
+        FirebaseApp.initializeApp(getContext());*/
+        if(userViewModel.getLoggedUser() != null){
+            dataUser=new ArrayList<>();
+            Log.d("firebase","entrato");
+            User loggedUser = userViewModel.getLoggedUser();
+            Log.d("firebase","idtoken "+loggedUser.getIdToken());
+            DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("user").child(loggedUser.getIdToken());
+            Log.d("firebase","reference "+reference);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    dataUser.clear();
+                    for(DataSnapshot sn:snapshot.getChildren()){
+                        dataUser.add(sn.getValue().toString());
+                        Log.d("firebase",""+snapshot.getChildren());
+                    }
+                    editTextGoal.setText(dataUser.get(2));
+                    editTextAge.setText(dataUser.get(0));
+                    textViewKilocalorie.setText(dataUser.get(4));;
+                    numberPickerWeight.setValue(Integer.parseInt(dataUser.get(5)));
+                    numberPickerHeight.setValue(Integer.parseInt(dataUser.get(3)));
+                    textViewMail.setText(dataUser.get(1));
+                    Log.d("firebase",dataUser.get(1));
+                    Log.d("firebase",dataUser.get(2));
+                }
 
-        if (userViewModel.getLoggedUser() != null) {
-         User loggedUser = userViewModel.getLoggedUser();
-         User user= userDataRemoteDataSource.getUserInfo(loggedUser);
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            /*databaseReference.child("users").child(user.getIdToken()).child("age").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            User user= userDataRemoteDataSource.getUserInfo(loggedUser);
+            */
+
 
             //User user = userDataRemoteDataSource.GetUserInfo(user);
 
-            editTextGoal.setText(String.valueOf(user.getGoal()));
-            editTextAge.setText(String.valueOf(user.getAge()));
-            textViewKilocalorie.setText(String.valueOf(user.getKilocalorie()));;
-            numberPickerWeight.setValue(user.getWeight());
-            numberPickerHeight.setValue(user.getHeight());
-            textViewMail.setText(user.getEmail());
 
-            modifica_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+           /* modifica_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
@@ -192,9 +233,10 @@ public class FragmentProfilo extends Fragment {
                         saveLoginData(user.getEmail(), user.getIdToken(), user.getWeight(), user.getHeight(), user.getKilocalorie(), user.getAge(), user.getGoal());
                     }
                 }
-            });
+            });*/
 
-        } else if (account!=null){
+        } /*else if (account!=null){
+            Log.d("firebase","entratosbagliato1");
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             String gemail = account.getEmail();
             String gidToken = account.getIdToken();
@@ -223,15 +265,16 @@ public class FragmentProfilo extends Fragment {
 
         }
         else{
+            Log.d("firebase","entratosbagliato2");
             editTextGoal.setText("ERROR");
             editTextAge.setText("ERROR");
             textViewKilocalorie.setText("ERROR");
             numberPickerWeight.setValue(0);
             numberPickerHeight.setValue(0);
             textViewMail.setText("ERROR");
-        }
+        }*/
 
-        mAuth = FirebaseAuth.getInstance();
+        /*mAuth = FirebaseAuth.getInstance();
             log_out = view.findViewById(R.id.LogOut);
             changePw = new Forgot_Password_Fragment();
             gOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -268,7 +311,7 @@ public class FragmentProfilo extends Fragment {
                 }
 
 
-            });
+            });*/
 
             reset_psw_card = (CardView) view.findViewById(R.id.cardViewPw);
             reset_psw_card.setOnClickListener(new View.OnClickListener() {
