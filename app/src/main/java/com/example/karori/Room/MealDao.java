@@ -33,6 +33,9 @@ public interface MealDao {
     @Query("SELECT * FROM meals")
     LiveData<List<Meal>> getAllMeals();
 
+    @Query("SELECT * FROM meals WHERE date = :date")
+    LiveData<List<Meal>> getDayMeals(LocalDate date);
+
     @Update
     void update(Meal meal);
 

@@ -37,7 +37,6 @@ public class Meal {
     //@ColumnInfo(name = "food_list")
     private Map<Integer, Map<String, Object>> foodList;
 
-
     //@ColumnInfo(name = "calorie_total")
     private double calorieTot;
 

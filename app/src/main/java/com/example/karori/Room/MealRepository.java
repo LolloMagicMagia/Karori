@@ -50,6 +50,8 @@ public class MealRepository {
         return meals;
     }
 
+    public LiveData<List<Meal>> getDayMeals(LocalDate date) { return mealDao.getDayMeals(date); }
+
     private static class InsertAsyncTask extends AsyncTask<Meal, Void, Void> {
 
         private MealDao mealDao;

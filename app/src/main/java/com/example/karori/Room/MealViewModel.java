@@ -47,6 +47,10 @@ public class MealViewModel extends AndroidViewModel {
         return meals;
     }
 
+    public LiveData<List<Meal>> getDayMeals(LocalDate date) {
+        return mealRepository.getDayMeals(date);
+    }
+
     public void update(Meal meal) {mealRepository.update(meal);}
 
     public void updateMeal(LocalDate date, String type, Map<String, Object> food){
