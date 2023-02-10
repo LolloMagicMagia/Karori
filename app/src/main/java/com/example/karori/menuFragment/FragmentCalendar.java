@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,6 +19,7 @@ import com.example.karori.Room.MealViewModel;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -25,20 +28,12 @@ import java.util.Locale;
 public class FragmentCalendar extends Fragment {
     private TextView show_selected_date;
     private Button calendar;
-    double cocar;
-    double cofatt;
-    double coprotetins;
-    double cocalories;
-
-    double prcar;
-    double prfatt;
-    double prproteins;
-    double prcalories;
-
-    double secar;
-    double sefatt;
-    double seproteins ;
-    double secalories;
+    double car;
+    double fatt;
+    double proteins;
+    LocalDate date;
+    double calories;
+    DecimalFormat df ;
 
     public FragmentCalendar() {
         // Required empty public constructor
@@ -55,6 +50,13 @@ public class FragmentCalendar extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState==null){
+
+        }else{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            date = LocalDate.parse(savedInstanceState.getString("dataSalvata"), formatter);
+            Log.d("calendar funge",""+date);
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +68,7 @@ public class FragmentCalendar extends Fragment {
         TextView fat=view.findViewById(R.id.fatCalendar);
         TextView proteine=view.findViewById(R.id.proteineCalendar);
         TextView calorie=view.findViewById(R.id.calorieCalendar);
+        df = new DecimalFormat("#,##0.00");
 
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
 
@@ -81,6 +84,41 @@ public class FragmentCalendar extends Fragment {
                 materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
             }
         });
+
+        if(savedInstanceState==null){
+
+        }else{
+            mealViewModel.getDayMeals(date).observe(getActivity(), new Observer<List<Meal>>() {
+                @Override
+                public void onChanged(List<Meal> meals) {
+                    if(meals != null){
+                        car=0;
+                        fatt=0;
+                        proteins=0;
+                        calories=0;
+                        for(Meal meal: meals){
+                            car=car+meal.getCarboidratiTot();
+                            fatt=fatt+meal.getGrassiTot();
+                            proteins=proteins+meal.getProteineTot();
+                            calories=calories+meal.getCalorieTot();
+                        }
+                    }else {
+                        car=0;
+                        fatt=0;
+                        proteins=0;
+                        calories=0;
+                    }
+                    carboidrati.setText(df.format(car));
+                    fat.setText(df.format(fatt));
+                    proteine.setText(df.format(proteins));
+                    calorie.setText(df.format(calories));
+                }
+            });
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
+            String dateString=date.format(formatter);
+            show_selected_date.setText(""+dateString);
+        }
+
         materialDatePicker.addOnPositiveButtonClickListener(
                 new MaterialPickerOnPositiveButtonClickListener() {
                     @SuppressLint("SetTextI18n")
@@ -91,12 +129,11 @@ public class FragmentCalendar extends Fragment {
                         // if the user clicks on the positive
                         // button that is ok button update the
                         // selected date
-                        show_selected_date.setText(""+materialDatePicker.getHeaderText());
                         String dateString = materialDatePicker.getHeaderText();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MMM d, yyyy");
+                        show_selected_date.setText(""+materialDatePicker.getHeaderText());
                         materialDatePicker.getArguments();
-                        LocalDate date;
                         try {
                             date = LocalDate.parse(dateString, formatter);
                         }catch(Exception e){
@@ -110,31 +147,30 @@ public class FragmentCalendar extends Fragment {
 
                         mealViewModel.getDayMeals(date).observe(getActivity(), new Observer<List<Meal>>() {
                             @Override
-                            public void onChanged(List<Meal> meal) {
-                                if(meal != null){
-                                    cocar=0;
-                                    secar=0;
+                            public void onChanged(List<Meal> meals) {
+                                if(meals != null){
+                                    car=0;
+                                    fatt=0;
+                                    proteins=0;
+                                    calories=0;
+                                    for(Meal meal: meals){
+                                        car=car+meal.getCarboidratiTot();
+                                        fatt=fatt+meal.getGrassiTot();
+                                        proteins=proteins+meal.getProteineTot();
+                                        calories=calories+meal.getCalorieTot();
+                                    }
                                 }else {
-
+                                    car=0;
+                                    fatt=0;
+                                    proteins=0;
+                                    calories=0;
                                 }
+                                carboidrati.setText(df.format(car));
+                                fat.setText(df.format(fatt));
+                                proteine.setText(df.format(proteins));
+                                calorie.setText(df.format(calories));
                             }
                         });
-
-                        Log.d("calendar",""+materialDatePicker.getHeaderText());
-                        Log.d("calendar","car "+secar);
-                        Log.d("calendar","car "+prcar);
-                        Log.d("calendar","car "+cocar);
-                        Log.d("calendar","fatt "+sefatt);
-                        Log.d("calendar","fatt "+prfatt);
-                        Log.d("calendar","fatt "+cofatt);
-                        Log.d("calendar","proteins "+seproteins);
-                        Log.d("calendar","proteins "+prproteins);
-                        Log.d("calendar","proteins "+coprotetins);
-
-                        carboidrati.setText(Double.toString(cocar+prcar+secar));
-                        fat.setText(Double.toString(cofatt+prfatt+sefatt));
-                        proteine.setText(Double.toString(coprotetins+prproteins+seproteins));
-                        calorie.setText(Double.toString(cocalories+prcalories+secalories));
                     }
                 });
 
@@ -142,4 +178,11 @@ public class FragmentCalendar extends Fragment {
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedString = date.format(formatter);
+        outState.putString("dataSalvata", formattedString);
+        super.onSaveInstanceState(outState);
+    }
 }

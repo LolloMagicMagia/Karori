@@ -10,12 +10,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.karori.Adapter.AdapterChangeRiassunti;
 import com.example.karori.R;
+import com.example.karori.Room.Meal;
+import com.example.karori.Room.MealViewModel;
 import com.example.karori.SearchClasses.SearchActivity;
 import com.google.android.material.tabs.TabLayout;
+
+import java.time.LocalDate;
+import java.util.List;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -29,6 +36,7 @@ public class FragmentHome extends Fragment {
     int positionRiassunti;
     private int where_MPS;
     String fronsblix;
+    double calories;
     private TextView totProteineBar;
     private TextView cal_now;
     private CircularProgressIndicator progressBar;
@@ -61,6 +69,7 @@ public class FragmentHome extends Fragment {
         riassunti=view.findViewById(R.id.Riassunti);
         ViewPager2 viewPager = view.findViewById(R.id.pager);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+        MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
         bottoneChangeActivity = view.findViewById(R.id.changeActivity);
 
         AdapterChangeRiassunti adapter = new AdapterChangeRiassunti(this);
@@ -117,19 +126,29 @@ public class FragmentHome extends Fragment {
             }
         });
 
+        //room per settare il totale delle calorie
+        LocalDate currentTime = LocalDate.now();
+        mealViewModel.getDayMeals(currentTime).observe(getActivity(), new Observer<List<Meal>>() {
+            @Override
+            public void onChanged(List<Meal> meals) {
+                if(meals != null){
+                    calories=0;
+                    for(Meal meal: meals){
+                        calories=calories+meal.getCalorieTot();
+                    }
+                }else {
+                    calories=0;
+                }
+                progressBarUpdate(calories,300);
+            }
+        });
+
 
 
         //barra inizializzazione
         progressBar=(CircularProgressIndicator) view.findViewById(R.id.circular_progress);
         //così va da 0 a 100
         progressBar.setMaxProgress(100);
-
-
-        //SERVE PER CAMBIARE ACTIVITY ALLA PRESSIONE DEL BOTTONE, E POI TRAMITE IL WHERE CHE SAREBBE
-        //UN VALORE PER INDICARE SE ERO SU COLAZ/PRANZ... SCELGO IL FRAGMENT DA METTERE SULLA ACTIVITY
-
-        //tot proteine mi serve per capire a quale percentuale è arrivato , così lascio sempre settato a 100 il max
-        progressBarUpdate(200, 300);
 
         // Inflate the layout for this fragment
         return view;
@@ -141,7 +160,7 @@ public class FragmentHome extends Fragment {
         savedInstanceState.putInt(KEY_INDEX, where_MPS);
     }
 
-    public  void progressBarUpdate(float totProteineAssunte, float totProteine){
+    public  void progressBarUpdate(double totProteineAssunte, double totProteine){
         if(totProteineAssunte>totProteine){
             cal_now.setText(">100 %");
             progressBar.setCurrentProgress(totProteine);
