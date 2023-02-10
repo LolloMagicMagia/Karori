@@ -140,27 +140,26 @@ public class FragmentProfilo extends Fragment {
         editTextAge.setEnabled(false);
         editTextGoal.setEnabled(false);
 
-        /*FirebaseDatabase.getInstance("https://karori-b3226-default-rtdb.europe-west1.firebasedatabase.app/");
-        FirebaseApp.initializeApp(getContext());*/
-        if(userViewModel.getLoggedUser() != null){
+        if(userViewModel.getLoggedUser()!= null){
             dataUser=new ArrayList<>();
             Log.d("firebase","entrato");
             User loggedUser = userViewModel.getLoggedUser();
             Log.d("firebase","idtoken "+loggedUser.getIdToken());
-            DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("user").child(loggedUser.getIdToken());
+            DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("users").child(loggedUser.getIdToken());
             Log.d("firebase","reference "+reference);
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     dataUser.clear();
+                    Log.d("firebase",snapshot.getChildren().toString());
                     for(DataSnapshot sn:snapshot.getChildren()){
+                        Log.d("firebase",""+sn);
                         dataUser.add(sn.getValue().toString());
-                        Log.d("firebase",""+snapshot.getChildren());
                     }
-                    editTextGoal.setText(dataUser.get(2));
+                    editTextGoal.setText(dataUser.get(2)+"0");
                     editTextAge.setText(dataUser.get(0));
                     textViewKilocalorie.setText(dataUser.get(4));;
-                    numberPickerWeight.setValue(Integer.parseInt(dataUser.get(5)));
+                    numberPickerWeight.setValue(Integer.parseInt(dataUser.get(5))*10);
                     numberPickerHeight.setValue(Integer.parseInt(dataUser.get(3)));
                     textViewMail.setText(dataUser.get(1));
                     Log.d("firebase",dataUser.get(1));
@@ -172,16 +171,16 @@ public class FragmentProfilo extends Fragment {
 
                 }
             });
-            /*databaseReference.child("users").child(user.getIdToken()).child("age").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            User user= userDataRemoteDataSource.getUserInfo(loggedUser);
-            */
 
+            /*User user= userDataRemoteDataSource.getUserInfo(loggedUser);*/
+            ///////////////////////////////////////////
+            /////////////////////////////////////////
+            User user=new User();
+            user.setIdToken(loggedUser.getIdToken());
+            ///////////////////////////////////////////
+            /////////////////////////////////////////
 
-            //User user = userDataRemoteDataSource.GetUserInfo(user);
-
-
-
-           /* modifica_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           modifica_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
@@ -210,12 +209,14 @@ public class FragmentProfilo extends Fragment {
 
 
                     } else {
+
                         ageNew = editTextAge.getText().toString().trim();
                         goalNew = editTextGoal.getText().toString().trim();
-                        user.setHeight(heightNew);
-                        user.setWeight(weightNew);
-                        user.setGoal(Integer.parseInt(goalNew));
-                        user.setAge(Integer.parseInt(ageNew));
+                        user.setEmail(dataUser.get(1));
+                        user.setHeight(Integer.parseInt(dataUser.get(3)));
+                        user.setWeight(Integer.parseInt(dataUser.get(5)));
+                        user.setGoal(Integer.parseInt((dataUser.get(2))));
+                        user.setAge(Integer.parseInt(dataUser.get(0)));
                         user.setKilocalorie((int) (1.2 * (66 + (13.7 * (user.getGoal() / 100)) + (5 * user.getHeight()) - (6.8 * user.getAge()))));
                         kilocalorieNew = (int) (1.2 * (66 + (13.7 * (user.getGoal() / 100)) + (5 * user.getHeight()) - (6.8 * user.getAge())));
                         editTextGoal.setEnabled(false);
@@ -233,9 +234,9 @@ public class FragmentProfilo extends Fragment {
                         saveLoginData(user.getEmail(), user.getIdToken(), user.getWeight(), user.getHeight(), user.getKilocalorie(), user.getAge(), user.getGoal());
                     }
                 }
-            });*/
+            });
 
-        } /*else if (account!=null){
+        } else if (account!=null){
             Log.d("firebase","entratosbagliato1");
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             String gemail = account.getEmail();
@@ -272,9 +273,9 @@ public class FragmentProfilo extends Fragment {
             numberPickerWeight.setValue(0);
             numberPickerHeight.setValue(0);
             textViewMail.setText("ERROR");
-        }*/
+        }
 
-        /*mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
             log_out = view.findViewById(R.id.LogOut);
             changePw = new Forgot_Password_Fragment();
             gOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -311,7 +312,7 @@ public class FragmentProfilo extends Fragment {
                 }
 
 
-            });*/
+            });
 
             reset_psw_card = (CardView) view.findViewById(R.id.cardViewPw);
             reset_psw_card.setOnClickListener(new View.OnClickListener() {
@@ -319,7 +320,7 @@ public class FragmentProfilo extends Fragment {
                 public void onClick(View view) {
                     //devi cambiare email in base a quella con cui sei loggato
 
-                    mAuth.sendPasswordResetEmail("montilorenzo62@gmail.com").addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mAuth.sendPasswordResetEmail(dataUser.get(1)).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
@@ -349,6 +350,7 @@ public class FragmentProfilo extends Fragment {
 
         writeFloatData("com.example.karori.save_file.txt", "goal: ", goal);
 
+        //non funziona
         userDataRemoteDataSource.SaveinfoUser(idToken, weight, height, kilocalorie, age, goal);
 
     }
