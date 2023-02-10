@@ -19,6 +19,7 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 
 public class FragmentCalendar extends Fragment {
@@ -105,57 +106,19 @@ public class FragmentCalendar extends Fragment {
                         // in the above statement, getHeaderText
                         // will return selected date preview from the
                         // dialog
-                            mealViewModel.getMealFromDate(date, "colazione").observe(getActivity(), new Observer<Meal>() {
-                                @Override
-                                public void onChanged(Meal meal) {
-                                    if (meal == null) {
-                                        cocar=0;
-                                        cofatt=0;
-                                        coprotetins=0;
-                                        cocalories=0;
-                                    }else{
-                                        cocar=meal.getCarboidratiTot();
-                                        cofatt=meal.getGrassiTot();
-                                        coprotetins=meal.getProteineTot();
-                                        cocalories=meal.getCalorieTot();
-                                    }
-                                }
-                            });
-                            mealViewModel.getMealFromDate(date, "pranzo").observe(getActivity(), new Observer<Meal>() {
-                                @Override
-                                public void onChanged(Meal meal) {
-                                    if(meal==null){
-                                        prcar=0;
-                                        prfatt=0;
-                                        prproteins=0;
-                                        prcalories=0;
-                                    }else{
-                                        prcar=meal.getCarboidratiTot();
-                                        prfatt=meal.getGrassiTot();
-                                        prproteins=meal.getProteineTot();
-                                        prcalories=meal.getCalorieTot();
-                                    }
 
-                                }
-                            });
-                        mealViewModel.getMealFromDate(date, "cena").observe(getActivity(), new Observer<Meal>() {
+
+                        mealViewModel.getDayMeals(date).observe(getActivity(), new Observer<List<Meal>>() {
                             @Override
-                            public void onChanged(Meal meal) {
-                                if(meal==null){
+                            public void onChanged(List<Meal> meal) {
+                                if(meal != null){
+                                    cocar=0;
                                     secar=0;
-                                    sefatt=0;
-                                    seproteins=0;
-                                    secalories=0;
                                 }else {
-                                    secar=meal.getCarboidratiTot();
-                                    sefatt=meal.getGrassiTot();
-                                    seproteins=meal.getProteineTot();
-                                    secalories=meal.getCalorieTot();
-                                }
 
+                                }
                             }
                         });
-
 
                         Log.d("calendar",""+materialDatePicker.getHeaderText());
                         Log.d("calendar","car "+secar);
