@@ -315,7 +315,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="@string/Fatt"
+                        android:text="@string/Fat"
                         android:textColor="#49454F" />
 
                     <TextView

@@ -50,12 +50,17 @@ public class FragmentCalendar extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState==null){
-
-        }else{
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            date = LocalDate.parse(savedInstanceState.getString("dataSalvata"), formatter);
-            Log.d("calendar funge",""+date);
+        if(savedInstanceState!=null){
+            if(savedInstanceState.getString("dataSalvata")==null){
+                date=LocalDate.now();
+            }else{
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                date = LocalDate.parse(savedInstanceState.getString("dataSalvata"), formatter);
+                Log.d("calendar funge",""+date);
+            }
+        }
+        else{
+            date=LocalDate.now();
         }
     }
     @Override
@@ -85,9 +90,6 @@ public class FragmentCalendar extends Fragment {
             }
         });
 
-        if(savedInstanceState==null){
-
-        }else{
             mealViewModel.getDayMeals(date).observe(getActivity(), new Observer<List<Meal>>() {
                 @Override
                 public void onChanged(List<Meal> meals) {
@@ -117,7 +119,7 @@ public class FragmentCalendar extends Fragment {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
             String dateString=date.format(formatter);
             show_selected_date.setText(""+dateString);
-        }
+
 
         materialDatePicker.addOnPositiveButtonClickListener(
                 new MaterialPickerOnPositiveButtonClickListener() {
@@ -180,9 +182,13 @@ public class FragmentCalendar extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
+        if(date!=null){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedString = date.format(formatter);
         outState.putString("dataSalvata", formattedString);
-        super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);}
+        else{
+            outState.putString("dataSalvata", null);
+        }
     }
 }
