@@ -148,7 +148,7 @@
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         android:backgroundTint="#039587"
-                        android:text="See more"
+                        android:text="@string/Seemore"
                         android:textColor="#DAD8D8"
                         android:textColorLink="#039587"
                         android:textSize="20sp"
@@ -162,7 +162,7 @@
                         android:layout_gravity="end"
                         android:layout_marginEnd="20dp"
                         android:backgroundTint="#039587"
-                        android:text="Add"
+                        android:text="@string/Add"
                         android:textColor="#DAD8D8"
                         android:textSize="20sp" />
                 </LinearLayout>

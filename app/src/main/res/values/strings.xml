@@ -43,6 +43,33 @@
     <string name="error_user_collision_message">The mail address is already in use</string>
     <string name="check_login_data_message">check the data you have insert</string>
     <string name="logout">logged out</string>
+    <string name="Zero">0</string>
+    <string name="Weight">Weight: </string>
+    <string name="Height">Height: </string>
+    <string name="Weightgoal">Weight goal: </string>
+    <string name="Age">Age: </string>
+    <string name="Carbohhydrates">Carbohhydrates: </string>
+    <string name="CARBOHYDRATES">CARBOHYDRATES: </string>
+    <string name="Fat">Fat: </string>
+    <string name="FAT">FAT: </string>
+    <string name="Proteins">Proteins: </string>
+    <string name="PROTEINS">PROTEINS: </string>
+    <string name="Calories">Calories: </string>
+    <string name="CALORIES">CALORIES: </string>
+    <string name="CaloriesNeeds">Calories Needs: </string>
+    <string name="Calendar">Calendar</string>
+    <string name="DataSelected">Data Selected: </string>
+    <string name="Email">Email: </string>
+    <string name="ChangeYourPassword">Change Your Password</string>
+    <string name="EnableModifyView">Enable Modify View</string>
+    <string name="LogOut">Log Out</string>
+    <string name="Seemore">See more</string>
+    <string name="Add">Add</string>
+    <string name="Breakfast">Breakfast</string>
+    <string name="Launch">Launch</string>
+    <string name="Dinner">Dinner</string>
+    <string name="Quantity">Quantity. </string>
+
 
     <!-->altra key 46a966c9b4dc4c8f98176d0f9c11a71e <-->
     <!-->altra key 8b70cdb4ff6d42f4ae4efece4a891a0d <-->

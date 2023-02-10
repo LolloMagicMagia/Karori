@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="DATA SELEZIONATA: "
+                android:text="@string/DataSelected"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 app:cardBackgroundColor="#B4FFFFFF" />
@@ -92,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="Weight: "
+                        android:text="@string/Weight"
                         android:textColor="#49454F" />
 
                     <TextView
@@ -101,9 +101,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginEnd="10dp"
-                        android:gravity="center_vertical|end"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:gravity="center_vertical|end"
+                        android:text="@string/Zero" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -130,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="Height: "
+                        android:text="@string/Height"
                         android:textColor="#49454F" />
 
                     <TextView
@@ -141,7 +141,7 @@
                         android:layout_marginEnd="10dp"
                         android:gravity="center_vertical|end"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="@string/Zero" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -168,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="Weight Goal: "
+                        android:text="@string/Weightgoal"
                         android:textColor="#49454F" />
 
                     <TextView
@@ -179,7 +179,7 @@
                         android:layout_marginEnd="10dp"
                         android:gravity="center_vertical|end"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="@string/Zero" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="Age: "
+                        android:text="@string/Age"
                         android:textColor="#49454F" />
 
                     <TextView
@@ -218,7 +218,7 @@
                         android:layout_marginEnd="10dp"
                         android:gravity="center_vertical|end"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="@string/Zero" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -277,7 +277,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="Carbohhydrates: "
+                        android:text="@string/Carbohhydrates"
                         android:textColor="#49454F" />
 
                     <TextView
@@ -288,7 +288,7 @@
                         android:layout_marginEnd="10dp"
                         android:gravity="center_vertical|end"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="@string/Zero" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -315,7 +315,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="Fatt: "
+                        android:text="@string/Fatt"
                         android:textColor="#49454F" />
 
                     <TextView
@@ -326,7 +326,7 @@
                         android:layout_marginEnd="10dp"
                         android:gravity="center_vertical|end"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="@string/Zero" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -353,7 +353,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="Proteins: "
+                        android:text="@string/Proteins"
                         android:textColor="#49454F" />
 
                     <TextView
@@ -364,7 +364,7 @@
                         android:layout_marginEnd="10dp"
                         android:gravity="center_vertical|end"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="@string/Zero" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -391,7 +391,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="Calories: "
+                        android:text="@string/Calories"
                         android:textColor="#49454F" />
 
                     <TextView
@@ -402,7 +402,7 @@
                         android:layout_marginEnd="10dp"
                         android:gravity="center_vertical|end"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="@string/Zero" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -430,7 +430,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="Calories Needs: "
+                        android:text="@string/CaloriesNeeds"
                         android:textColor="#49454F" />
 
                     <TextView
@@ -441,7 +441,7 @@
                         android:gravity="center_vertical|end"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="@string/Zero" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -455,5 +455,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginTop="20dp"
-        android:text="Calendar" />
+        android:text="@string/Calendar" />
 </LinearLayout>

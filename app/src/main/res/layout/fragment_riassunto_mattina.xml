@@ -36,9 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/arimo_bold"
                 android:gravity="center"
-                android:text="Breakfast"
+                android:text="@string/Breakfast"
                 android:textColor="#49454F"
                 android:textSize="30sp" />
 
@@ -73,9 +72,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:fontFamily="@font/arimo_bold"
                             android:padding="15dp"
-                            android:text="CALORIES: "
+                            android:text="@string/CALORIES"
                             android:textColor="#49454F"
                             android:textSize="15sp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -88,8 +86,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|center_vertical|end"
                             android:layout_marginEnd="10dp"
-                            android:fontFamily="@font/arimo_bold"
-                            android:text="10"
+
+                            android:text="@string/Zero"
                             android:textColor="#49454F"
                             android:textSize="20sp" />
                     </com.google.android.material.card.MaterialCardView>
@@ -112,9 +110,8 @@
                             android:id="@+id/TextProteine"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/arimo_bold"
                             android:padding="15dp"
-                            android:text="PROTEINS: "
+                            android:text="@string/PROTEINS"
                             android:textColor="#49454F"
                             android:textSize="15sp" />
 
@@ -124,8 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|end"
                             android:layout_marginEnd="10dp"
-                            android:fontFamily="@font/arimo_bold"
-                            android:text="10"
+                            android:text="@string/Zero"
                             android:textColor="#49454F"
                             android:textSize="20sp" />
                     </com.google.android.material.card.MaterialCardView>
@@ -162,9 +158,8 @@
                             android:id="@+id/TextGrassi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/arimo_bold"
                             android:padding="15dp"
-                            android:text="FAT: "
+                            android:text="@string/FAT"
                             android:textColor="#49454F"
                             android:textSize="15sp" />
 
@@ -174,8 +169,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|end"
                             android:layout_marginEnd="10dp"
-                            android:fontFamily="@font/arimo_bold"
-                            android:text="10"
+                            android:text="@string/Zero"
                             android:textColor="#49454F"
                             android:textSize="20sp" />
                     </com.google.android.material.card.MaterialCardView>
@@ -198,9 +192,8 @@
                             android:id="@+id/TextCarboidrati"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/arimo_bold"
                             android:padding="15dp"
-                            android:text="CARBOHYDRATES: "
+                            android:text="@string/CARBOHYDRATES"
                             android:textColor="#49454F"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -212,9 +205,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|end"
                             android:layout_marginEnd="10dp"
-                            android:fontFamily="@font/arimo_bold"
                             android:gravity="center"
-                            android:text="10"
+                            android:text="@string/Zero"
                             android:textColor="#49454F"
                             android:textSize="20sp" />
 
