@@ -239,17 +239,8 @@ public class LoginFragment extends Fragment {
                 Log.d("Tag", gAccount.getEmail());
                 String idToken = gAccount.getId();
                 String email = gAccount.getEmail();
-                UserAuthenticationRemoteDataSource userAuthenticationRemoteDataSource = new UserAuthenticationRemoteDataSource();
-                userAuthenticationRemoteDataSource.signInWithGoogle(idToken);
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_google_dataUserFragment);
 
-                //SE MI SONO GIA' loggato allora l'email è già su firebase con i relativi valori
-                //e vado a settare i valori in profilo come con il login normale
-
-
-
-                //modifica questo
-                Intent intent=new Intent(getActivity(),SummaryActivity.class);
-                startActivity(intent);
                 getActivity().finish();
             }
 
@@ -268,8 +259,7 @@ public class LoginFragment extends Fragment {
                                     * per poi andare a salvare su firebase tutto questo*/
                                     task.getResult(ApiException.class);
                                     Log.d("Tag", GoogleSignIn.getLastSignedInAccount(getContext()).getEmail());
-                                    Intent intent = new Intent(getActivity(),SummaryActivity.class);
-                                    startActivity(intent);
+                                    Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_google_dataUserFragment);
                                     getActivity().finish();
                                 }catch(ApiException e){
                                     Toast.makeText(getContext(),"Something went wrong",Toast.LENGTH_LONG);
@@ -284,6 +274,8 @@ public class LoginFragment extends Fragment {
                 public void onClick(View view) {
                     Intent signInIntent=gsc.getSignInIntent();
                     activityResultLauncher.launch(signInIntent);
+                    Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_google_dataUserFragment);
+
 
                 }
             });

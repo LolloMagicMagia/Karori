@@ -49,5 +49,9 @@
     <fragment
         android:id="@+id/google_dataUserFragment"
         android:name="com.example.karori.Login.google_dataUserFragment"
-        android:label="google_dataUserFragment" />
+        android:label="google_dataUserFragment" >
+        <action
+            android:id="@+id/action_google_dataUserFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>
