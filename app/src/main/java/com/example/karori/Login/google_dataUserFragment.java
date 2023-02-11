@@ -90,28 +90,32 @@ public class google_dataUserFragment extends Fragment {
             databaseReference = FirebaseDatabase.getInstance().getReference();
 
             final Button googlebutton = view.findViewById(R.id.informationGoogleButton);
-            editTextAge=view.findViewById(R.id.ageGTextView);
-            editTextHeight=view.findViewById(R.id.heightGTextView);
-            editTextWeight= view.findViewById(R.id.weightGTextView);
-            editTextGoal = view.findViewById(R.id.ageGTextView);
 
-            String age =editTextAge.getText().toString().trim();
-            String height = editTextHeight.getText().toString().trim();
-            String weight = editTextWeight.getText().toString().trim();
-            String goal = editTextGoal.getText().toString().trim();
+            googlebutton.setOnClickListener(v ->{
+                editTextAge=view.findViewById(R.id.ageGTextView);
+                editTextHeight=view.findViewById(R.id.heightGTextView);
+                editTextWeight= view.findViewById(R.id.weightGTextView);
+                editTextGoal = view.findViewById(R.id.ageGTextView);
 
-            User user = new User();
+                String age =editTextAge.getText().toString().trim();
+                String height = editTextHeight.getText().toString().trim();
+                String weight = editTextWeight.getText().toString().trim();
+                String goal = editTextGoal.getText().toString().trim();
 
-            if (numberOk(age, weight, height, goal)){
-                user.setAge(Integer.parseInt(age));
-                user.setEmail("");
-                user.setHeight(Integer.parseInt(height));
-                user.setWeight(Integer.parseInt(weight));
-                user.setGoal(Integer.parseInt(goal));
-                user.setKilocalorie((int) (1.2*(66+(13.7* (user.getGoal()/10))+(5*user.getHeight())-(6.8*user.getAge()))));
-            }
+                User user = new User();
 
-        writeNewUser(user);
+                if (numberOk(age, weight, height, goal)){
+                    user.setAge(Integer.parseInt(age));
+                    user.setEmail("");
+                    user.setHeight(Integer.parseInt(height));
+                    user.setWeight(Integer.parseInt(weight));
+                    user.setGoal(Integer.parseInt(goal));
+                    user.setKilocalorie((int) (1.2*(66+(13.7* (user.getGoal()/10))+(5*user.getHeight())-(6.8*user.getAge()))));
+                }
+
+                writeNewUser(user);
+
+            });
 
             Navigation.findNavController(view).navigate(
                     R.id.action_google_dataUserFragment_to_loginFragment);
