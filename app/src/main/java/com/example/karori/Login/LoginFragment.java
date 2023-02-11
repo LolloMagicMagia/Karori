@@ -2,6 +2,8 @@ package com.example.karori.Login;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.karori.util.SharedPreferencesUtil.writeFloatData;
+import static com.example.karori.util.SharedPreferencesUtil.writeIntData;
 import static com.example.karori.util.SharedPreferencesUtil.writeStringData;
 
 import android.app.Activity;
@@ -31,6 +33,7 @@ import android.widget.Toast;
 import com.example.karori.Models.Result;
 import com.example.karori.R;
 import com.example.karori.SearchClasses.SearchActivity;
+import com.example.karori.Source.User.UserAuthenticationRemoteDataSource;
 import com.example.karori.data.User.User;
 import com.example.karori.menuFragment.SummaryActivity;
 import com.example.karori.repository.User.IUserRepository;
@@ -234,6 +237,11 @@ public class LoginFragment extends Fragment {
             //MI SONO GIA' LOGGATO CON GOOGLE
             if(gAccount != null ){
                 Log.d("Tag", gAccount.getEmail());
+                String idToken = gAccount.getId();
+                String email = gAccount.getEmail();
+
+                UserAuthenticationRemoteDataSource.signInWithGoogle(idToken);
+
                 //SE MI SONO GIA' loggato allora l'email è già su firebase con i relativi valori
                 //e vado a settare i valori in profilo come con il login normale
 
@@ -363,6 +371,8 @@ public class LoginFragment extends Fragment {
         return true;
     }
 
+
+
 }
 
     /*private void userLogin() {
@@ -410,7 +420,7 @@ public class LoginFragment extends Fragment {
     }
 */
 
-// onviewcreated :
+// onviewcreated:
 /*
         final Button buttonFrgPsw =(Button)  view.findViewById(R.id.buttonForgotPsw);
         final Button buttonSignUp = (Button) view.findViewById(R.id.sign_up_button);

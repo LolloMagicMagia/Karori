@@ -157,10 +157,10 @@ public class FragmentProfilo extends Fragment {
                         Log.d("firebase",""+sn);
                         dataUser.add(sn.getValue().toString());
                     }
-                    editTextGoal.setText(dataUser.get(2)+"0");
+                    editTextGoal.setText(dataUser.get(2));
                     editTextAge.setText(dataUser.get(0));
                     textViewKilocalorie.setText(dataUser.get(4));;
-                    numberPickerWeight.setValue(Integer.parseInt(dataUser.get(5))*10);
+                    numberPickerWeight.setValue(Integer.parseInt(dataUser.get(5)));
                     numberPickerHeight.setValue(Integer.parseInt(dataUser.get(3)));
                     textViewMail.setText(dataUser.get(1));
                     Log.d("firebase",dataUser.get(1));
@@ -193,7 +193,7 @@ public class FragmentProfilo extends Fragment {
 
                         numberPickerHeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                             public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
-                                weightNew = newValue;
+                                heightNew = newValue;
                             }
                         });
 
@@ -201,7 +201,7 @@ public class FragmentProfilo extends Fragment {
                         numberPickerWeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                             @Override
                             public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
-                                heightNew = newValue;
+                                weightNew = newValue;
                             }
                         });
 
@@ -214,12 +214,12 @@ public class FragmentProfilo extends Fragment {
                         ageNew = editTextAge.getText().toString().trim();
                         goalNew = editTextGoal.getText().toString().trim();
                         user.setEmail(dataUser.get(1));
-                        user.setHeight(Integer.parseInt(dataUser.get(3)));
-                        user.setWeight(Integer.parseInt(dataUser.get(5)));
-                        user.setGoal(Integer.parseInt((dataUser.get(2))));
-                        user.setAge(Integer.parseInt(dataUser.get(0)));
-                        user.setKilocalorie((int) (1.2 * (66 + (13.7 * (user.getGoal() / 100)) + (5 * user.getHeight()) - (6.8 * user.getAge()))));
-                        kilocalorieNew = (int) (1.2 * (66 + (13.7 * (user.getGoal() / 100)) + (5 * user.getHeight()) - (6.8 * user.getAge())));
+                        user.setHeight(Integer.parseInt(String.valueOf(heightNew)));
+                        user.setWeight(Integer.parseInt(String.valueOf(weightNew)));
+                        user.setGoal(Integer.parseInt(goalNew));
+                        user.setAge(Integer.parseInt(ageNew));
+                        user.setKilocalorie((int) (1.2 * (66 + (13.7 * (user.getGoal() / 10)) + (5 * user.getHeight()) - (6.8 * user.getAge()))));
+                        kilocalorieNew = (int) (1.2 * (66 + (13.7 * (user.getGoal() / 10)) + (5 * user.getHeight()) - (6.8 * user.getAge())));
                         editTextGoal.setEnabled(false);
                         editTextAge.setEnabled(false);
                         numberPickerHeight.setEnabled(false);
@@ -228,11 +228,11 @@ public class FragmentProfilo extends Fragment {
                         editTextGoal.setText(String.valueOf(goalNew));
                         editTextAge.setText(String.valueOf(ageNew));
                         textViewKilocalorie.setText(String.valueOf(user.getKilocalorie()));
-                        numberPickerWeight.setValue(user.getWeight());
-                        numberPickerHeight.setValue(user.getHeight());
+                        numberPickerWeight.setValue(weightNew);
+                        numberPickerHeight.setValue(heightNew);
                         textViewMail.setText(user.getEmail());
 
-                        saveLoginData(user.getEmail(), user.getIdToken(), user.getWeight(), user.getHeight(), user.getKilocalorie(), user.getAge(), user.getGoal());
+                        saveLoginData(user.getEmail(), user.getIdToken(), weightNew, heightNew, user.getKilocalorie(), user.getAge(), user.getGoal());
                     }
                 }
             });

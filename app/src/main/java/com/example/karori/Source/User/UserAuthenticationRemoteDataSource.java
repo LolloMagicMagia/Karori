@@ -131,7 +131,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     }
 
     @Override
-    public void signInWithGoogle(String idToken) {
+    public static void signInWithGoogle(String idToken) {
         if(idToken != null){
             AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
             firebaseAuth.signInWithCredential(firebaseCredential).addOnCompleteListener(task -> {

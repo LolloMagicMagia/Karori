@@ -86,7 +86,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteSource{
                     else {
                         user.setAge(task.getResult().getValue(int.class));
                     }
-                latch.countDown();
+               latch.countDown();
                 }
 
             });
@@ -140,7 +140,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteSource{
                 else{
                     user.setKilocalorie(task.getResult().getValue(int.class));
                 }
-                latch.countDown();
+               latch.countDown();
             }
 
         });
@@ -152,6 +152,27 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteSource{
         }
 
         return user;
+    }
+
+    public int getUserAge (User user){
+        final int[] age = new int[1];
+        databaseReference.child("users").child(user.getIdToken()).child("age").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    age[0] = 0;
+                    Log.d(TAG, "errore nessn eta");
+                }
+                else {
+                    age[0] = task.getResult().getValue(int.class);
+                }
+
+            }
+
+        });
+
+
+        return age[0];
     }
 
 }
