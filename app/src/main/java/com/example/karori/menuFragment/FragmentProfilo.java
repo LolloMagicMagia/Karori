@@ -143,6 +143,7 @@ public class FragmentProfilo extends Fragment {
         if(userViewModel.getLoggedUser()!= null){
             dataUser=new ArrayList<>();
             Log.d("firebase","entrato");
+            //ciao
             User loggedUser = userViewModel.getLoggedUser();
             Log.d("firebase","idtoken "+loggedUser.getIdToken());
             DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("users").child(loggedUser.getIdToken());
