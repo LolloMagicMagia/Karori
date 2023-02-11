@@ -193,6 +193,10 @@ public class FragmentProfilo extends Fragment {
 
                         numberPickerHeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                             public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
+                                if (oldValue == newValue){
+                                    System.out.println("old" + oldValue);
+                                    System.out.println("new" + newValue);
+                                }
                                 heightNew = newValue;
                             }
                         });

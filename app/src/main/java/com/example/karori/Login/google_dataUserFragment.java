@@ -72,9 +72,6 @@ public class google_dataUserFragment extends Fragment {
                 requireActivity(),
                 new UserViewModelFactory(userRepository)).get(UserViewModel.class);
 
-
-
-
     }
 
     @Override
@@ -92,6 +89,7 @@ public class google_dataUserFragment extends Fragment {
             final Button googlebutton = view.findViewById(R.id.informationGoogleButton);
 
             googlebutton.setOnClickListener(v ->{
+
                 editTextAge=view.findViewById(R.id.ageGTextView);
                 editTextHeight=view.findViewById(R.id.heightGTextView);
                 editTextWeight= view.findViewById(R.id.weightGTextView);
@@ -106,7 +104,7 @@ public class google_dataUserFragment extends Fragment {
 
                 if (numberOk(age, weight, height, goal)){
                     user.setAge(Integer.parseInt(age));
-                    user.setEmail("");
+                    user.setIdToken("");
                     user.setHeight(Integer.parseInt(height));
                     user.setWeight(Integer.parseInt(weight));
                     user.setGoal(Integer.parseInt(goal));
