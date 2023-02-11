@@ -239,8 +239,8 @@ public class LoginFragment extends Fragment {
                 Log.d("Tag", gAccount.getEmail());
                 String idToken = gAccount.getId();
                 String email = gAccount.getEmail();
-
-                UserAuthenticationRemoteDataSource.signInWithGoogle(idToken);
+                UserAuthenticationRemoteDataSource userAuthenticationRemoteDataSource = new UserAuthenticationRemoteDataSource();
+                userAuthenticationRemoteDataSource.signInWithGoogle(idToken);
 
                 //SE MI SONO GIA' loggato allora l'email è già su firebase con i relativi valori
                 //e vado a settare i valori in profilo come con il login normale
