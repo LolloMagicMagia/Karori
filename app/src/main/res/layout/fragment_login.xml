@@ -147,59 +147,7 @@
                     android:text="@string/login"
                     tools:ignore="MissingClass" />
 
-                <RelativeLayout
-                    android:id="@+id/relative_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/buttonLogin">
 
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="24dp"
-                        android:layout_toStartOf="@id/textview_or"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:id="@+id/textview_or"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:text="or" />
-
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="24dp"
-                        android:layout_toEndOf="@id/textview_or"
-                        android:background="@color/black" />
-
-                </RelativeLayout>
-
-                <Button
-                    android:id="@+id/button_google_login"
-                    style="@style/Widget.Material3.Button.ElevatedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="24dp"
-                    android:text="@string/google_login"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/google_login_text"
-                    android:textSize="14sp"
-                    app:backgroundTint="@color/google_login_button"
-                    app:icon="@drawable/googleg_standard_color_18"
-                    app:iconGravity="textStart"
-                    app:iconTint="@null" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/linearLayout2"
