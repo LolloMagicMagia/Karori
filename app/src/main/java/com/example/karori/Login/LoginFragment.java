@@ -133,6 +133,7 @@ public class LoginFragment extends Fragment {
                                 saveLoginData(user.getEmail(), null, user.getIdToken());
                                 userViewModel.setAuthenticationError(false);
                                 retrieveUserInformationAndStartActivity(user, R.id.action_loginFragment_to_summaryActivity);
+                                Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_google_dataUserFragment);
                             } else {
                                 userViewModel.setAuthenticationError(true);
                                 Snackbar.make(requireActivity().findViewById(android.R.id.content),

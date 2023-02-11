@@ -73,7 +73,6 @@ public class FragmentProfilo extends Fragment {
     private UserDataRemoteDataSource userDataRemoteDataSource;
     private String ageNew;
     List<String> dataUser;
-    ArrayAdapter adapter;
     private int weightNew;
     private int heightNew;
     private String goalNew;
@@ -157,6 +156,8 @@ public class FragmentProfilo extends Fragment {
                         Log.d("firebase",""+sn);
                         dataUser.add(sn.getValue().toString());
                     }
+                    weightNew=Integer.parseInt(dataUser.get(5));
+                    heightNew=Integer.parseInt(dataUser.get(3));
                     editTextGoal.setText(dataUser.get(2));
                     editTextAge.setText(dataUser.get(0));
                     textViewKilocalorie.setText(dataUser.get(4));;
@@ -193,11 +194,7 @@ public class FragmentProfilo extends Fragment {
 
                         numberPickerHeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                             public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
-                                if (oldValue == newValue){
-                                    System.out.println("old" + oldValue);
-                                    System.out.println("new" + newValue);
-                                }
-                                heightNew = newValue;
+                                    heightNew = newValue;
                             }
                         });
 
@@ -205,7 +202,7 @@ public class FragmentProfilo extends Fragment {
                         numberPickerWeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                             @Override
                             public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
-                                weightNew = newValue;
+                                    weightNew = newValue;
                             }
                         });
 
@@ -283,23 +280,7 @@ public class FragmentProfilo extends Fragment {
         mAuth = FirebaseAuth.getInstance();
             log_out = view.findViewById(R.id.LogOut);
             changePw = new Forgot_Password_Fragment();
-            gOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .build();
-
-            gClient = GoogleSignIn.getClient(getContext(), gOptions);
-            GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(getContext());
             log_out.setOnClickListener(v -> {
-                if (gAccount != null) {
-                    gClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Intent i = new Intent(getActivity(), WelcomeActivity.class);
-                            getActivity().finish();
-                            startActivity(i);
-                        }
-                    });
-                } else {
                     userViewModel.logout();
                     if (userViewModel.getLoggedUser() == null) {
                         Snackbar.make(view,
@@ -313,7 +294,6 @@ public class FragmentProfilo extends Fragment {
                                 requireActivity().getString(R.string.unexpected_error),
                                 Snackbar.LENGTH_SHORT).show();
 
-                    }
                 }
 
 

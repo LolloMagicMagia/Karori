@@ -1,5 +1,6 @@
 package com.example.karori.menuFragment;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,15 +14,28 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.karori.Login.UserViewModel;
+import com.example.karori.Login.UserViewModelFactory;
 import com.example.karori.R;
 import com.example.karori.Room.Meal;
 import com.example.karori.Room.MealViewModel;
+import com.example.karori.Source.User.UserDataRemoteDataSource;
+import com.example.karori.data.User.User;
+import com.example.karori.repository.User.IUserRepository;
+import com.example.karori.util.ServiceLocator;
+import com.example.karori.util.SharedPreferencesUtil;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,7 +43,10 @@ public class FragmentCalendar extends Fragment {
     private TextView show_selected_date;
     private Button calendar;
     double car;
+    private UserViewModel userViewModel;
     double fatt;
+    private UserDataRemoteDataSource userDataRemoteDataSource;
+    List<String> dataUserCalendar;
     double proteins;
     LocalDate date;
     double calories;
@@ -50,6 +67,16 @@ public class FragmentCalendar extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                requireActivity(),
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        userViewModel.setAuthenticationError(false);
+        Activity activity = getActivity();
+        SharedPreferencesUtil sharedPreferencesUtil = activity != null ? new SharedPreferencesUtil(activity.getApplication()) : null;
+        userDataRemoteDataSource = sharedPreferencesUtil != null ? new UserDataRemoteDataSource(sharedPreferencesUtil) : null;
+
         if(savedInstanceState!=null){
             if(savedInstanceState.getString("dataSalvata")==null){
                 date=LocalDate.now();
@@ -73,6 +100,11 @@ public class FragmentCalendar extends Fragment {
         TextView fat=view.findViewById(R.id.fatCalendar);
         TextView proteine=view.findViewById(R.id.proteineCalendar);
         TextView calorie=view.findViewById(R.id.calorieCalendar);
+        TextView height=view.findViewById(R.id.pesoCalendar);
+        TextView weight=view.findViewById(R.id.altezzaCalendar);
+        TextView weightGoal=view.findViewById(R.id.pesoGoalCalendar);
+        TextView age=view.findViewById(R.id.ageCalendar);
+        TextView calNeeds=view.findViewById(R.id.calorieNeedsCalendar);
         df = new DecimalFormat("#,##0.00");
 
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
@@ -175,6 +207,38 @@ public class FragmentCalendar extends Fragment {
                         });
                     }
                 });
+
+
+        dataUserCalendar=new ArrayList<>();
+        Log.d("firebase","entrato");
+        //ciao
+        User loggedUser = userViewModel.getLoggedUser();
+        Log.d("firebase","idtoken "+loggedUser.getIdToken());
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("users").child(loggedUser.getIdToken());
+        Log.d("firebase","reference "+reference);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataUserCalendar.clear();
+                Log.d("firebase",snapshot.getChildren().toString());
+                for(DataSnapshot sn:snapshot.getChildren()){
+                    Log.d("firebase",""+sn);
+                    dataUserCalendar.add(sn.getValue().toString());
+                }
+                weight.setText(dataUserCalendar.get(5));
+                height.setText(dataUserCalendar.get(3));
+                age.setText(dataUserCalendar.get(0));;
+                weightGoal.setText(dataUserCalendar.get(2));
+                calNeeds.setText(dataUserCalendar.get(4));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
 
         return view;
