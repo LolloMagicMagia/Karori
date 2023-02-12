@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -199,27 +200,32 @@ public class LoginFragment extends Fragment {
 
                 if (isEmailOk(email) & isPasswordOk(password)) {
                     if (!userViewModel.isAuthenticationError()) {
-
+                        Log.d("logout ", "Fa schifo il logout:  3");
                         userViewModel.getUserMutableLiveData(email, password, true).observe(
                                 getViewLifecycleOwner(), result -> {
                                     if (result.isSuccess()) {
+                                        Log.d("logout ", "Fa schifo il logout:  4");
                                         User user = ((Result.UserResponseSuccess) result).getData();
                                         saveLoginData(email, password, user.getIdToken());
                                         userViewModel.setAuthenticationError(false);
                                         retrieveUserInformationAndStartActivity(user, R.id.action_loginFragment_to_summaryActivity);
                                     } else {
+                                        Log.d("logout ", "Fa schifo il logout:  5");
                                         userViewModel.setAuthenticationError(true);
                                         Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                                 getErrorMessage(((Result.Error) result).getMessage()),
                                                 Snackbar.LENGTH_SHORT).show();
                                     }
+
                                 });
                     } else {
                         userViewModel.getUser(email, password, true);
+                        Log.d("logout ", "Fa schifo il logout:  1");
                     }
                 } else {
                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                             "Check the the data you inserted", Snackbar.LENGTH_SHORT).show();
+                    Log.d("logout ", "Fa schifo il logout:  2");
                 }
             });
 
