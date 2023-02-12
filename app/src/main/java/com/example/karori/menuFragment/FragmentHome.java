@@ -37,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -217,12 +218,13 @@ public class FragmentHome extends Fragment {
     }
 
     public  void progressBarUpdate(double totProteineAssunte, double totProteine){
+        DecimalFormat df = new DecimalFormat("#.##");
         if(totProteineAssunte>totProteine){
             cal_now.setText(">100 %");
             progressBar.setCurrentProgress(totProteine);
         }
         else{
-            cal_now.setText(String.valueOf(totProteineAssunte)+" / "+ String.valueOf(totProteine));
+            cal_now.setText(String.valueOf(df.format(totProteineAssunte))+" / "+ String.valueOf(totProteine));
             progressBar.setCurrentProgress((int)((totProteineAssunte/totProteine)*100));
         }
 
