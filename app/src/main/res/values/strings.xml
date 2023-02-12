@@ -33,7 +33,7 @@
     <string name="google_login">Login with Google</string>
     <string name="Or">Or</string>
     <string name="new_karori">New to Karori?</string>
-    <string name="api_key">8b70cdb4ff6d42f4ae4efece4a891a0d</string>
+    <string name="api_key">1326e32a25274e658d4c68f4bbcc6f2f</string>
     <string name="Web_id_client">821771622083-4v2f4g48me1jqqkdllhk9bpkfbsj7pib.apps.googleusercontent.com</string>
     <string name="error_login_password_message">The password is invalid</string>
     <string name="error_login_user_message">here is no user record corresponding to this identifier</string>
@@ -73,5 +73,6 @@
 
     <!-->altra key 46a966c9b4dc4c8f98176d0f9c11a71e <-->
     <!-->altra key 8b70cdb4ff6d42f4ae4efece4a891a0d <-->
+    <!-->altra key 1326e32a25274e658d4c68f4bbcc6f2f <-->
 
 </resources>

@@ -113,10 +113,10 @@ public class Meal {
             Log.d("Alimento", "qui");
             if(a != null && a.getId() == idAlimento){
                 foodListPopUp.remove(a);
-                setCalorieTot(calorieTot - Double.parseDouble(a.getCalorie()));
-                setCarboidratiTot(carboidratiTot - Double.parseDouble(a.getCarboidrati()));
-                setProteineTot(proteineTot - Double.parseDouble(a.getProteine()));
-                setGrassiTot(grassiTot - Double.parseDouble(a.getGrassi()));
+                setCalorieTot(calorieTot - Double.parseDouble(a.getCalorie().replace(",",".")));
+                setCarboidratiTot(carboidratiTot - Double.parseDouble(a.getCarboidrati().replace(",",".")));
+                setProteineTot(proteineTot - Double.parseDouble(a.getProteine().replace(",",".")));
+                setGrassiTot(grassiTot - Double.parseDouble(a.getGrassi().replace(",",".")));
                 Log.d("Alimento", a.getNome());
                 break;
             }

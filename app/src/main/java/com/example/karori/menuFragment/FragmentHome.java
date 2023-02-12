@@ -39,6 +39,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,13 +56,15 @@ public class FragmentHome extends Fragment {
     int positionRiassunti;
     private int where_MPS;
     String fronsblix;
-    double calories;
+    double calories = 0;
+    double calogero = 0;
     private TextView totProteineBar;
     private TextView cal_now;
     private CircularProgressIndicator progressBar;
     private String pasto = "";
     private Button bottoneChangeActivity;
 
+    public static boolean first;
 
     public FragmentHome() {
     }
@@ -163,17 +166,57 @@ public class FragmentHome extends Fragment {
                 if (meals != null) {
                     calories = 0;
                     for (Meal meal : meals) {
-                        calories = calories + meal.getCalorieTot();
+                        calories += meal.getCalorieTot();
+                        User loggedUser = userViewModel.getLoggedUser();
+                        if (loggedUser != null) {
+                            DatabaseReference reference = FirebaseDatabase.getInstance()
+                                    .getReference().child("users").child(loggedUser.getIdToken());
+                            DatabaseReference newReference = reference.child("zDates");
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+                            LocalDate date = LocalDate.now();
+                            DatabaseReference dateReference = newReference.child(date.format(formatter));
+                            dateReference.child("zCalAssunte").setValue(calories);
+                        }
                     }
-                } else {
-                    calories = 0;
                 }
-                progressBarUpdate(calories, 3000);
-
-                ArrayList<String> dataUser = new ArrayList<>();
                 if (userViewModel.getLoggedUser() != null) {
+                    ArrayList<String> dataUser = new ArrayList<>();
                     User loggedUser = userViewModel.getLoggedUser();
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(loggedUser.getIdToken());
+                    DatabaseReference reference = FirebaseDatabase.getInstance()
+                            .getReference().child("users")
+                            .child(loggedUser.getIdToken());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+                    LocalDate date=LocalDate.now();
+                    DatabaseReference newReference = reference.child("zDates");
+                    DatabaseReference dateReference = newReference.child(date.format(formatter));
+                    dateReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            dataUser.clear();
+                            Log.d("firebase", snapshot.getChildren().toString());
+                            for (DataSnapshot sn : snapshot.getChildren()) {
+                                Log.d("firebase", "" + sn);
+                                dataUser.add(sn.getValue().toString());
+                            }
+                            try {
+                                calories = Double.parseDouble(dataUser.get(3));
+                            }
+                            catch (Exception e) {
+                                //
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            //
+                        }
+                    });
+                }
+                if (userViewModel.getLoggedUser() != null) {
+                    ArrayList<String> dataUser = new ArrayList<>();
+                    User loggedUser = userViewModel.getLoggedUser();
+                    DatabaseReference reference = FirebaseDatabase.getInstance()
+                            .getReference().child("users").child(loggedUser.getIdToken());
                     reference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
