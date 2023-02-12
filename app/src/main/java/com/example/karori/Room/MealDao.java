@@ -8,7 +8,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Dao

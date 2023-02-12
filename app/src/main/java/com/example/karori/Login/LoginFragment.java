@@ -185,7 +185,7 @@ public class LoginFragment extends Fragment {
             editTextPsw = view.findViewById(R.id.PswEditText);
 
             final Button buttonLogin = view.findViewById(R.id.buttonLogin);
-            final Button buttonGoogleLogin = view.findViewById(R.id.button_google_login);
+            //final Button buttonGoogleLogin = view.findViewById(R.id.button_google_login);
             final Button buttonRegistration = view.findViewById(R.id.sign_up_button);
             final Button buttonforgotpsw = view.findViewById(R.id.buttonForgotPsw);
 
@@ -270,7 +270,7 @@ public class LoginFragment extends Fragment {
                         }
                     });
 
-            buttonGoogleLogin.setOnClickListener(new View.OnClickListener() {
+           /* buttonGoogleLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent signInIntent=gsc.getSignInIntent();
@@ -279,7 +279,7 @@ public class LoginFragment extends Fragment {
 
 
                 }
-            });
+            });*/
 
 
 

@@ -75,11 +75,16 @@ public class MyPopupFragment extends DialogFragment {
             mealViewModel.getMealFromDate(currentTime, tipo).observe(requireActivity(), new Observer<Meal>() {
                 @Override
                 public void onChanged(Meal meal) {
-                    mAlimentoSpecificoArrayList=meal.getFoodListPopUp();
-                    /*setmAlimentoInfo();*/
-                    if(getActivity()!=null) {
-                        setAdapter();
+                    if(meal != null){
+                        mAlimentoSpecificoArrayList=meal.getFoodListPopUp();
+                        /*setmAlimentoInfo();*/
+                        if(getActivity()!=null) {
+                            setAdapter();
+                        }
+                    }else{
+                        mAlimentoSpecificoArrayList = new ArrayList<>();
                     }
+
                 }
             });
 
