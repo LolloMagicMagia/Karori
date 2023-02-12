@@ -4,16 +4,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karori.R;
-
-import org.w3c.dom.Text;
+import com.example.karori.Room.Meal;
+import com.example.karori.Room.MealViewModel;
 
 import java.util.ArrayList;
 
@@ -21,9 +21,16 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     private ArrayList<AlimentoSpecifico> alimentiList;
     private RecyclerViewClickListener listener;
 
-    public recyclerAdapter(ArrayList<AlimentoSpecifico> alimento, RecyclerViewClickListener listener){
+    private Meal meal;
+    private Button remove;
+
+    private MealViewModel mealViewModel;
+
+    public recyclerAdapter(ArrayList<AlimentoSpecifico> alimento, RecyclerViewClickListener listener, Meal meal, MealViewModel mealViewModel){
         this.alimentiList=alimento;
         this.listener=listener;
+        this.meal = meal;
+        this.mealViewModel = mealViewModel;
     }
 
 
@@ -39,6 +46,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
         private TextView grassi;
 
+
         public MyViewHoleder(final View view){
             super(view);
             nome=view.findViewById(R.id.nomeCiboPopUp);
@@ -47,6 +55,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
             grassi=view.findViewById(R.id.GrassiPopUp);
             carboidrati=view.findViewById(R.id.CarboidratiPopUp);
             proteine=view.findViewById(R.id.ProteinePopUp);
+            remove = view.findViewById(R.id.remove_btn);
             view.setOnClickListener(this);
         }
 
@@ -80,6 +89,15 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
          holder.proteine.setText(proteine);
          holder.carboidrati.setText(carboidrati);
          holder.grassi.setText(grassi);
+
+         final int pos = position;
+         remove.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 meal.remove(alimentiList.get(pos).getId());
+                 mealViewModel.update(meal);
+             }
+         });
     }
 
     @Override
