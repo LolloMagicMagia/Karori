@@ -166,14 +166,28 @@ public class FragmentCalendar extends Fragment {
                         String dateString = materialDatePicker.getHeaderText();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MMM d, yyyy");
+                        DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("dd MMM yyyy");
+                        DateTimeFormatter formatter4 = DateTimeFormatter.ofPattern("d MMM yyyy");
                         show_selected_date.setText(""+materialDatePicker.getHeaderText());
                         materialDatePicker.getArguments();
                         try {
                             date = LocalDate.parse(dateString, formatter);
+                            Log.d("formatter","emulatore1 "+dateString);
                         }catch(Exception e){
-                            date = LocalDate.parse(dateString, formatter2);
-                        }
-                        Log.d("calendar",""+date);
+                            try{
+                                date = LocalDate.parse(dateString, formatter2);
+                                Log.d("formatter","emulatore2 "+dateString);
+                            }catch(Exception ex){
+                                try{
+                                date = LocalDate.parse(dateString, formatter3);
+                                Log.d("formatter","cellulare1 "+dateString);}
+                                catch(Exception ex1){
+                                    date = LocalDate.parse(dateString, formatter4);
+                                    Log.d("formatter","cellulare2 "+dateString);}
+                                }
+                            }
+
+                        Log.d("formatter",""+date);
                         // in the above statement, getHeaderText
                         // will return selected date preview from the
                         // dialog
