@@ -12,6 +12,7 @@ import androidx.room.TypeConverters;
 import com.example.karori.SearchClasses.IngredientInfoFragment;
 import com.example.karori.menuFragment.AlimentoSpecifico;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +71,8 @@ public class Meal {
 
     public void add(Map<String, Object> food) {
 
+        DecimalFormat df = new DecimalFormat("#.##");
+
         if(food.get("id") != null && food.get("Calories") != null && food.get("Protein") != null
                 && food.get("Fat") != null && food.get("Carbohydrates") != null &&
                 food.get("amount") != null && food.get("unit") != null
@@ -85,9 +88,9 @@ public class Meal {
 
             AlimentoSpecifico al1=new AlimentoSpecifico(String.valueOf(food.get("nome alimento")),
                     (String) food.get("id"),
-                    String.valueOf(food.get("Calories")),
-                    String.valueOf(food.get("amount")),String.valueOf(food.get("Protein")),
-                    type,String.valueOf(food.get("Fat")),String.valueOf(food.get("Carbohydrates")),
+                    String.valueOf(df.format(food.get("Calories"))),
+                    String.valueOf(food.get("amount")),String.valueOf(df.format(food.get("Protein"))),
+                    type,String.valueOf(df.format(food.get("Fat"))),String.valueOf(df.format(food.get("Carbohydrates"))),
                     (String) food.get("unit"));
 
             foodListPopUp.add(al1);
@@ -102,6 +105,24 @@ public class Meal {
             Log.d("Error", "l'alimento non è stato aggiunto correttamente");
         }
 
+    }
+
+    public void remove(String idAlimento){
+        Log.d("Alimento", "qui");
+        for (AlimentoSpecifico a: foodListPopUp) {
+            Log.d("Alimento", "qui");
+            if(a != null && a.getId() == idAlimento){
+                foodListPopUp.remove(a);
+                setCalorieTot(calorieTot - Double.parseDouble(a.getCalorie()));
+                setCarboidratiTot(carboidratiTot - Double.parseDouble(a.getCarboidrati()));
+                setProteineTot(proteineTot - Double.parseDouble(a.getProteine()));
+                setGrassiTot(grassiTot - Double.parseDouble(a.getGrassi()));
+                Log.d("Alimento", a.getNome());
+                break;
+            }
+
+        }
+        Log.d("Alimento", "qui");
     }
 
     public Map<String, String> getMealDetails() {

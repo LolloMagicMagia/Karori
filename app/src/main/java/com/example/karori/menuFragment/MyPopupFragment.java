@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
@@ -25,7 +24,6 @@ import com.example.karori.SearchClasses.SearchActivity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class MyPopupFragment extends DialogFragment {
     private ArrayList<AlimentoSpecifico> mAlimentoSpecificoArrayList;
@@ -44,6 +42,8 @@ public class MyPopupFragment extends DialogFragment {
     //////////////////////////
 
     private RecyclerView mRecyclerView;
+
+    Meal meal;
 
     public MyPopupFragment(int position){
         if(position==0){
@@ -79,12 +79,13 @@ public class MyPopupFragment extends DialogFragment {
         }
             mealViewModel.getMealFromDate(currentTime, tipo).observe(requireActivity(), new Observer<Meal>() {
                 @Override
-                public void onChanged(Meal meal) {
+                public void onChanged(Meal meal1) {
+                    meal = meal1;
                     if(meal != null){
                         mAlimentoSpecificoArrayList=meal.getFoodListPopUp();
                         /*setmAlimentoInfo();*/
                         if(getActivity()!=null) {
-                            setAdapter();
+                            setAdapter(meal, mealViewModel);
                         }
                     }else{
                         mAlimentoSpecificoArrayList = new ArrayList<>();
@@ -119,9 +120,9 @@ public class MyPopupFragment extends DialogFragment {
         mAlimentoSpecificoArrayList.add(al7);
     }*/
 
-    private void setAdapter(){
+    private void setAdapter(Meal meal, MealViewModel mealViewModel){
         setOnClickListener();
-        recyclerAdapter adapter=new recyclerAdapter(mAlimentoSpecificoArrayList,listener);
+        recyclerAdapter adapter=new recyclerAdapter(mAlimentoSpecificoArrayList,listener, meal, mealViewModel);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(requireActivity().getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
