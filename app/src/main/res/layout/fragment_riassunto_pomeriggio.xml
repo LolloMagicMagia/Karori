@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:text="@string/Launch"
+                android:text="@string/Lunch"
                 android:textColor="#49454F"
                 android:textSize="30sp" />
 

@@ -270,7 +270,7 @@ public class LoginFragment extends Fragment {
                         }
                     });
 
-           /* buttonGoogleLogin.setOnClickListener(new View.OnClickListener() {
+           /*buttonGoogleLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent signInIntent=gsc.getSignInIntent();
@@ -279,7 +279,7 @@ public class LoginFragment extends Fragment {
 
 
                 }
-            });*/
+            }); */
 
 
 
