@@ -72,18 +72,23 @@ public class Meal {
 
         if(food.get("id") != null && food.get("Calories") != null && food.get("Protein") != null
                 && food.get("Fat") != null && food.get("Carbohydrates") != null &&
-                food.get("amount") != null && food.get("unit") != null && food.get("unit") != null
+                food.get("amount") != null && food.get("unit") != null
                 && food.get("nome alimento") != null){
 
-            int id = (int) food.get("id");
-            food.remove("id");
+            int id = Integer.parseInt((String) food.get("id"));
+            Log.d("franx", ""+id);
+            //food.remove("id");
             foodList.put(id, food);
+            Log.d("franx", ""+food.get("id"));
+            Log.d("franx", ""+food.get("unit"));
+            Log.d("franx", ""+food.get("amount"));
 
             AlimentoSpecifico al1=new AlimentoSpecifico(String.valueOf(food.get("nome alimento")),
-                    String.valueOf(food.get("id")),
+                    (String) food.get("id"),
                     String.valueOf(food.get("Calories")),
-                    String.valueOf(food.get("unit")),String.valueOf(food.get("Protein")),
-                    type,String.valueOf(food.get("Fat")),String.valueOf(food.get("Carbohydrates")));
+                    String.valueOf(food.get("amount")),String.valueOf(food.get("Protein")),
+                    type,String.valueOf(food.get("Fat")),String.valueOf(food.get("Carbohydrates")),
+                    (String) food.get("unit"));
 
             foodListPopUp.add(al1);
 

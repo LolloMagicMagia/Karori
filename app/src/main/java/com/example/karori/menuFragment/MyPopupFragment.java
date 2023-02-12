@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
@@ -36,6 +37,7 @@ public class MyPopupFragment extends DialogFragment {
     AlimentoSpecifico al6;
     AlimentoSpecifico al7;
     public int parteDelGiorno;
+    private String tipo;
     private recyclerAdapter.RecyclerViewClickListener listener;
     private String pasto = "";
     //////////////////////////
@@ -45,12 +47,15 @@ public class MyPopupFragment extends DialogFragment {
     public MyPopupFragment(int position){
         if(position==0){
             parteDelGiorno=0;
+            pasto = "0";
         }
         else if(position==1){
             parteDelGiorno=1;
+            pasto = "1";
         }
         else{
             parteDelGiorno=2;
+            pasto = "2";
         }
     }
 
@@ -64,7 +69,6 @@ public class MyPopupFragment extends DialogFragment {
         MealViewModel mealViewModel = new ViewModelProvider(this).get(MealViewModel.class);
         //trasparente fragment
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        String tipo;
         if(parteDelGiorno==0){
             tipo="colazione";
         }else if(parteDelGiorno==1){
@@ -128,20 +132,10 @@ public class MyPopupFragment extends DialogFragment {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
-                AlimentoSpecifico totti = mAlimentoSpecificoArrayList.get(position);
-                if (totti.getTipo() == "colazione") {
-                    pasto = "0";
-                }
-                if (totti.getTipo() == "pasto") {
-                    pasto = "1";
-                }
-                if (totti.getTipo() == "cena") {
-                    pasto = "2";
-                }
-                intent.putExtra("id", totti.getId()) //id
-                        .putExtra("amount", "22") //quantita
-                        .putExtra("unit", "g") //unita di misura
-                        .putExtra("selected", "colazione") //tipo
+                intent.putExtra("id", mAlimentoSpecificoArrayList.get(position).getId()) //id
+                        .putExtra("amount", mAlimentoSpecificoArrayList.get(position).getQuantità()) //quantita
+                        .putExtra("unit", mAlimentoSpecificoArrayList.get(position).getUnit()) //unita di misura
+                        .putExtra("selected", tipo) //tipo
                         .putExtra("mode", "update"); //lasciare invariato
                 intent.putExtra("pasto", pasto); //codice per ricercaeaggiungi, lasciare
                 intent.putExtra("skip", "true"); //lasciare

@@ -210,7 +210,7 @@ public class IngredientInfoFragment extends Fragment implements LifecycleOwner {
         @Override
         public void didFetch(IngredientInfoResponse response, String message) {
             txt_unit.setText(unit);
-            importanti.put("id", id);
+            importanti.put("id", getArguments().getString("id"));
             importanti.put("amount", amount);
             importanti.put("unit", unit);
             txt_amount.setText(String.valueOf(amount));

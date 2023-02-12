@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -70,6 +71,8 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
          String proteine=alimentiList.get(position).getProteine();
          String carboidrati=alimentiList.get(position).getCarboidrati();
          String grassi=alimentiList.get(position).getGrassi();
+         Log.d("pinoins", alimentiList.get(position).getId());
+         Log.d("pinoins", alimentiList.get(position).getTipo());
 
          holder.nome.setText(nome);
          holder.calorie.setText(calorie);
