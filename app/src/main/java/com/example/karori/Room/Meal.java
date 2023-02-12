@@ -2,6 +2,7 @@ package com.example.karori.Room;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -107,16 +108,32 @@ public class Meal {
 
     }
 
-    public void remove(String idAlimento){
+    public void remove(String idAlimento, int i){
         Log.d("Alimento", "qui");
         for (AlimentoSpecifico a: foodListPopUp) {
             Log.d("Alimento", "qui");
             if(a != null && a.getId() == idAlimento){
-                foodListPopUp.remove(a);
-                setCalorieTot(calorieTot - Double.parseDouble(a.getCalorie().replace(",",".")));
-                setCarboidratiTot(carboidratiTot - Double.parseDouble(a.getCarboidrati().replace(",",".")));
-                setProteineTot(proteineTot - Double.parseDouble(a.getProteine().replace(",",".")));
-                setGrassiTot(grassiTot - Double.parseDouble(a.getGrassi().replace(",",".")));
+                if (Integer.parseInt(a.getQuantità()) <= i) {
+                    foodListPopUp.remove(a);
+                }
+                if (i == 0) {
+                    break;
+                }
+                int ex = Integer.parseInt(a.getQuantità());
+                DecimalFormat df = new DecimalFormat("#,##0.00");
+                a.setQuantità(String.valueOf(Integer.parseInt(a.getQuantità())-i));
+                setCalorieTot(calorieTot - i*(Double.parseDouble(a.getCalorie().replace(",",".")) / ex));
+                setCarboidratiTot(carboidratiTot - i*(Double.parseDouble(a.getCarboidrati().replace(",",".")) / ex));
+                setProteineTot(proteineTot - i*(Double.parseDouble(a.getProteine().replace(",",".")) / ex));
+                setGrassiTot(grassiTot - i*(Double.parseDouble(a.getGrassi().replace(",",".")) / ex));
+                a.setCalorie(df.format(Double.parseDouble(a.getCalorie().replace(",", "."))
+                        -i*(Double.parseDouble(a.getCalorie().replace(",",".")) / ex)));
+                a.setGrassi(df.format(Double.parseDouble(a.getGrassi().replace(",","."))
+                        -i*(Double.parseDouble(a.getGrassi().replace(",",".")) / ex)));
+                a.setProteine(df.format(Double.parseDouble(a.getProteine().replace(",","."))
+                        -i*(Double.parseDouble(a.getProteine().replace(",",".")) / ex)));
+                a.setCarboidrati(df.format(Double.parseDouble(a.getCarboidrati().replace(",","."))
+                        -i*(Double.parseDouble(a.getCarboidrati().replace(",",".")) / ex)));
                 Log.d("Alimento", a.getNome());
                 break;
             }

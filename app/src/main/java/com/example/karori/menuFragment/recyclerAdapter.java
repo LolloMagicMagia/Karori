@@ -1,14 +1,23 @@
 package com.example.karori.menuFragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.karori.R;
@@ -94,8 +103,30 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
          remove.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 meal.remove(alimentiList.get(pos).getId());
-                 mealViewModel.update(meal);
+                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+                 alertDialog.setTitle("Insert Amount");
+                 final EditText input = new EditText(v.getContext());
+                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                 input.setRawInputType(Configuration.KEYBOARD_12KEY);
+                 alertDialog.setView(input);
+                 alertDialog.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                     public void onClick(DialogInterface dialog, int whichButton) {
+                         if(input.getText().toString().equals("") || input.getText().toString().equals(null)) {
+                             Toast.makeText(v.getContext(), "Insert a valid amount", Toast.LENGTH_SHORT).show();
+                             return;
+                         }
+                         else {
+                             meal.remove(alimentiList.get(pos).getId(), Integer.parseInt(input.getText().toString()));
+                             mealViewModel.update(meal);
+                         }
+                     }
+                 });
+                 alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                     public void onClick(DialogInterface dialog, int whichButton) {
+                         return;
+                     }
+                 });
+                 alertDialog.show();
              }
          });
     }
