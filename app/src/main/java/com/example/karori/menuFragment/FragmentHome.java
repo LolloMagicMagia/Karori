@@ -1,37 +1,55 @@
 package com.example.karori.menuFragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.karori.Adapter.AdapterChangeRiassunti;
+import com.example.karori.Login.UserViewModel;
+import com.example.karori.Login.UserViewModelFactory;
 import com.example.karori.R;
 import com.example.karori.Room.Meal;
 import com.example.karori.Room.MealViewModel;
 import com.example.karori.SearchClasses.SearchActivity;
+import com.example.karori.Source.User.UserDataRemoteDataSource;
+import com.example.karori.data.User.User;
+import com.example.karori.repository.User.IUserRepository;
+import com.example.karori.util.ServiceLocator;
+import com.example.karori.util.SharedPreferencesUtil;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentHome extends Fragment {
     private static final String KEY_INDEX="index";
     private ImageButton mattina;
     private ImageButton pomeriggio;
     private ImageButton sera;
+    private UserViewModel userViewModel;
+    private UserDataRemoteDataSource userDataRemoteDataSource;
     private Button riassunti;
     int positionRiassunti;
     private int where_MPS;
@@ -57,6 +75,16 @@ public class FragmentHome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                requireActivity(),
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        userViewModel.setAuthenticationError(false);
+
+        Activity activity = getActivity();
+        SharedPreferencesUtil sharedPreferencesUtil = activity != null ? new SharedPreferencesUtil(activity.getApplication()) : null;
+        userDataRemoteDataSource = sharedPreferencesUtil != null ? new UserDataRemoteDataSource(sharedPreferencesUtil) : null;
         fronsblix="0";
     }
 
@@ -131,15 +159,43 @@ public class FragmentHome extends Fragment {
         mealViewModel.getDayMeals(currentTime).observe(getActivity(), new Observer<List<Meal>>() {
             @Override
             public void onChanged(List<Meal> meals) {
-                if(meals != null){
-                    calories=0;
-                    for(Meal meal: meals){
-                        calories=calories+meal.getCalorieTot();
+                if (meals != null) {
+                    calories = 0;
+                    for (Meal meal : meals) {
+                        calories = calories + meal.getCalorieTot();
                     }
-                }else {
-                    calories=0;
+                } else {
+                    calories = 0;
                 }
-                progressBarUpdate(calories,300);
+                progressBarUpdate(calories, 3000);
+
+                ArrayList<String> dataUser = new ArrayList<>();
+                if (userViewModel.getLoggedUser() != null) {
+                    User loggedUser = userViewModel.getLoggedUser();
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(loggedUser.getIdToken());
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            dataUser.clear();
+                            Log.d("firebase", snapshot.getChildren().toString());
+                            for (DataSnapshot sn : snapshot.getChildren()) {
+                                Log.d("firebase", "" + sn);
+                                dataUser.add(sn.getValue().toString());
+                            }
+                            String caloriesTot = String.valueOf(Integer.parseInt(dataUser.get(4)));
+                            progressBarUpdate(calories, Double.parseDouble(caloriesTot));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            //
+                        }
+                    });
+                }
+                else {
+                    progressBarUpdate(calories,3000);
+                    Toast.makeText(getContext(), "Default Calories Have Been Insterted, Check Your Connection", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
