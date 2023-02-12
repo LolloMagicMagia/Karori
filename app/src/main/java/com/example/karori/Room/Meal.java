@@ -85,9 +85,9 @@ public class Meal {
 
             AlimentoSpecifico al1=new AlimentoSpecifico(String.valueOf(food.get("nome alimento")),
                     (String) food.get("id"),
-                    String.valueOf(food.get("Calories")),
-                    String.valueOf(food.get("amount")),String.valueOf(food.get("Protein")),
-                    type,String.valueOf(food.get("Fat")),String.valueOf(food.get("Carbohydrates")),
+                    (String) food.get("Calories"),
+                    (String) food.get("amount"),(String) food.get("Protein"),
+                    type,(String) food.get("Fat"), (String) food.get("Carbohydrates"),
                     (String) food.get("unit"));
 
             foodListPopUp.add(al1);

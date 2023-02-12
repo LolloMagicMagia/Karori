@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,10 +133,11 @@ public class MyPopupFragment extends DialogFragment {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
+                Log.d("franx", mAlimentoSpecificoArrayList.get(position).getTipo());
                 intent.putExtra("id", mAlimentoSpecificoArrayList.get(position).getId()) //id
                         .putExtra("amount", mAlimentoSpecificoArrayList.get(position).getQuantità()) //quantita
                         .putExtra("unit", mAlimentoSpecificoArrayList.get(position).getUnit()) //unita di misura
-                        .putExtra("selected", tipo) //tipo
+                        .putExtra("selected", mAlimentoSpecificoArrayList.get(position).getTipo()) //tipo
                         .putExtra("mode", "update"); //lasciare invariato
                 intent.putExtra("pasto", pasto); //codice per ricercaeaggiungi, lasciare
                 intent.putExtra("skip", "true"); //lasciare
