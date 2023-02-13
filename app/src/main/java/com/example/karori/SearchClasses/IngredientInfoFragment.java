@@ -108,7 +108,7 @@ public class IngredientInfoFragment extends Fragment implements LifecycleOwner {
                 allerta.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity(), "bravo", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "bravo", Toast.LENGTH_SHORT).show();
                         aggiungi.setVisibility(View.GONE);
                         LocalDate currentTime = LocalDate.now();
 

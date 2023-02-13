@@ -137,7 +137,6 @@ public class Meal {
                 Log.d("Alimento", a.getNome());
                 break;
             }
-
         }
         Log.d("Alimento", "qui");
     }
