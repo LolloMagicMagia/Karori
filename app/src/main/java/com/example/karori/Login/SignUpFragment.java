@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -230,11 +231,13 @@ public class SignUpFragment extends Fragment {
         return true;
     }
 
-    private boolean numberOk(String age, String weight, String height, String goal){
+
+
+    private boolean numberOk(String age, String height, String weight, String goal){
         boolean check = true;
         int i= 0;
-        if (age.isEmpty()){
-            editTextAge.setError("The age is required");
+        if (age.isEmpty() || Integer.parseInt(age)<0 || Integer.parseInt(age)>130){
+            editTextAge.setError("The age is not in the range");
             editTextAge.requestFocus();
             check = false;
         }
@@ -252,8 +255,9 @@ public class SignUpFragment extends Fragment {
             check = false;
         }
 
-        if (weight.isEmpty()){
-            editTextWeight.setError("The weight is required");
+        Log.d("weight & height" , "1 "+weight);
+        if (weight.isEmpty() || Integer.parseInt(weight)<300 || Integer.parseInt(weight)>1500){
+            editTextWeight.setError("The weight is not in the range");
             editTextWeight.requestFocus();
             check = false;
         }
@@ -265,8 +269,10 @@ public class SignUpFragment extends Fragment {
             check = false;
         }
 
-        if (height.isEmpty()){
-            editTextHeight.setError("The age is required");
+
+        Log.d("weight & height" , "2 "+height);
+        if (height.isEmpty() || Integer.parseInt(height)<100 || Integer.parseInt(height)>230){
+            editTextHeight.setError("The height is not in the range");
             editTextHeight.requestFocus();
             check = false;
         }
@@ -285,8 +291,8 @@ public class SignUpFragment extends Fragment {
             editTextAge.requestFocus();
             check = false;
         }
-        if (goal.isEmpty()){
-            editTextgoal.setError("The weight goal is required");
+        if (goal.isEmpty()|| Integer.parseInt(goal)<300 || Integer.parseInt(goal)>1500){
+            editTextgoal.setError("The weight goal is not in the range");
             editTextgoal.requestFocus();
             check = false;
         }
