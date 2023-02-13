@@ -1,7 +1,10 @@
 package com.example.karori.menuFragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -54,6 +58,7 @@ public class FragmentHome extends Fragment {
     private UserDataRemoteDataSource userDataRemoteDataSource;
     private Button riassunti;
     int positionRiassunti;
+    float defaultValue = -1;
     private int where_MPS;
     String fronsblix;
     double calories = 0;
@@ -76,6 +81,7 @@ public class FragmentHome extends Fragment {
         return fragment;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,7 +172,7 @@ public class FragmentHome extends Fragment {
                 if (meals != null) {
                     calories = 0;
                     for (Meal meal : meals) {
-                        calories += meal.getCalorieTot();
+                        calories = calories + meal.getCalorieTot() + (calogero / 3);
                         User loggedUser = userViewModel.getLoggedUser();
                         if (loggedUser != null) {
                             DatabaseReference reference = FirebaseDatabase.getInstance()
@@ -175,7 +181,9 @@ public class FragmentHome extends Fragment {
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                             LocalDate date = LocalDate.now();
                             DatabaseReference dateReference = newReference.child(date.format(formatter));
-                            dateReference.child("zCalAssunte").setValue(calories);
+                            DecimalFormat df = new DecimalFormat("#,##0.00");
+                            dateReference.child("zCalAssunte")
+                                    .setValue(Double.parseDouble(df.format(calories).replace(",",".")));
                         }
                     }
                 }
