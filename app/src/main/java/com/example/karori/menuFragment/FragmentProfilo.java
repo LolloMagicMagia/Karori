@@ -195,6 +195,11 @@ public class FragmentProfilo extends Fragment {
                         numberPickerHeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                             public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
                                     heightNew = newValue;
+                                    if(heightNew <100 || heightNew > 230){
+                                        heightNew = Integer.parseInt(dataUser.get(3));
+                                        Toast.makeText(getContext(), "Please insert height between 100cm and 230cm", Toast.LENGTH_LONG).show();
+                                    }
+
                             }
                         });
 
@@ -203,6 +208,10 @@ public class FragmentProfilo extends Fragment {
                             @Override
                             public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue) {
                                     weightNew = newValue;
+                                if(weightNew <300 || weightNew > 1500){
+                                    weightNew = Integer.parseInt(dataUser.get(5));
+                                    Toast.makeText(getContext(), "Please insert height between 300hg and 1500hg", Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
 
