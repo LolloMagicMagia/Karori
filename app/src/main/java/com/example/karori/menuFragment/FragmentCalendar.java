@@ -257,9 +257,9 @@ public class FragmentCalendar extends Fragment {
                                             car += 0;
                                             fatt += 0;
                                             proteins += 0;
-                                            carboidrati.setText("0");
-                                            fat.setText("0");
-                                            proteine.setText("0");
+                                            carboidrati.setText(df.format(car));
+                                            fat.setText(df.format(fatt));
+                                            proteine.setText(df.format(proteins));
                                         }
                                     }
 
