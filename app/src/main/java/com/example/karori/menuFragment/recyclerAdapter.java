@@ -52,6 +52,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
         private CardView card;
 
         private TextView carboidrati;
+        private TextView unità;
 
         private TextView grassi;
 
@@ -65,6 +66,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
             carboidrati=view.findViewById(R.id.CarboidratiPopUp);
             proteine=view.findViewById(R.id.ProteinePopUp);
             remove = view.findViewById(R.id.remove_btn);
+            unità = view.findViewById(R.id.unitàPopUp);
             view.setOnClickListener(this);
         }
 
@@ -86,6 +88,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
          String nome=alimentiList.get(position).getNome();
          String calorie=alimentiList.get(position).getCalorie();
          String quantità=alimentiList.get(position).getQuantità();
+         String unità = alimentiList.get(position).getUnit();
          String proteine=alimentiList.get(position).getProteine();
          String carboidrati=alimentiList.get(position).getCarboidrati();
          String grassi=alimentiList.get(position).getGrassi();
@@ -93,6 +96,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
          Log.d("pinoins", alimentiList.get(position).getTipo());
 
          holder.nome.setText(nome);
+         holder.unità.setText(unità);
          holder.calorie.setText(calorie);
          holder.quantità.setText(quantità);
          holder.proteine.setText(proteine);

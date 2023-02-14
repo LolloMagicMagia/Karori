@@ -183,7 +183,7 @@ public class FragmentHome extends Fragment {
                             DatabaseReference dateReference = newReference.child(date.format(formatter));
                             DecimalFormat df = new DecimalFormat("#,##0.00");
                             dateReference.child("zCalAssunte")
-                                    .setValue(Double.parseDouble(df.format(calories).replace(",",".")));
+                                    .setValue(calories);
                         }
                     }
                 }
