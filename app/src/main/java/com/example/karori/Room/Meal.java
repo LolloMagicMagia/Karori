@@ -139,6 +139,19 @@ public class Meal {
             }
         }
         Log.d("Alimento", "qui");
+
+        if(calorieTot < 0){
+            setCalorieTot(0);
+        }
+        if(carboidratiTot < 0){
+            setCarboidratiTot(0);
+        }
+        if(proteineTot < 0){
+            setProteineTot(0);
+        }
+        if(grassiTot < 0){
+            setGrassiTot(0);
+        }
     }
 
     public Map<String, String> getMealDetails() {

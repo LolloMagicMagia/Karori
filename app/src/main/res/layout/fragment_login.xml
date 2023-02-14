@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:outlineProvider="none"
-                    app:boxBackgroundColor="#D5D5D5"
+                    app:boxBackgroundColor="@android:color/transparent"
                     app:boxCornerRadiusBottomEnd="20dp"
                     app:boxCornerRadiusBottomStart="20dp"
                     app:boxCornerRadiusTopEnd="20dp"

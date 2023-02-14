@@ -40,8 +40,9 @@
                         android:id="@+id/weightTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:layout_marginTop="5dp"
 
+                        android:gravity="center"
                         android:text="Weight"
                         android:textColor="#49454F"
                         app:layout_constraintStart_toStartOf="parent"
@@ -52,6 +53,9 @@
                         style="@style/NumberPickerStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/background_transparent"
+                        android:backgroundTint="@android:color/transparent"
+                        android:outlineProvider="none"
                         android:theme="@style/NumberPickerStyle"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/weightTextView" />
@@ -79,10 +83,11 @@
                         android:id="@+id/heightTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:gravity="center"
                         android:text="Height (cm)"
-                        android:textColor="#49454F"
 
+                        android:textColor="#49454F"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -91,6 +96,7 @@
                         style="@style/NumberPickerStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:outlineProvider="none"
                         android:theme="@style/NumberPickerStyle"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/heightTextView" />
@@ -226,7 +232,8 @@
                     android:gravity="center_vertical|end"
                     android:padding="10dp"
                     android:text=""
-                    android:textColor="#49454F" />
+                    android:textColor="#49454F"
+                    android:textSize="15sp" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
@@ -238,8 +245,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Settings"
+        android:fontFamily="@font/arimo_bold"
 
+        android:gravity="center"
+        android:text="Settings"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/cardViewEmail"
@@ -322,11 +331,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/arimo_bold"
                     android:gravity="center"
                     android:outlineProvider="none"
                     android:padding="10dp"
                     android:text="@string/ChangeYourPassword"
-                    android:textColor="#039587"
+                    android:textColor="#49454F"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/CalorieMax" />

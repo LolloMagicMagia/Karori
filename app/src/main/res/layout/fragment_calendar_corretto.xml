@@ -25,8 +25,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:text="@string/DataSelected"
-                android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textColor="#E1E0E0"
+                android:textSize="20sp"
                 app:cardBackgroundColor="#B4FFFFFF" />
 
             <TextView
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="20dp"
         android:background="@color/white"
         android:outlineProvider="none"
@@ -66,9 +66,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="USER INFO"
-                android:textColor="@color/black" />
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/arimo_bold"
+                android:gravity="center"
+                android:text="User info"
+                android:textColor="#49454F"
+                android:textSize="20sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -90,6 +93,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="sans-serif"
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:text="@string/Weight"
@@ -100,10 +105,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/arimo_bold"
                         android:gravity="center_vertical|end"
-                        android:text="@string/Zero" />
+                        android:text="@string/Zero"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -128,6 +135,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="sans-serif"
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:text="@string/Height"
@@ -138,10 +147,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center_vertical|end"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
-                        android:text="@string/Zero" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/Zero"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -166,6 +177,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="sans-serif"
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:text="@string/Weightgoal"
@@ -176,10 +189,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center_vertical|end"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
-                        android:text="@string/Zero" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/Zero"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -190,7 +205,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="20sp"
                 android:layout_weight="1"
                 android:outlineProvider="none"
                 app:cardBackgroundColor="#34202020"
@@ -205,6 +220,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="sans-serif"
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:text="@string/Age"
@@ -215,10 +232,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center_vertical|end"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
-                        android:text="@string/Zero" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/Zero"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -231,7 +250,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="20dp"
         android:background="@color/white"
         android:outlineProvider="none"
@@ -252,8 +271,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:text="FOOD INFO"
-                android:textColor="@color/black" />
+                android:fontFamily="@font/arimo_bold"
+                android:gravity="center"
+                android:text="Food info"
+                android:textColor="#49454F"
+                android:textSize="20sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -275,6 +297,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="sans-serif"
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:text="@string/Carbohhydrates"
@@ -285,10 +309,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center_vertical|end"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
-                        android:text="@string/Zero" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/Zero"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -313,6 +339,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="sans-serif"
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:text="@string/Fat"
@@ -323,10 +351,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center_vertical|end"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
-                        android:text="@string/Zero" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/Zero"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -351,6 +381,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="sans-serif"
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:text="@string/Proteins"
@@ -361,10 +393,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center_vertical|end"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
-                        android:text="@string/Zero" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/Zero"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -389,6 +423,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="sans-serif"
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:text="@string/Calories"
@@ -399,10 +435,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center_vertical|end"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
-                        android:text="@string/Zero" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/Zero"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -413,7 +451,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="20sp"
                 android:layout_weight="1"
                 android:outlineProvider="none"
                 app:cardBackgroundColor="#34202020"
@@ -428,6 +466,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="sans-serif"
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:text="@string/CaloriesNeeds"
@@ -437,11 +477,13 @@
                         android:id="@+id/calorieNeedsCalendar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center_vertical|end"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
-                        android:text="@string/Zero" />
+                        android:fontFamily="@font/arimo_bold"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/Zero"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -454,6 +496,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
         android:text="@string/Calendar" />
 </LinearLayout>

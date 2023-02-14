@@ -275,8 +275,13 @@ public class FragmentHome extends Fragment {
             progressBar.setCurrentProgress(totProteine);
         }
         else{
-            cal_now.setText(String.valueOf(df.format(totProteineAssunte))+" / "+ String.valueOf(totProteine));
-            progressBar.setCurrentProgress((int)((totProteineAssunte/totProteine)*100));
+            if (totProteineAssunte >= 0){
+                cal_now.setText(String.valueOf(df.format(totProteineAssunte))+" / "+ String.valueOf(totProteine));
+                progressBar.setCurrentProgress((int)((totProteineAssunte/totProteine)*100));
+            }else{
+                cal_now.setText(String.valueOf(0)+" / "+ String.valueOf(totProteine));
+                progressBar.setCurrentProgress((int)((0/totProteine)*100));
+            }
         }
 
     }
