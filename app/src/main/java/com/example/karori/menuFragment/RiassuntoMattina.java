@@ -133,45 +133,10 @@ public class RiassuntoMattina extends Fragment {
                         typeReference.child("Carboidrati").setValue(tcarboidrati.getText());
                     }
                 } else {
-                    if (userViewModel.getLoggedUser() != null) {
-                        ArrayList<String> dataUser = new ArrayList<>();
-                        User loggedUser = userViewModel.getLoggedUser();
-                        DatabaseReference reference = FirebaseDatabase.getInstance()
-                                .getReference().child("users")
-                                .child(loggedUser.getIdToken());
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                        date = LocalDate.now();
-                        DatabaseReference newReference = reference.child("zDates");
-                        DatabaseReference dateReference = newReference.child(date.format(formatter).toLowerCase());
-                        DatabaseReference typeReference = dateReference.child("Colazione");
-                        typeReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                dataUser.clear();
-                                for (DataSnapshot sn : snapshot.getChildren()) {
-                                    dataUser.add(sn.getValue().toString());
-                                }
-                                try {
-                                    tgrassi.setText(dataUser.get(2));
-                                    tproteine.setText(dataUser.get(3));
-                                    tcarboidrati.setText(dataUser.get(1));
-                                    tcalorie.setText(dataUser.get(0));
-                                } catch (Exception e) {
-                                    //
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                //
-                            }
-                        });
-                    } else {
                         tgrassi.setText("0");
                         tproteine.setText("0");
                         tcarboidrati.setText("0");
                         tcalorie.setText("0");
-                    }
                 }
             }
         });

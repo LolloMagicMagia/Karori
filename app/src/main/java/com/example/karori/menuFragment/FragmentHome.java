@@ -191,39 +191,6 @@ public class FragmentHome extends Fragment {
                     ArrayList<String> dataUser = new ArrayList<>();
                     User loggedUser = userViewModel.getLoggedUser();
                     DatabaseReference reference = FirebaseDatabase.getInstance()
-                            .getReference().child("users")
-                            .child(loggedUser.getIdToken());
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                    LocalDate date=LocalDate.now();
-                    DatabaseReference newReference = reference.child("zDates");
-                    DatabaseReference dateReference = newReference.child(date.format(formatter));
-                    dateReference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            dataUser.clear();
-                            Log.d("firebase", snapshot.getChildren().toString());
-                            for (DataSnapshot sn : snapshot.getChildren()) {
-                                Log.d("firebase", "" + sn);
-                                dataUser.add(sn.getValue().toString());
-                            }
-                            try {
-                                calories = Double.parseDouble(dataUser.get(3));
-                            }
-                            catch (Exception e) {
-                                //
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            //
-                        }
-                    });
-                }
-                if (userViewModel.getLoggedUser() != null) {
-                    ArrayList<String> dataUser = new ArrayList<>();
-                    User loggedUser = userViewModel.getLoggedUser();
-                    DatabaseReference reference = FirebaseDatabase.getInstance()
                             .getReference().child("users").child(loggedUser.getIdToken());
                     reference.addValueEventListener(new ValueEventListener() {
                         @Override

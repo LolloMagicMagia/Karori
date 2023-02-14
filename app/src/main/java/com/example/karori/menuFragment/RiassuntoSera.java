@@ -121,47 +121,10 @@ public class RiassuntoSera extends Fragment {
                         typeReference.child("Carboidrati").setValue(tcarboidratis.getText());
                     }
                 }else {
-                    if (userViewModel.getLoggedUser() != null) {
-                        ArrayList<String> dataUser = new ArrayList<>();
-                        User loggedUser = userViewModel.getLoggedUser();
-                        DatabaseReference reference = FirebaseDatabase.getInstance()
-                                .getReference().child("users")
-                                .child(loggedUser.getIdToken());
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                        LocalDate date=LocalDate.now();
-                        DatabaseReference newReference = reference.child("zDates");
-                        DatabaseReference dateReference = newReference.child(date.format(formatter).toLowerCase());
-                        DatabaseReference typeReference = dateReference.child("Cena");
-                        typeReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                dataUser.clear();
-                                for (DataSnapshot sn : snapshot.getChildren()) {
-                                    dataUser.add(sn.getValue().toString());
-                                }
-                                try {
-                                    tgrassis.setText(dataUser.get(2));
-                                    tproteines.setText(dataUser.get(3));
-                                    tcarboidratis.setText(dataUser.get(1));
-                                    tcalories.setText(dataUser.get(0));
-                                }
-                                catch (Exception e) {
-                                    //
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                //
-                            }
-                        });
-                    }
-                    else {
                         tgrassis.setText("0");
                         tproteines.setText("0");
                         tcarboidratis.setText("0");
                         tcalories.setText("0");
-                    }
                 }
             }
         });
