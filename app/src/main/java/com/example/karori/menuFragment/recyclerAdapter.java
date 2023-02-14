@@ -1,8 +1,13 @@
 package com.example.karori.menuFragment;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -24,6 +29,7 @@ import com.example.karori.R;
 import com.example.karori.Room.Meal;
 import com.example.karori.Room.MealViewModel;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHoleder> {
@@ -104,6 +110,7 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
          holder.grassi.setText(grassi);
 
          final int pos = position;
+
          remove.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -120,8 +127,15 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
                              return;
                          }
                          else {
-                             meal.remove(alimentiList.get(pos).getId(), Integer.parseInt(input.getText().toString()));
-                             mealViewModel.update(meal);
+                             boolean bool = isInternetAvailable();
+                             boolean bool2 = isNetworkAvailable(v.getContext());
+                             if (bool || bool2) {
+                                 meal.remove(alimentiList.get(pos).getId(), Integer.parseInt(input.getText().toString()));
+                                 mealViewModel.update(meal);
+                             }
+                             else {
+                                 Toast.makeText(v.getContext(), "Check Your Connection!", Toast.LENGTH_SHORT).show();
+                             }
                          }
                      }
                  });
@@ -142,5 +156,19 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     public interface RecyclerViewClickListener{
         void onClick(View v, int position);
+    }
+
+    public boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("google.com");
+            //You can replace it with your name
+            return !ipAddr.equals("");
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }

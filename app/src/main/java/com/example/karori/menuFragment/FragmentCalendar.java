@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -46,6 +47,8 @@ public class FragmentCalendar extends Fragment {
     private UserViewModel userViewModel;
     double fatt;
     private UserDataRemoteDataSource userDataRemoteDataSource;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+    String dateStr = LocalDate.now().format(formatter);
     List<String> dataUserCalendar;
     double proteins;
     LocalDate date;
@@ -113,7 +116,6 @@ public class FragmentCalendar extends Fragment {
         materialDateBuilder.setTitleText("SELECT A DATE");
         final MaterialDatePicker materialDatePicker = materialDateBuilder.build();
 
-
         //calendario
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,103 +124,155 @@ public class FragmentCalendar extends Fragment {
             }
         });
 
-            mealViewModel.getDayMeals(date).observe(getActivity(), new Observer<List<Meal>>() {
-                @Override
-                public void onChanged(List<Meal> meals) {
-                    if(meals != null){
-                        car=0;
-                        fatt=0;
-                        proteins=0;
-                        calories=0;
-                        for(Meal meal: meals){
-                            car=car+meal.getCarboidratiTot();
-                            fatt=fatt+meal.getGrassiTot();
-                            proteins=proteins+meal.getProteineTot();
-                            calories=calories+meal.getCalorieTot();
-                        }
-                    }else {
-                        car=0;
-                        fatt=0;
-                        proteins=0;
-                        calories=0;
-                    }
-                    carboidrati.setText(df.format(car));
-                    fat.setText(df.format(fatt));
-                    proteine.setText(df.format(proteins));
-                    calorie.setText(df.format(calories));
-                }
-            });
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
-            String dateString=date.format(formatter);
-            show_selected_date.setText(""+dateString);
-
-
         materialDatePicker.addOnPositiveButtonClickListener(
                 new MaterialPickerOnPositiveButtonClickListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-
-
                         // if the user clicks on the positive
                         // button that is ok button update the
                         // selected date
-                        String dateString = materialDatePicker.getHeaderText();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("MMM d, yyyy");
-                        DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("dd MMM yyyy");
-                        DateTimeFormatter formatter4 = DateTimeFormatter.ofPattern("d MMM yyyy");
-                        show_selected_date.setText(""+materialDatePicker.getHeaderText());
+                        //LocalDate date = LocalDate.parse(newStr, formatter);
+                        //Toast.makeText(getActivity(), ""+dateStr, Toast.LENGTH_SHORT).show();
                         materialDatePicker.getArguments();
-                        try {
-                            date = LocalDate.parse(dateString, formatter);
-                            Log.d("formatter","emulatore1 "+dateString);
-                        }catch(Exception e){
-                            try{
-                                date = LocalDate.parse(dateString, formatter2);
-                                Log.d("formatter","emulatore2 "+dateString);
-                            }catch(Exception ex){
-                                try{
-                                date = LocalDate.parse(dateString, formatter3);
-                                Log.d("formatter","cellulare1 "+dateString);}
-                                catch(Exception ex1){
-                                    date = LocalDate.parse(dateString, formatter4);
-                                    Log.d("formatter","cellulare2 "+dateString);}
-                                }
-                            }
+                        if (userViewModel.getLoggedUser() != null) {
+                            String dateString = materialDatePicker.getHeaderText();
+                            show_selected_date.setText("" + materialDatePicker.getHeaderText());
+                            StringBuilder sb = new StringBuilder(dateString);
+                            sb.insert(6, ',');
+                            String newStr = sb.toString();
+                            //12 feb, 2023
+                            String numero = newStr.substring(0, 2); //numero giorno 12
+                            String mese = newStr.substring(3, 6); //mese feb
+                            String anno = newStr.substring(8, 12); //anno 2023
+                            dateStr = mese + " " + numero + "," + " " + anno;
+                            ArrayList<String> dataUser = new ArrayList<>();
+                            User loggedUser = userViewModel.getLoggedUser();
+                            DatabaseReference reference = FirebaseDatabase.getInstance()
+                                    .getReference().child("users")
+                                    .child(loggedUser.getIdToken());
+                            DatabaseReference newReference = reference.child("zDates");
+                            DatabaseReference dateReference = newReference.child(dateStr.toLowerCase());
+                            Log.d("ciaoneciccione", dateReference.toString());
+                            DatabaseReference colazReference = dateReference.child("Colazione");
+                            Log.d("ciaoneciccione", colazReference.toString());
+                            DatabaseReference pranzoReference = dateReference.child("Pranzo");
+                            DatabaseReference cenaReference = dateReference.child("Cena");
 
-                        Log.d("formatter",""+date);
-                        // in the above statement, getHeaderText
-                        // will return selected date preview from the
-                        // dialog
-
-
-                        mealViewModel.getDayMeals(date).observe(getActivity(), new Observer<List<Meal>>() {
-                            @Override
-                            public void onChanged(List<Meal> meals) {
-                                if(meals != null){
-                                    car=0;
-                                    fatt=0;
-                                    proteins=0;
-                                    calories=0;
-                                    for(Meal meal: meals){
-                                        car=car+meal.getCarboidratiTot();
-                                        fatt=fatt+meal.getGrassiTot();
-                                        proteins=proteins+meal.getProteineTot();
-                                        calories=calories+meal.getCalorieTot();
+                            if (dateReference.getParent() == null) {
+                                carboidrati.setText("0,0");
+                                fat.setText("0,0");
+                                proteine.setText("0,0");
+                            } else {
+                                dateReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        dataUser.clear();
+                                        Log.d("firebase", snapshot.getChildren().toString());
+                                        for (DataSnapshot sn : snapshot.getChildren()) {
+                                            Log.d("firebase", "" + sn);
+                                            dataUser.add(sn.getValue().toString());
+                                        }
+                                        try {
+                                            calories = Double.parseDouble(dataUser.get(3).replace(",", "."));
+                                            //Toast.makeText(getActivity(), ""+calories, Toast.LENGTH_SHORT).show();
+                                            calorie.setText(df.format(calories));
+                                        } catch (Exception e) {
+                                            calorie.setText("0");
+                                        }
                                     }
-                                }else {
-                                    car=0;
-                                    fatt=0;
-                                    proteins=0;
-                                    calories=0;
-                                }
-                                carboidrati.setText(df.format(car));
-                                fat.setText(df.format(fatt));
-                                proteine.setText(df.format(proteins));
-                                calorie.setText(df.format(calories));
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        //
+                                    }
+                                });
+                                colazReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        dataUser.clear();
+                                        Log.d("firebase", snapshot.getChildren().toString());
+                                        for (DataSnapshot sn : snapshot.getChildren()) {
+                                            Log.d("firebase", "" + sn);
+                                            dataUser.add(sn.getValue().toString());
+                                        }
+                                        try {
+                                            car += Double.parseDouble(dataUser.get(1).replace(",", "."));
+                                            fatt += Double.parseDouble(dataUser.get(2).replace(",", "."));
+                                            proteins += Double.parseDouble(dataUser.get(3).replace(",", "."));
+                                        } catch (Exception e) {
+                                            car +=0;
+                                            fatt +=0;
+                                            proteins +=0;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        //
+                                    }
+                                });
+                                cenaReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        dataUser.clear();
+                                        Log.d("firebase", snapshot.getChildren().toString());
+                                        for (DataSnapshot sn : snapshot.getChildren()) {
+                                            Log.d("firebase", "" + sn);
+                                            dataUser.add(sn.getValue().toString());
+                                        }
+                                        try {
+                                            car += Double.parseDouble(dataUser.get(1).replace(",", "."));
+                                            fatt += Double.parseDouble(dataUser.get(2).replace(",", "."));
+                                            proteins += Double.parseDouble(dataUser.get(3).replace(",", "."));
+                                        } catch (Exception e) {
+                                            car +=0;
+                                            fatt +=0;
+                                            proteins +=0;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        //
+                                    }
+                                });
+                                pranzoReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        dataUser.clear();
+                                        Log.d("firebase", snapshot.getChildren().toString());
+                                        for (DataSnapshot sn : snapshot.getChildren()) {
+                                            Log.d("firebase", "" + sn);
+                                            dataUser.add(sn.getValue().toString());
+                                        }
+                                        try {
+                                            car += Double.parseDouble(dataUser.get(1).replace(",", "."));
+                                            fatt += Double.parseDouble(dataUser.get(2).replace(",", "."));
+                                            proteins += Double.parseDouble(dataUser.get(3).replace(",", "."));
+                                            carboidrati.setText(df.format(car));
+                                            fat.setText(df.format(fatt));
+                                            proteine.setText(df.format(proteins));
+                                        } catch (Exception e) {
+                                            car += 0;
+                                            fatt += 0;
+                                            proteins += 0;
+                                            carboidrati.setText("0");
+                                            fat.setText("0");
+                                            proteine.setText("0");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        //
+                                    }
+                                });
+                                car = 0;
+                                fatt = 0;
+                                proteins = 0;
                             }
-                        });
+                        }
                     }
                 });
 

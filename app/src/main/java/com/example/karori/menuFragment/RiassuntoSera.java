@@ -113,7 +113,7 @@ public class RiassuntoSera extends Fragment {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                         LocalDate date=LocalDate.now();
                         DatabaseReference newReference = reference.child("zDates");
-                        DatabaseReference dateReference = newReference.child(date.format(formatter));
+                        DatabaseReference dateReference = newReference.child(date.format(formatter).toLowerCase());
                         DatabaseReference typeReference = dateReference.child("Cena");
                         typeReference.child("Calorie").setValue(tcalories.getText());
                         typeReference.child("Proteine").setValue(tproteines.getText());
@@ -130,7 +130,7 @@ public class RiassuntoSera extends Fragment {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                         LocalDate date=LocalDate.now();
                         DatabaseReference newReference = reference.child("zDates");
-                        DatabaseReference dateReference = newReference.child(date.format(formatter));
+                        DatabaseReference dateReference = newReference.child(date.format(formatter).toLowerCase());
                         DatabaseReference typeReference = dateReference.child("Cena");
                         typeReference.addValueEventListener(new ValueEventListener() {
                             @Override
