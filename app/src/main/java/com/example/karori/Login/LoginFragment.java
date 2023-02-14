@@ -119,58 +119,13 @@ public class LoginFragment extends Fragment {
                         .build();
 
         startIntentSenderForResult = new ActivityResultContracts.StartIntentSenderForResult();
-
-        activityResultLauncher = registerForActivityResult(startIntentSenderForResult, activityResult -> {
-            if (activityResult.getResultCode() == Activity.RESULT_OK) {
-                Log.d(TAG, "result.getResultCode() == Activity.RESULT_OK");
-                try {
-                    SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(activityResult.getData());
-                    String idToken = credential.getGoogleIdToken();
-                    if (idToken != null) {
-                        // Got an ID token from Google. Use it to authenticate with Firebase.
-                        userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
-                            if (authenticationResult.isSuccess()) {
-                                User user = ((Result.UserResponseSuccess) authenticationResult).getData();
-                                saveLoginData(user.getEmail(), null, user.getIdToken());
-                                userViewModel.setAuthenticationError(false);
-                                retrieveUserInformationAndStartActivity(user, R.id.action_loginFragment_to_summaryActivity);
-                                Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_google_dataUserFragment);
-                            } else {
-                                userViewModel.setAuthenticationError(true);
-                                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                        getErrorMessage(((Result.Error) authenticationResult).getMessage()),
-                                        Snackbar.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                } catch (ApiException e) {
-                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                            requireActivity().getString(R.string.unexpected_error),
-                            Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-
-
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //lascia questo pezzo , mi serve per il debug della mia parte
         View view=inflater.inflate(R.layout.fragment_login, container, false);
-       /* provaSummaryActivity=(Button)view.findViewById(R.id.provaSummaryActivity);
-        provaSummaryActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SummaryActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });*/
-        // Inflate the layout for this fragment
         return view;
     }
 
@@ -200,17 +155,17 @@ public class LoginFragment extends Fragment {
 
                 if (isEmailOk(email) & isPasswordOk(password)) {
                     if (!userViewModel.isAuthenticationError()) {
-                        Log.d("logout ", "Fa schifo il logout:  3");
+                        Log.d("logout ", "il logout:  3");
                         userViewModel.getUserMutableLiveData(email, password, true).observe(
                                 getViewLifecycleOwner(), result -> {
                                     if (result.isSuccess()) {
-                                        Log.d("logout ", "Fa schifo il logout:  4");
+                                        Log.d("logout ", "il logout:  4");
                                         User user = ((Result.UserResponseSuccess) result).getData();
                                         saveLoginData(email, password, user.getIdToken());
                                         userViewModel.setAuthenticationError(false);
                                         retrieveUserInformationAndStartActivity(user, R.id.action_loginFragment_to_summaryActivity);
                                     } else {
-                                        Log.d("logout ", "Fa schifo il logout:  5");
+                                        Log.d("logout ", "il logout:  5");
                                         userViewModel.setAuthenticationError(true);
                                         Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                                 getErrorMessage(((Result.Error) result).getMessage()),
@@ -220,12 +175,12 @@ public class LoginFragment extends Fragment {
                                 });
                     } else {
                         userViewModel.getUser(email, password, true);
-                        Log.d("logout ", "Fa schifo il logout:  1");
+                        Log.d("logout ", "il logout:  1");
                     }
                 } else {
                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                             "Check the the data you inserted", Snackbar.LENGTH_SHORT).show();
-                    Log.d("logout ", "Fa schifo il logout:  2");
+                    Log.d("logout ", "il logout:  2");
                 }
             });
 

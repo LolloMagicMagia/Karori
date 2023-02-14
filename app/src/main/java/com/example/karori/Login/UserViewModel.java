@@ -1,5 +1,7 @@
 package com.example.karori.Login;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -19,18 +21,16 @@ public class UserViewModel extends ViewModel {
 
     public MutableLiveData<Result> getUserMutableLiveData(
             String email, String password, boolean isUserRegistered) {
-        //if (userMutableLiveData == null) {
+        if (userMutableLiveData == null) {
             getUserData(email, password, isUserRegistered);
-      // }
+       }
 
         return userMutableLiveData;
     }
 
     public MutableLiveData<Result> getGoogleUserMutableLiveData(String token) {
-        if (userMutableLiveData == null) {
             getUserData(token);
-        }
-        return userMutableLiveData;
+            return userMutableLiveData;
     }
 
     public User getLoggedUser() {
@@ -48,8 +48,8 @@ public class UserViewModel extends ViewModel {
     }
 
     public void getUser(String email, String password, boolean isUserRegistered) {
-        //SEI SICURO CHE DEVO METTERE NULL?
-        userRepository.getUser(email, null, isUserRegistered);
+        Log.d("logout","giusto7");
+        userRepository.getUser(email, password, isUserRegistered);
     }
 
     public void getUserInformation(String idToken){
@@ -65,6 +65,7 @@ public class UserViewModel extends ViewModel {
     }
 
     private void getUserData(String email, String password, boolean isUserRegistered) {
+        Log.d("logout","giusto6");
             userMutableLiveData = userRepository.getUser(email, password, isUserRegistered);
 
     }

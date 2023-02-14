@@ -1,5 +1,7 @@
 package com.example.karori.repository.User;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.karori.Models.Result;
@@ -61,6 +63,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
 
     @Override
     public void signIn(String email, String password) {
+        Log.d("logout","giusto2");
         userRemoteDataSource.signIn(email, password);
     }
 
@@ -83,7 +86,8 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
 
     @Override
     public void onFailureFromAuthentication(String message) {
-
+        Result.Error result = new Result.Error(message);
+        userMutableLiveData.setValue(result);
     }
 
     @Override
@@ -95,7 +99,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     @Override
     public void onFailureFromRemoteDatabase(String message) {
         Result.Error result = new Result.Error(message);
-        userMutableLiveData.postValue(result);
+        userMutableLiveData.setValue(result);
     }
 
     @Override
