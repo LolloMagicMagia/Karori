@@ -180,7 +180,7 @@ public class FragmentHome extends Fragment {
                             DatabaseReference newReference = reference.child("zDates");
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
                             LocalDate date = LocalDate.now();
-                            DatabaseReference dateReference = newReference.child(date.format(formatter));
+                            DatabaseReference dateReference = newReference.child(date.format(formatter).toLowerCase());
                             DecimalFormat df = new DecimalFormat("#,##0.00");
                             dateReference.child("zCalAssunte")
                                     .setValue(calories);
