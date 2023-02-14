@@ -112,10 +112,10 @@ public class SignUpFragment extends Fragment {
 
 
             if (isEmailOk(email) & isPasswordOk(password, cnfpsw) & numberOk(ageSt,heightSt,weightSt, goalSt)) {
-                weight = (Integer.parseInt(weightSt) * 10);
+                weight = (Integer.parseInt(weightSt) );
                 height = Integer.parseInt(heightSt);
                 age = Integer.parseInt(ageSt);
-                goal = (Integer.parseInt(goalSt)*10);
+                goal = (Integer.parseInt(goalSt));
 
                 if (!userViewModel.isAuthenticationError()) {
 
@@ -256,7 +256,7 @@ public class SignUpFragment extends Fragment {
         }
 
         Log.d("weight & height" , "1 "+weight);
-        if (weight.isEmpty() || Integer.parseInt(weight)*10<300 || Integer.parseInt(weight)*10>1500){
+        if (weight.isEmpty() || Integer.parseInt(weight)<300 || Integer.parseInt(weight)>1500){
             editTextWeight.setError("The weight is not in the range");
             editTextWeight.requestFocus();
             check = false;
@@ -291,7 +291,7 @@ public class SignUpFragment extends Fragment {
             editTextAge.requestFocus();
             check = false;
         }
-        if (goal.isEmpty()|| Integer.parseInt(goal)*10<300 || Integer.parseInt(goal)*10>1500){
+        if (goal.isEmpty()|| Integer.parseInt(goal)<300 || Integer.parseInt(goal)>1500){
             editTextgoal.setError("The weight goal is not in the range");
             editTextgoal.requestFocus();
             check = false;
