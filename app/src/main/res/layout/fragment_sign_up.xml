@@ -145,7 +145,7 @@
                             android:id="@+id/weightTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="weight in hg (85.5kg = 855)"
+                            android:hint="weight in kg to one decimal place"
                             android:inputType="number"
                             tools:ignore="TextContrastCheck" />
 
@@ -167,7 +167,7 @@
                             android:id="@+id/goalTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="weight goal in hg (85.5kg = 855)"
+                            android:hint="weight goal in kg to one decimal place"
                             android:inputType="number"
                             tools:ignore="TextContrastCheck" />
 

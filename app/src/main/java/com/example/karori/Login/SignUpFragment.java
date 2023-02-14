@@ -112,10 +112,10 @@ public class SignUpFragment extends Fragment {
 
 
             if (isEmailOk(email) & isPasswordOk(password, cnfpsw) & numberOk(ageSt,heightSt,weightSt, goalSt)) {
-                weight = Integer.parseInt(weightSt);
+                weight = (Integer.parseInt(weightSt) * 10);
                 height = Integer.parseInt(heightSt);
                 age = Integer.parseInt(ageSt);
-                goal = Integer.parseInt(goalSt);
+                goal = (Integer.parseInt(goalSt)*10);
 
                 if (!userViewModel.isAuthenticationError()) {
 
