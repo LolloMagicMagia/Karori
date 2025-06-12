@@ -1,5 +1,13 @@
 # Karori 2022/2023 - Mobile Fit Application
 
+Gruppo: MELMA <br />
+Componenti Gruppo: <br />
+Monti Lorenzo 869960 <br />
+Oltolini Edoardo 869124 <br />
+Gherardi Marco 869138 <br />
+Lombardo Matteo 869232
+
+
 ## 📱 Project Overview
 
 **Karori** is a mobile application developed as an academic project within the context of Mobile Application Development. The app aims to provide a user-friendly platform for searching, viewing, and count the kilocalories , leveraging external APIs for data retrieval and backend services for authentication and data persistence.
@@ -16,9 +24,9 @@ We started from a conceptual idea, which served as the foundation for the design
 The following three images represent the initial prototype, which guided the implementation of the core features and user experience of the app.
 
 <p align="center">
-  <img src="images/How it started.png" alt="Prototype 1" height="250px" style="margin-right: 10px;">
-  <img src="images/How it started 2.png" alt="Prototype 2" height="250px" style="margin-right: 10px;">
-  <img src="images/How it started 3.png" alt="Prototype 3" height="250px">
+  <img src="images/How it started.png" alt="Prototype 1" height="450px" style="margin-right: 10px;">
+  <img src="images/How it started 2.png" alt="Prototype 2" height="450px" style="margin-right: 10px;">
+  <img src="images/How it started 3.png" alt="Prototype 3" height="450px">
 </p>
 
 ### 2. System Architecture
@@ -57,6 +65,12 @@ The user can log out at any time through the “Settings” section of the appli
 ![Login Page](images/login%20utente.png)
 
 ### 🍽️ **Home (Diet-Friendly Recipes)**
+
+<p align="center">
+  <img src="images/Home screen.png" alt="Daily Summary 1" width="35%" style="margin-right: 10px;">
+  <img src="images/Riassunto.png" alt="Daily Summary 2" width="35%">
+</p>
+
 This screen displays a daily summary divided into three main meals: Breakfast, Lunch, and Dinner.
 Users can switch between these meal sections by swiping left or right across the screen.
 
@@ -67,13 +81,13 @@ The “Add” button enables users to search for a food item they have consumed 
 
 At the top of the screen, the application logo dynamically displays the total calories consumed, calculated according to a previously defined formula.
 
+### 🔍 **Search and Nutrition Information Flow**
+
 <p align="center">
-  <img src="images/Home screen.png" alt="Daily Summary 1" width="45%" style="margin-right: 10px;">
-  <img src="images/Riassunto.png" alt="Daily Summary 2" width="45%">
+  <img src="images/Ricerca Cibo.png" alt="Daily Summary 1" width="35%" style="margin-right: 10px;">
+  <img src="images/Information food.png" alt="Daily Summary 2" width="35%">
 </p>
 
-
-### 🔍 **Search and Nutrition Information Flow**
 In the Search screen, a user can look for a specific food item to add to a selected meal (Breakfast, Lunch, or Dinner).
 Upon selecting a food, the application first prompts the user to enter the quantity, followed by a screen to choose the appropriate unit of measurement.
 
@@ -83,32 +97,23 @@ In the Information screen, if a user has selected a food item, they can view bot
 
 Once reviewed, the user can add the selected food item to the chosen meal using the “Add Aliment” button. This action stores the data locally via Room, the app’s local database component.
 
-<p align="center">
-  <img src="images/Ricerca Cibo.png" alt="Daily Summary 1" width="45%" style="margin-right: 10px;">
-  <img src="images/Information food.png" alt="Daily Summary 2" width="45%">
-</p>
-
 ### ⚙️ **User Profile**
 In this screen, the user can view all their personal information, including:
-
 Height
-
 Weight
-
 Age
-
 Goal
-
 Daily Caloric Intake (kcal)
-
 Email address
+
+![Use Case](images/profile.png)
 
 All these values can be manually updated using a dedicated edit button, which enables the user to overwrite the existing data and update the changes in the database. The caloric intake is calculated using the same formula applied during the login/registration phase.
 Another feature available in this section is the ability to change the password. By pressing the corresponding button, an email will be sent to the user’s registered address, containing a link to reset the password securely.
 Finally, the screen also includes a Logout button, which signs the user out and redirects them to the Login screen.
 A toggle switch is present to enable or disable editing mode, allowing the user to make changes only when necessary.
 
-![Use Case](images/profile.png)
+
 
 ## 🔧 Technologies Used
 
@@ -154,11 +159,3 @@ Integration with Firebase and external APIs (Spoonacular)
 Room database for local persistence
 
 Navigation Graph for in-app routing
-
-Gruppo: MELMA <br />
-Componenti Gruppo: <br />
-Monti Lorenzo 869960 <br />
-Oltolini Edoardo 869124 <br />
-Gherardi Marco 869138 <br />
-Lombardo Matteo 869232
-
