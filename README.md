@@ -24,9 +24,9 @@ We started from a conceptual idea, which served as the foundation for the design
 The following three images represent the initial prototype, which guided the implementation of the core features and user experience of the app.
 
 <p align="center">
-  <img src="images/How it started.png" alt="Prototype 1" height="450px" style="margin-right: 10px;">
-  <img src="images/How it started 2.png" alt="Prototype 2" height="450px" style="margin-right: 10px;">
-  <img src="images/How it started 3.png" alt="Prototype 3" height="450px">
+  <img src="images/How it started.png" alt="Prototype 1" height="350px" style="margin-right: 10px;">
+  <img src="images/How it started 2.png" alt="Prototype 2" height="350px" style="margin-right: 10px;">
+  <img src="images/How it started 3.png" alt="Prototype 3" height="350px">
 </p>
 
 ### 2. System Architecture
@@ -67,8 +67,8 @@ The user can log out at any time through the “Settings” section of the appli
 ### 🍽️ **Home (Diet-Friendly Recipes)**
 
 <p align="center">
-  <img src="images/Home screen.png" alt="Daily Summary 1" width="35%" style="margin-right: 10px;">
-  <img src="images/Riassunto.png" alt="Daily Summary 2" width="35%">
+  <img src="images/Home screen.png" alt="Daily Summary 1" width="25%" style="margin-right: 10px;">
+  <img src="images/Riassunto.png" alt="Daily Summary 2" width="25%">
 </p>
 
 This screen displays a daily summary divided into three main meals: Breakfast, Lunch, and Dinner.
