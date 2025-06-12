@@ -1,5 +1,4 @@
-# Karori 2022/2023
-# 🍽️ FitApp - Mobile Fit Application
+# Karori 2022/2023 - Mobile Fit Application
 
 ## 📱 Project Overview
 
@@ -17,9 +16,9 @@ We started from a conceptual idea, which served as the foundation for the design
 The following three images represent the initial prototype, which guided the implementation of the core features and user experience of the app.
 
 <p align="center">
-  <img src="images/How it started.png" alt="Prototype 1" width="30%" style="margin-right: 10px;">
-  <img src="images/How it started 2.png" alt="Prototype 2" width="30%" style="margin-right: 10px;">
-  <img src="images/How it started 3.png" alt="Prototype 3" width="30%">
+  <img src="images/How it started.png" alt="Prototype 1" height="250px" style="margin-right: 10px;">
+  <img src="images/How it started 2.png" alt="Prototype 2" height="250px" style="margin-right: 10px;">
+  <img src="images/How it started 3.png" alt="Prototype 3" height="250px">
 </p>
 
 ### 2. System Architecture
@@ -69,26 +68,51 @@ The “Add” button enables users to search for a food item they have consumed 
 At the top of the screen, the application logo dynamically displays the total calories consumed, calculated according to a previously defined formula.
 
 <p align="center">
-  <img src="images/Home screen" alt="Daily Summary 1" width="45%" style="margin-right: 10px;">
-  <img src="images/Riassunto" alt="Daily Summary 2" width="45%">
+  <img src="images/Home screen.png" alt="Daily Summary 1" width="45%" style="margin-right: 10px;">
+  <img src="images/Riassunto.png" alt="Daily Summary 2" width="45%">
 </p>
 
 
-### 🔍 **Recipe Search**
-Enables users to search for recipes using keywords. Results can be filtered by diet type, preparation time, and number of ingredients.
+### 🔍 **Search and Nutrition Information Flow**
+In the Search screen, a user can look for a specific food item to add to a selected meal (Breakfast, Lunch, or Dinner).
+Upon selecting a food, the application first prompts the user to enter the quantity, followed by a screen to choose the appropriate unit of measurement.
 
-### 📖 **Recipe Details**
-Shows a detailed view including ingredients, preparation steps, nutritional values, and an option to save the recipe.
+Alternatively, the user can also search for a recipe, and from there, view the list of ingredients it contains.
 
-### ❤️ **Saved Recipes**
-Lets users view and manage the recipes they have previously saved to their profile.
+In the Information screen, if a user has selected a food item, they can view both primary nutritional values—Calories, Carbohydrates, Proteins, and Fats—as well as glycemic properties and secondary nutritional details, such as Vitamins, Zinc, Iron, and more.
+
+Once reviewed, the user can add the selected food item to the chosen meal using the “Add Aliment” button. This action stores the data locally via Room, the app’s local database component.
+
+<p align="center">
+  <img src="images/Ricerca Cibo.png" alt="Daily Summary 1" width="45%" style="margin-right: 10px;">
+  <img src="images/Information food.png" alt="Daily Summary 2" width="45%">
+</p>
 
 ### ⚙️ **User Profile**
-A personal area where the user can manage account details and access their collection of saved recipes.
+In this screen, the user can view all their personal information, including:
+
+Height
+
+Weight
+
+Age
+
+Goal
+
+Daily Caloric Intake (kcal)
+
+Email address
+
+All these values can be manually updated using a dedicated edit button, which enables the user to overwrite the existing data and update the changes in the database. The caloric intake is calculated using the same formula applied during the login/registration phase.
+Another feature available in this section is the ability to change the password. By pressing the corresponding button, an email will be sent to the user’s registered address, containing a link to reset the password securely.
+Finally, the screen also includes a Logout button, which signs the user out and redirects them to the Login screen.
+A toggle switch is present to enable or disable editing mode, allowing the user to make changes only when necessary.
+
+![Use Case](images/profile.png)
 
 ## 🔧 Technologies Used
 
-- **Language**: Kotlin  
+- **Language**: JAVA  
 - **Framework**: Android Jetpack (LiveData, ViewModel, Navigation)  
 - **Libraries**: Retrofit, Glide, Firebase SDK, Material Design Components  
 - **Architecture**: MVVM  
@@ -99,8 +123,38 @@ A personal area where the user can manage account details and access their colle
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/foodapp.git
-   
+   git clone https://github.com/LolloMagicMagia/Karori.git
+
+## ⚠️ Application Status
+This application is currently deprecated and no longer maintained.
+
+At the time of development, it relied on the integration of two key external services:
+
+Spoonacular API – for retrieving nutritional data, recipe details, and ingredient information.
+
+Firebase – for user authentication, real-time data storage, and password recovery functionality.
+
+## 🎓 Educational Approach and Development Philosophy
+This project makes use of Android’s Navigation Component, specifically the Navigation Graph, to manage transitions between fragments in a structured and scalable way. Each navigation action is clearly defined within the graph, improving both readability and maintainability of the app's flow.
+
+While not all components and design patterns strictly contributed to functionality or were necessary for the app’s scope, we intentionally chose to implement all the key elements taught during the course. The purpose was to challenge ourselves by experimenting with different architectural patterns and best practices—even in cases where simpler alternatives may have sufficed.
+
+This includes, but is not limited to:
+
+MVVM architecture (Model–View–ViewModel)
+
+ViewModel + LiveData for state management
+
+Repository pattern for data abstraction
+
+Listeners, Adapters, and Factory classes
+
+Integration with Firebase and external APIs (Spoonacular)
+
+Room database for local persistence
+
+Navigation Graph for in-app routing
+
 Gruppo: MELMA <br />
 Componenti Gruppo: <br />
 Monti Lorenzo 869960 <br />
