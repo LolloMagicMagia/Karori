@@ -1,4 +1,5 @@
 # Karori 2022/2023 - Mobile Fit Application
+Karori is a mobile application developed as an academic project within the context of Mobile Application Development. The app aims to provide a user-friendly platform for searching, viewing, and count the kilocalories , leveraging external APIs for data retrieval and backend services for authentication and data persistence.
 
 Gruppo: MELMA <br />
 Componenti Gruppo: <br />
@@ -7,10 +8,6 @@ Oltolini Edoardo 869124 <br />
 Gherardi Marco 869138 <br />
 Lombardo Matteo 869232
 
-
-## 📱 Project Overview
-
-**Karori** is a mobile application developed as an academic project within the context of Mobile Application Development. The app aims to provide a user-friendly platform for searching, viewing, and count the kilocalories , leveraging external APIs for data retrieval and backend services for authentication and data persistence.
 
 ## 🧩 Project Design Phases
 
